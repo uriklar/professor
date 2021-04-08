@@ -22,7 +22,13 @@ const Container = styled(motion.div)`
   ${({ state }) => state !== "correct" && "cursor: pointer;"}
 `;
 
-export default function Square({ item, onSelect = (type) => {}, state }) {
+interface Props {
+  item: string;
+  onSelect?: (item: string) => void;
+  state: "correct" | "selected";
+}
+
+export default function Square({ item, onSelect = () => {}, state }: Props) {
   return (
     <Container layout state={state} onClick={() => onSelect(item)}>
       {item}

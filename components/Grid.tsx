@@ -70,7 +70,7 @@ function getSortedItems(
 }
 
 function useBoard(board: TBoard) {
-  const [items, setItems] = useState(generateInitialItems(board));
+  const [items] = useState(generateInitialItems(board));
   const [foundCategories, setFoundCategories] = useState([]);
   const [selection, setSelection] = useState({});
 
@@ -95,7 +95,7 @@ function useBoard(board: TBoard) {
 
       setSelection({});
     }
-  }, [selection]);
+  }, [board, foundCategories, selection]);
 
   return {
     items,
@@ -128,7 +128,7 @@ export default function Grid({ board }: Props) {
           item={item}
           key={item}
           onSelect={onSelect}
-          state={!!selection[item] ? "selected" : null}
+          state={selection[item] ? "selected" : null}
         />
       ))}
     </Container>

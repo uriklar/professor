@@ -26,5 +26,11 @@
       "version": "detect"
     }
   },
-  "plugins": []
+  "plugins": [],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  },
+  "globals": {
+    "React": "writable"
+  }
 }
