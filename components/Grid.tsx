@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { TBoard } from "../pages/types";
+import { TBoard } from "../types";
+import {
+  generateInitialItems,
+  getSelectedItems,
+  getSortedItems,
+  getFoundCategoryId,
+} from "../utils/board.utils";
 import Square from "./Square";
 
 const Container = styled(motion.div)`
@@ -14,60 +20,6 @@ const Container = styled(motion.div)`
   padding: 16px;
   border-radius: 8px;
 `;
-
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-function difference(arr1, arr2) {
-  return arr1.filter((value) => !arr2.includes(value));
-}
-
-function generateInitialItems(board: TBoard) {
-  const shuffledItems = shuffle(board.map((category) => category.words).flat());
-  return [...shuffledItems];
-}
-
-function getSelectedItems(selection) {
-  return Object.keys(selection).filter((key) => !!selection[key]);
-}
-
-function getFoundCategory(selectedItems: string[], board: TBoard) {
-  return board.find(
-    (category) => difference(category.words, selectedItems).length === 0
-  )?.id;
-}
-
-function getSortedItems(
-  items: string[],
-  foundCategories: string[],
-  board: TBoard
-) {
-  const correctItems = foundCategories.reduce((acc, categoryId) => {
-    const category = board.find((_category) => _category.id === categoryId);
-    return [...acc, ...category.words];
-  }, []);
-
-  const otherItems = difference(items, correctItems);
-
-  return { correctItems, otherItems };
-}
 
 function useBoard(board: TBoard) {
   const [items] = useState(generateInitialItems(board));
@@ -87,7 +39,7 @@ function useBoard(board: TBoard) {
   useEffect(() => {
     const selectedItems = getSelectedItems(selection);
     if (selectedItems.length === 4) {
-      const foundCategoryId = getFoundCategory(selectedItems, board);
+      const foundCategoryId = getFoundCategoryId(selectedItems, board);
 
       if (foundCategoryId) {
         setFoundCategories([...foundCategories, foundCategoryId]);
