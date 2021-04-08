@@ -1,4 +1,4 @@
-import { TBoard } from "../types";
+import { AnswerState, IAnswer, IItem } from "../types";
 
 // Shuffles an array
 export function shuffle(array) {
@@ -26,38 +26,59 @@ export function difference(arr1, arr2) {
   return arr1.filter((value) => !arr2.includes(value));
 }
 
-// Generates a flat array of items, shuffled
-export function generateInitialItems(board: TBoard) {
-  const shuffledItems = shuffle(board.map((category) => category.words).flat());
-  return [...shuffledItems];
-}
-
-// returns an array of currently selected items
-export function getSelectedItems(selection) {
-  return Object.keys(selection).filter((key) => !!selection[key]);
+export function toChunks<T>(arr: any[], n: number): T[][] {
+  return [...Array(Math.ceil(arr.length / n))].map((v, i) =>
+    arr.slice(i * n, (i + 1) * n)
+  );
 }
 
 // returns the id of the categroy if the selected items match a category
-export function getFoundCategoryId(selectedItems: string[], board: TBoard) {
-  return board.find(
-    (category) => difference(category.words, selectedItems).length === 0
-  )?.id;
+export function getConnectionCategory(selection: IItem[]) {
+  const categories = selection.map((item) => item.categoryId);
+  const uniqCategories = [...new Set(categories)];
+
+  return uniqCategories.length === 1 ? uniqCategories[0] : null;
 }
 
-// Returns two arrays of items:
-// correctItems - items that were already matched correctly
-// otherItems - the remaining items to be found
-export function getSortedItems(
-  items: string[],
-  foundCategories: string[],
-  board: TBoard
-) {
-  const correctItems = foundCategories.reduce((acc, categoryId) => {
-    const category = board.find((_category) => _category.id === categoryId);
-    return [...acc, ...category.words];
+// adds or removes a value from the array
+// according to weather it exists there or not
+export function toggleSelection(arr: IItem[], item: IItem) {
+  return arr.includes(item)
+    ? arr.filter((i) => i.text !== item.text)
+    : [...arr, item];
+}
+
+export function getSortedItems(items: IItem[], answers: IAnswer[]) {
+  const matchedItems = answers.reduce((acc, answer) => {
+    const categoryItems = items.filter(
+      (item) => item.categoryId === answer.categoryId
+    );
+
+    return [...acc, ...categoryItems];
   }, []);
 
-  const otherItems = difference(items, correctItems);
+  const remainingItems = difference(items, matchedItems);
 
-  return { correctItems, otherItems };
+  return {
+    matchedItems: toChunks<IItem>(matchedItems, 4),
+    remainingItems: toChunks<IItem>(remainingItems, 4),
+  };
+}
+
+export function getItemState(
+  item: IItem,
+  selection: IItem[],
+  answers: IAnswer[]
+) {
+  if (selection.includes(item)) {
+    // TODO: add another enum?
+    return "selected";
+  }
+
+  debugger;
+  const itemAnswer = answers.find(
+    (answer) => answer.categoryId === item.categoryId
+  );
+
+  return itemAnswer?.state;
 }

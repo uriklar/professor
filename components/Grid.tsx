@@ -1,18 +1,12 @@
-import { motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { AnimateSharedLayout, motion } from "framer-motion";
 import styled from "styled-components";
-import { TBoard } from "../types";
-import {
-  generateInitialItems,
-  getSelectedItems,
-  getSortedItems,
-  getFoundCategoryId,
-} from "../utils/board.utils";
-import Square from "./Square";
+import { IItem } from "../types";
+import { getSortedItems, toChunks } from "../utils/board.utils";
+import Row from "./Row";
+import { useStore } from "./Store";
 
 const Container = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
   width: 600px;
@@ -21,68 +15,23 @@ const Container = styled(motion.div)`
   border-radius: 8px;
 `;
 
-function useBoard(board: TBoard) {
-  const [items] = useState(generateInitialItems(board));
-  const [foundCategories, setFoundCategories] = useState([]);
-  const [selection, setSelection] = useState({});
+export default function Grid() {
+  const {
+    state: { items, answers },
+  } = useStore();
 
-  const onSelect = useCallback(
-    (item) => {
-      setSelection({
-        ...selection,
-        [item]: !selection[item],
-      });
-    },
-    [selection]
-  );
-
-  useEffect(() => {
-    const selectedItems = getSelectedItems(selection);
-    if (selectedItems.length === 4) {
-      const foundCategoryId = getFoundCategoryId(selectedItems, board);
-
-      if (foundCategoryId) {
-        setFoundCategories([...foundCategories, foundCategoryId]);
-      }
-
-      setSelection({});
-    }
-  }, [board, foundCategories, selection]);
-
-  return {
-    items,
-    selection,
-    onSelect,
-    foundCategories,
-  };
-}
-
-interface Props {
-  board: TBoard;
-}
-
-export default function Grid({ board }: Props) {
-  const { items, selection, onSelect, foundCategories } = useBoard(board);
-
-  const { correctItems, otherItems } = getSortedItems(
-    items,
-    foundCategories,
-    board
-  );
+  const { matchedItems, remainingItems } = getSortedItems(items, answers);
 
   return (
-    <Container layout>
-      {correctItems.map((item) => (
-        <Square item={item} key={item} state="correct" />
-      ))}
-      {otherItems.map((item) => (
-        <Square
-          item={item}
-          key={item}
-          onSelect={onSelect}
-          state={selection[item] ? "selected" : null}
-        />
-      ))}
-    </Container>
+    <AnimateSharedLayout>
+      <Container layout>
+        {matchedItems.map((itemRow) => (
+          <Row items={itemRow} key={itemRow[0].text} />
+        ))}
+        {remainingItems.map((itemRow) => (
+          <Row items={itemRow} key={itemRow[0].text} />
+        ))}
+      </Container>
+    </AnimateSharedLayout>
   );
 }

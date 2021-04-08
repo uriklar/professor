@@ -1,12 +1,17 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { Actions, useStore } from "./Store";
+import { AnswerState, IItem } from "../types";
+import { getItemState } from "../utils/board.utils";
 
-function getBgColor(state) {
+function getBgColor(state: AnswerState | "selected") {
   switch (state) {
     case "selected":
       return "blue";
-    case "correct":
+    case AnswerState.Matched:
       return "purple";
+    case AnswerState.Answered:
+      return "yellow";
     default:
       return "green";
   }
@@ -19,19 +24,32 @@ const Container = styled(motion.div)`
   align-items: center;
   background: ${({ state }) => getBgColor(state)};
   border-radius: 8px;
-  ${({ state }) => state !== "correct" && "cursor: pointer;"}
+  ${({ state }) =>
+    state !== AnswerState.Answered &&
+    state !== AnswerState.Matched &&
+    "cursor: pointer;"}
 `;
 
 interface Props {
-  item: string;
-  onSelect?: (item: string) => void;
-  state: "correct" | "selected";
+  item: IItem;
 }
 
-export default function Square({ item, onSelect = () => {}, state }: Props) {
+// TODO: don't allow selecting if already part of an answer
+export default function Square({ item }: Props) {
+  const {
+    dispatch,
+    state: { selection, answers },
+  } = useStore();
+
+  const itemState = getItemState(item, selection, answers);
+
+  const onSelect = () => {
+    dispatch({ type: Actions.SelectItem, payload: { item } });
+  };
+
   return (
-    <Container layout state={state} onClick={() => onSelect(item)}>
-      {item}
+    <Container layout state={itemState} onClick={onSelect}>
+      {item.text}
     </Container>
   );
 }
