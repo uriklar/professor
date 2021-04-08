@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import Grid from "../components/Grid";
 import { IBoard } from "../types";
 import Store from "../components/Store";
+import db from "../db";
 
 interface Props {
   board: IBoard;
@@ -53,9 +54,10 @@ const MOCK_BOARD: IBoard = {
 };
 
 export async function getServerSideProps() {
+  const snapshot = await db.collection("boards").doc("testing").get();
   return {
     props: {
-      board: MOCK_BOARD,
+      board: snapshot.data(),
     },
   };
 }
