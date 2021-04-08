@@ -75,7 +75,6 @@ export function getItemState(
     return "selected";
   }
 
-  debugger;
   const itemAnswer = answers.find(
     (answer) => answer.categoryId === item.categoryId
   );
