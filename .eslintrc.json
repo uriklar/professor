@@ -1,13 +1,13 @@
 {
   "root": true,
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
+  "plugins": ["@typescript-eslint", "plugin:import/typescript"],
   "env": {
     "browser": true,
     "commonjs": true,
@@ -24,9 +24,14 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".js", ".jsx", ".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
-  "plugins": [],
   "rules": {
     "react/react-in-jsx-scope": "off"
   },
