@@ -28,11 +28,11 @@ export default function Home({ board }: Props) {
 }
 
 export async function getServerSideProps() {
-  // I tried created a node script to seed the data, but had issues
+  // I tried creating a node script to seed the data, but had issues
   // If you feel like giving this a shot for a better solution then what I did here, feel free
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
-  const docRef = db.collection("boards").doc("testing");
-  await docRef.set(MOCK_BOARD);
+  // const docRef = db.collection("boards").doc("testing");
+  // await docRef.set(MOCK_BOARD);
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
 
   const snapshot = await db.collection("boards").doc("testing").get();
