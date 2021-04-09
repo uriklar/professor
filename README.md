@@ -17,7 +17,7 @@ Once your database is created, in the sidebar, next to Project overview, there's
 
 1. Click on **Generate new private key**
 2. Once the key is generated, you will have a button that downloads a json file
-3. In the root of the project, create a file called **serviceAccountKey.json** and paste the content of your downloaded json file.
+3. In the root of the project, create a file called **serviceAccountKey.json** and paste the content of your downloaded json file. **Note: This file is in the .gitignore, but make sure you don't commit it!**
 4. run the app (`npm run dev`)
 5. The first run of the app will create an initial board in your firebase DB. You can then comment out the lines in `index.tsx` that have the comment `Seed data` above them. (If they are commented out, you'll need to un-comment them and refresh for the seeding to happen)
 
