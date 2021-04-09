@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Installation
 
-## Getting Started
+1. Fork the repo and clone it locally
+2. Run 'npm install'
+3. To start the server, run `npm run dev`
 
-First, run the development server:
+The repo is a Next.js repo. You can read more about Next.js [here](https://nextjs.org/docs)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Setting up Firestore
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Go to https://console.firebase.google.com/ and click **Add project**
+2. Click on the **Cloud Firestore** button (it's a big orange sqaure on the page) and click on **Create Database**
+3. In the wizard, choose **Production mode**
+4. Select a location (preferably eu-something..)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Once your database is created, in the sidebar, next to Project overview, there's a Cog icon. Click it, and navigate to **Project settings -> Service accounts**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Click on **Generate new private key**
+2. Once the key is generated, you will have a button that downloads a json file
+3. In the root of the project, create a file called **serviceAccountKey.json** and paste the content of your downloaded json file.
+4. run the app (`npm run dev`)
+5. The first run of the app will create an initial board in your firebase DB. You can then comment out the lines in `index.tsx` that have the comment `Seed data` above them. (If they are commented out, you'll need to un-comment them and refresh for the seeding to happen)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Contributing
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+See [This issue](https://github.com/uriklar/professor/issues/1) for issues open for grabs. And thanks for taking a part in this project!
