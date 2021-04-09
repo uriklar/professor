@@ -1,4 +1,4 @@
-import { AnswerState, IAnswer, IItem } from "../types";
+import { IAnswer, IItem } from "../types";
 
 // Shuffles an array
 export function shuffle(array) {

@@ -8,6 +8,12 @@ The repo is a Next.js repo. You can read more about Next.js [here](https://nextj
 
 ## Setting up Firestore
 
+**Note** - if you just want to work on non Database related features, at the bottom of `index.tsx` there's an alternative `getServerSideProps` which will return mock data that is identical to the data from the db.
+
+**If you are just working on FE features i'd suggest using this as it saves a lot of setup**
+
+But, if you need to setup the database :-)
+
 1. Go to https://console.firebase.google.com/ and click **Add project**
 2. Click on the **Cloud Firestore** button (it's a big orange sqaure on the page) and click on **Create Database**
 3. In the wizard, choose **Production mode**

@@ -9,8 +9,8 @@ import { MOCK_BOARD } from "../mocks";
 interface Props {
   board: IBoard;
 }
+
 export default function Home({ board }: Props) {
-  console.log(board);
   return (
     <div className={styles.container}>
       <Head>
@@ -42,3 +42,12 @@ export async function getServerSideProps() {
     },
   };
 }
+
+// Uncomment this instead of the existing function if you don't want to use firebase
+// export async function getServerSideProps() {
+//   return {
+//     props: {
+//       board: MOCK_BOARD,
+//     },
+//   };
+// }

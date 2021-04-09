@@ -17,11 +17,6 @@ export interface IItem {
 export interface IAnswers {
   [categoryId: string]: string[];
 }
-export interface Category {
-  words: string[];
-  answers: string[];
-  id: string;
-}
 export interface IBoard {
   items: IItem[];
   answers: IAnswers;
