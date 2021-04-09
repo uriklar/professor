@@ -3,6 +3,8 @@ import styles from "../styles/Home.module.css";
 import Grid from "../components/Grid";
 import { IBoard } from "../types";
 import Store from "../components/Store";
+import db from "../db";
+import { MOCK_BOARD } from "../mocks";
 
 interface Props {
   board: IBoard;
@@ -25,37 +27,18 @@ export default function Home({ board }: Props) {
   );
 }
 
-const MOCK_BOARD: IBoard = {
-  items: [
-    { text: "אחת", categoryId: "1" },
-    { text: "שתיים", categoryId: "1" },
-    { text: "שלוש", categoryId: "1" },
-    { text: "ארבע", categoryId: "1" },
-    { text: "אלף", categoryId: "2" },
-    { text: "בית", categoryId: "2" },
-    { text: "גימל", categoryId: "2" },
-    { text: "דלת", categoryId: "2" },
-    { text: "כלב", categoryId: "3" },
-    { text: "חתול", categoryId: "3" },
-    { text: "סוס", categoryId: "3" },
-    { text: "נמר", categoryId: "3" },
-    { text: "תל אביב", categoryId: "4" },
-    { text: "ראשון לציון", categoryId: "4" },
-    { text: "אילת", categoryId: "4" },
-    { text: "עפולה", categoryId: "4" },
-  ],
-  answers: {
-    "1": ["מספרים", "מספר"],
-    "2": ["אותיות", "אות"],
-    "3": ["חיות"],
-    "4": ["ערים בישראל"],
-  },
-};
-
 export async function getServerSideProps() {
+  // I tried created a node script to seed the data, but had issues
+  // If you feel like giving this a shot for a better solution then what I did here, feel free
+  // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
+  const docRef = db.collection("boards").doc("testing");
+  await docRef.set(MOCK_BOARD);
+  // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
+
+  const snapshot = await db.collection("boards").doc("testing").get();
   return {
     props: {
-      board: MOCK_BOARD,
+      board: snapshot.data(),
     },
   };
 }
