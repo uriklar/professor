@@ -19,6 +19,7 @@ export enum Actions {
   SelectItem,
   FoundConnection,
   ResetSelection,
+  FoundAnswer,
 }
 
 type TPayloads = {
@@ -29,6 +30,9 @@ type TPayloads = {
     categoryId: string;
   };
   [Actions.ResetSelection]: {};
+  [Actions.FoundAnswer]: {
+    categoryId: string;
+  };
 };
 
 export type TActions = ActionMap<TPayloads>[keyof ActionMap<TPayloads>];
@@ -48,6 +52,7 @@ const INITIAL_STATE: IState = {
 const StoreContext = createContext({
   state: INITIAL_STATE,
   dispatch: null,
+  board: null,
 });
 
 function reducer(state: IState, action: TActions) {
@@ -72,6 +77,18 @@ function reducer(state: IState, action: TActions) {
           { categoryId: action.payload.categoryId, state: AnswerState.Matched },
         ],
       };
+    case Actions.FoundAnswer:
+      const { categoryId } = action.payload;
+      const nextAnswers = state.answers.map((answer) =>
+        answer.categoryId === categoryId
+          ? { categoryId, state: AnswerState.Answered }
+          : answer
+      );
+      return {
+        ...state,
+        selection: [],
+        answers: nextAnswers,
+      };
     default:
       return state;
   }
@@ -91,7 +108,7 @@ export default function Store({ children, board }: Props) {
     (initialState) => ({ ...initialState, items: shuffle(board.items) })
   );
 
-  const value = useMemo(() => ({ state, dispatch }), [state]);
+  const value = useMemo(() => ({ state, dispatch, board }), [state]);
 
   // Triggeres when 4 items have been selected,
   // Checks if selection is a category or not
@@ -119,6 +136,7 @@ export default function Store({ children, board }: Props) {
 export function useStore(): {
   state: IState;
   dispatch: Dispatch<TActions>;
+  board: IBoard;
 } {
   return useContext(StoreContext);
 }

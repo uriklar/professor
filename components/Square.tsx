@@ -28,13 +28,15 @@ const Container = styled(motion.div)`
     state !== AnswerState.Answered &&
     state !== AnswerState.Matched &&
     "cursor: pointer;"}
+  ${({ state }) =>
+    (state === AnswerState.Answered || state === AnswerState.Matched) &&
+    "pointer-events: none;"}
 `;
 
 interface Props {
   item: IItem;
 }
 
-// TODO: don't allow selecting if already part of an answer
 export default function Square({ item }: Props) {
   const {
     dispatch,

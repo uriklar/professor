@@ -4,6 +4,7 @@ import { AnswerState, IItem } from "../types";
 import Square from "./Square";
 import { useStore } from "./Store";
 import { getConnectionCategory } from "../utils/board.utils";
+import AnswerInput from "./AnswerInput";
 
 const Container = styled(motion.div)`
   display: grid;
@@ -31,7 +32,9 @@ export default function Row({ items }: Props) {
       {items.map((item) => (
         <Square item={item} key={item.text} />
       ))}
-      {isMatchedButNotAnswered && <input placeholder="מה הקשר?" />}
+      {isMatchedButNotAnswered && (
+        <AnswerInput categoryId={connectionCategory} />
+      )}
     </Container>
   );
 }
