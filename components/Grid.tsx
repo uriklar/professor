@@ -1,7 +1,6 @@
 import { AnimateSharedLayout, motion } from "framer-motion";
 import styled from "styled-components";
-import { IItem } from "../types";
-import { getSortedItems, toChunks } from "../utils/board.utils";
+import { getSortedItems } from "../utils/board.utils";
 import Row from "./Row";
 import { useStore } from "./Store";
 
@@ -9,7 +8,6 @@ const Container = styled(motion.div)`
   display: grid;
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
-  width: 600px;
   background: gray;
   padding: 16px;
   border-radius: 8px;

@@ -10,7 +10,7 @@ interface Props {
   board: IBoard;
 }
 
-export default function Home({ board }: Props) {
+export default function Home({ board, ids }: Props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -36,9 +36,13 @@ export async function getServerSideProps() {
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
 
   const snapshot = await db.collection("boards").doc("testing").get();
+  const querySnapshot = await db.collection("boards").select().get();
+  const ids = querySnapshot.docs.map((doc) => doc.id);
+
   return {
     props: {
       board: snapshot.data(),
+      ids,
     },
   };
 }

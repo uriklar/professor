@@ -18,7 +18,7 @@ function getBgColor(state: AnswerState | "selected") {
 }
 
 const Container = styled(motion.div)`
-  height: 100px;
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,6 +31,8 @@ const Container = styled(motion.div)`
   ${({ state }) =>
     (state === AnswerState.Answered || state === AnswerState.Matched) &&
     "pointer-events: none;"}
+    aspect-ratio: 1 / 1;
+  text-align: center;
 `;
 
 interface Props {
