@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import Grid from "../components/Grid";
 import Store from "../components/Store";
 import db from "../db";
@@ -41,7 +42,14 @@ export default function Board({ board, ids }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>פרופסור</header>
+      <header>
+        <div>פרופסור</div>
+        <div>
+          <Link href="/create">
+            <a>+ ליצירת לוח</a>
+          </Link>
+        </div>
+      </header>
       <main>
         {/* Existing boards */}
         <aside>
