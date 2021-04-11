@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Actions, useStore } from "./Store";
 import { AnswerState, IItem } from "../types";
 import { getItemState } from "../utils";
-import { Props } from "react";
 
 function getBgColor(state: AnswerState | "selected") {
   switch (state) {
