@@ -4,6 +4,7 @@ import { IItem } from "../types";
 interface Props {
   items: IItem[];
   categoryIndex: number;
+  index: number;
   onItemBlur: (value: string, index: number) => void;
   onAnswersBlur: (value: string[], categoryIndex: string) => void;
 }
