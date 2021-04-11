@@ -3,22 +3,31 @@ import { motion } from "framer-motion";
 import { Actions, useStore } from "./Store";
 import { AnswerState, IItem } from "../types";
 import { getItemState } from "../utils";
+import { Props } from "react";
 
 function getBgColor(state: AnswerState | "selected") {
   switch (state) {
     case "selected":
-      return "blue";
+      return "#E0C353";
     case AnswerState.Matched:
-      return "purple";
+      return "#5158AD";
     case AnswerState.Answered:
-      return "yellow";
+      return "#4B4C61";
     default:
-      return "green";
+      return "#64B5ED";
   }
 }
 
+//   case "selected":
+// return "#6971E0";
+// case AnswerState.Matched:
+//   return "#64B5ED";
+// case AnswerState.Answered:
+//   return "#5158AD";
+// default:
+//   return "#50515d";
+
 const Container = styled(motion.div)`
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,8 +40,10 @@ const Container = styled(motion.div)`
   ${({ state }) =>
     (state === AnswerState.Answered || state === AnswerState.Matched) &&
     "pointer-events: none;"}
-    aspect-ratio: 1 / 1;
   text-align: center;
+  /* padding: 24px 48px; */
+  font-weight: bold;
+  color: white;
 `;
 
 interface Props {

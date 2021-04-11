@@ -1,6 +1,4 @@
-import { TextField } from "@material-ui/core";
 import React, { useState } from "react";
-import styled from "styled-components";
 import { IItem } from "../types";
 
 interface Props {
@@ -15,6 +13,7 @@ const CategoryForm = ({
   categoryIndex,
   onItemBlur,
   onAnswersBlur,
+  index,
 }: Props) => {
   const [itemValues, setItemValues] = useState({
     "0": "",
@@ -34,28 +33,45 @@ const CategoryForm = ({
 
   return (
     <div>
-      <div style={{ marginBottom: 20 }}> הזן את מילות הקטגוריה:</div>
-      <div>
+      <div style={{ marginBottom: 20, marginTop: 20 }}>
+        {" "}
+        קטגוריה {index + 1}:
+      </div>
+      <div className="category-form-input-group">
         {items.map((item, index) => (
-          <TextField
+          <input
             key={index}
-            label="מילה"
+            placeholder="מילה"
             value={itemValues[index]}
             onChange={(e) => onItemTextChange(e.target.value, index)}
             onBlur={(e) =>
               onItemBlur(e.target.value, categoryIndex * 4 + index)
             }
-            variant="outlined"
             required
           />
         ))}
       </div>
 
       {allItemsFilled && (
-        <div>
-          <div>נא להזין ערכים מופרדים ע"י פסיקים</div>
-          <TextField
-            label="תשובות"
+        <div
+          css={`
+            margin-top: 20px;
+          `}
+        >
+          <div
+            css={`
+              margin-bottom: 10px;
+              font-size: 14px;
+            `}
+          >
+            נא להזין ערכים מופרדים ע"י פסיקים
+          </div>
+          <input
+            css={`
+              padding: 6px 24px;
+              width: 80%;
+            `}
+            placeholder="תשובות"
             value={answers}
             onChange={(e) => setAnswers(e.target.value)}
             onBlur={() =>

@@ -1,5 +1,3 @@
-import styled from "styled-components";
-import { Button, FormGroup, TextField } from "@material-ui/core";
 import Head from "next/head";
 import React, { useState } from "react";
 import slugify from "slugify";
@@ -95,30 +93,30 @@ export default function Create() {
         <h1>יצירת לוח</h1>
 
         <form onSubmit={onSubmit}>
-          <h2>כמה פרטים עליך</h2>
+          {/* <h2>כמה פרטים עליך</h2> */}
 
-          <FieldGroup>
-            <TextField label="שם (פרטי, מלא, בדוי..)" variant="outlined" />
-          </FieldGroup>
+          {/* <fieldset>
+            <label>
+              שם
+              <input placeholder="שם (פרטי, מלא, בדוי..)" />
+            </label>
+          </fieldset> */}
 
-          <FieldGroup>
-            <TextField
-              label="שם משתמש (אנגלית בלבד)"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              variant="outlined"
-              onKeyPress={validateIsEnglish}
-              required
-            />
-          </FieldGroup>
+          <fieldset>
+            <label>
+              שם משתמש (אנגלית בלבד)
+              <input
+                placeholder="שם משתמש (אנגלית בלבד)"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onKeyPress={validateIsEnglish}
+                required
+              />
+            </label>
+          </fieldset>
 
           {username && (
-            <div
-              style={{
-                padding: "40px 80px",
-                backgroundColor: "hsl(123, 37%, 75%)",
-              }}
-            >
+            <div className="board-url-notice">
               בסיום היצירה הלוח שלך יהיה זמין בכתובת:
               <a href={boardUrl}>{boardUrl}</a>
             </div>
@@ -127,6 +125,7 @@ export default function Create() {
           {categories.map((categoryItems, index) => (
             <CategoryForm
               key={index}
+              index={index}
               items={categoryItems}
               categoryIndex={index}
               onItemBlur={onItemBlur}
@@ -134,15 +133,9 @@ export default function Create() {
             />
           ))}
 
-          <Button variant="contained" color="primary" type="submit">
-            סיימתי
-          </Button>
+          <button type="submit">סיימתי</button>
         </form>
       </main>
     </div>
   );
 }
-
-const FieldGroup = styled(FormGroup)`
-  margin-bottom: 20px;
-`;

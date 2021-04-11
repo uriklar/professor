@@ -7,10 +7,14 @@ import { useStore } from "./Store";
 const Container = styled(motion.div)`
   display: grid;
   grid-template-rows: repeat(4, 1fr);
-  gap: 10px;
-  background: gray;
-  padding: 16px;
-  border-radius: 8px;
+  gap: 16px;
+  padding: 8px;
+  min-width: 600px;
+  min-height: 600px;
+  border-style: solid;
+  border-width: 8px;
+  border-image: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
+  border-image-slice: 9;
 `;
 
 export default function Grid() {
