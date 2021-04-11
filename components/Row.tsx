@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { AnswerState, IItem } from "../types";
 import Square from "./Square";
 import { useStore } from "./Store";
-import { getConnectionCategory } from "../utils/board.utils";
+import { getConnectionCategory } from "../utils";
 import AnswerInput from "./AnswerInput";
 
 const Container = styled(motion.div)`

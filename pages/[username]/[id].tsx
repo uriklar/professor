@@ -2,20 +2,20 @@ import Head from "next/head";
 import Grid from "../../components/Grid";
 import Store from "../../components/Store";
 import db from "../../db";
-import { MOCK_BOARD } from "../../mocks";
 import { IBoard } from "../../types";
 import styles from "../../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import Link from "next/link";
+import { getBoardUrlFromId } from "../../utils";
 
 interface Props {
   board: IBoard;
+  ids: string[];
 }
 
-export default function Board({ board, ids }: Props) {
+function useToast() {
   const [showToast, setShowToast] = useState(false);
   const closeToast = () => setShowToast(false);
   const router = useRouter();
@@ -26,6 +26,16 @@ export default function Board({ board, ids }: Props) {
       setShowToast(true);
     }
   }, []);
+
+  return {
+    showToast,
+    closeToast,
+  };
+}
+
+export default function Board({ board, ids }: Props) {
+  const { showToast, closeToast } = useToast();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -33,20 +43,15 @@ export default function Board({ board, ids }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Existing boards */}
       <header className={styles.main}>
         <h2>לוחות קיימים:</h2>
         <ul>
-          {ids.map((id) => {
-            const splitId = id.split("-");
-            const boardId = splitId[splitId.length - 1];
-            splitId.splice(-1, 1);
-            const href = `/${splitId.join("-")}/${boardId}`;
-            return (
-              <li key={id}>
-                <a href={href}>{id}</a>
-              </li>
-            );
-          })}
+          {ids.map((id) => (
+            <li key={id}>
+              <a href={getBoardUrlFromId(id)}>{id}</a>
+            </li>
+          ))}
         </ul>
       </header>
 

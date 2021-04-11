@@ -46,6 +46,7 @@ const CategoryForm = ({
               onItemBlur(e.target.value, categoryIndex * 4 + index)
             }
             variant="outlined"
+            required
           />
         ))}
       </div>
@@ -66,6 +67,7 @@ const CategoryForm = ({
                 items[0].categoryId
               )
             }
+            required
           />
         </div>
       )}

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Actions, useStore } from "./Store";
 import { AnswerState, IItem } from "../types";
-import { getItemState } from "../utils/board.utils";
+import { getItemState } from "../utils";
 
 function getBgColor(state: AnswerState | "selected") {
   switch (state) {

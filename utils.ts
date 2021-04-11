@@ -1,4 +1,20 @@
-import { IAnswer, IItem } from "../types";
+import { KeyboardEvent } from "react";
+import slugify from "slugify";
+import { IAnswer, IItem } from "./types";
+
+export function makeid(length) {
+  var result = [];
+  // Right now I just use numbers for ids as each board is under the
+  // username path. To get more complex ids you can add letter here too
+  var characters = "123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result.push(
+      characters.charAt(Math.floor(Math.random() * charactersLength))
+    );
+  }
+  return result.join("");
+}
 
 // Shuffles an array
 export function shuffle(array) {
@@ -81,3 +97,50 @@ export function getItemState(
 
   return itemAnswer?.state;
 }
+
+export const EMPTY_BOARD = {
+  items: [
+    { text: "", categoryId: "1" },
+    { text: "", categoryId: "1" },
+    { text: "", categoryId: "1" },
+    { text: "", categoryId: "1" },
+    { text: "", categoryId: "2" },
+    { text: "", categoryId: "2" },
+    { text: "", categoryId: "2" },
+    { text: "", categoryId: "2" },
+    { text: "", categoryId: "3" },
+    { text: "", categoryId: "3" },
+    { text: "", categoryId: "3" },
+    { text: "", categoryId: "3" },
+    { text: "", categoryId: "4" },
+    { text: "", categoryId: "4" },
+    { text: "", categoryId: "4" },
+    { text: "", categoryId: "4" },
+  ],
+  answers: {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+  },
+};
+
+export const isBrowser = () => typeof window !== "undefined";
+
+export const validateIsEnglish = (e: KeyboardEvent) => {
+  var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+  var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+  if (regex.test(str)) return true;
+  e.preventDefault();
+  return false;
+};
+
+export const generateBoardUrl = (username: string, id: string) =>
+  isBrowser() ? `${window.location.origin}/${slugify(username)}/${id}` : "";
+
+export const getBoardUrlFromId = (id: string) => {
+  const splitId = id.split("-");
+  const boardId = splitId[splitId.length - 1];
+  splitId.splice(-1, 1);
+  return `/${splitId.join("-")}/${boardId}`;
+};

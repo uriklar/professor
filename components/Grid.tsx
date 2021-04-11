@@ -1,6 +1,6 @@
 import { AnimateSharedLayout, motion } from "framer-motion";
 import styled from "styled-components";
-import { getSortedItems } from "../utils/board.utils";
+import { getSortedItems } from "../utils";
 import Row from "./Row";
 import { useStore } from "./Store";
 

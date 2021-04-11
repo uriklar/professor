@@ -1,64 +1,23 @@
 import styled from "styled-components";
 import { Button, FormGroup, TextField } from "@material-ui/core";
 import Head from "next/head";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import slugify from "slugify";
 import CategoryForm from "../components/CategoryForm";
 import { IItem } from "../types";
-import { toChunks } from "../utils/board.utils";
-import ContentSort from "material-ui/svg-icons/content/sort";
-
-function makeid(length) {
-  var result = [];
-  var characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result.push(
-      characters.charAt(Math.floor(Math.random() * charactersLength))
-    );
-  }
-  return result.join("");
-}
-
-const EMPTY_BOARD = {
-  items: [
-    { text: "", categoryId: "1" },
-    { text: "", categoryId: "1" },
-    { text: "", categoryId: "1" },
-    { text: "", categoryId: "1" },
-    { text: "", categoryId: "2" },
-    { text: "", categoryId: "2" },
-    { text: "", categoryId: "2" },
-    { text: "", categoryId: "2" },
-    { text: "", categoryId: "3" },
-    { text: "", categoryId: "3" },
-    { text: "", categoryId: "3" },
-    { text: "", categoryId: "3" },
-    { text: "", categoryId: "4" },
-    { text: "", categoryId: "4" },
-    { text: "", categoryId: "4" },
-    { text: "", categoryId: "4" },
-  ],
-  answers: {
-    "1": [],
-    "2": [],
-    "3": [],
-    "4": [],
-  },
-};
+import {
+  EMPTY_BOARD,
+  makeid,
+  toChunks,
+  validateIsEnglish,
+  generateBoardUrl,
+} from "../utils";
 
 const ID = makeid(4);
 
-export default function Create() {
+function useCreateBoard() {
   const [board, setBoard] = useState(EMPTY_BOARD);
   const [username, setUsername] = useState("");
-  const ref = useRef<HTMLFormElement>();
-
-  let boardUrl;
-
-  if (typeof window !== "undefined") {
-    boardUrl = `${window.location.origin}/${slugify(username)}/${ID}`;
-  }
 
   const onItemBlur = (value: string, index: number) => {
     const nextItems = board.items.map((item, i) => {
@@ -82,15 +41,8 @@ export default function Create() {
     });
   };
 
-  const validateIsEnglish = (e) => {
-    var regex = new RegExp("^[a-zA-Z0-9 ]+$");
-    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-    if (regex.test(str)) return true;
+  const onSubmit = async (e) => {
     e.preventDefault();
-    return false;
-  };
-
-  const onSubmit = async () => {
     try {
       const response = await fetch("/api/create", {
         method: "POST",
@@ -106,7 +58,31 @@ export default function Create() {
     } catch {}
   };
 
+  const boardUrl = generateBoardUrl(username, ID);
   const categories = toChunks<IItem>(board.items, 4);
+
+  return {
+    board,
+    username,
+    boardUrl,
+    categories,
+    setUsername,
+    onItemBlur,
+    onAnswersBlur,
+    onSubmit,
+  };
+}
+
+export default function Create() {
+  const {
+    username,
+    setUsername,
+    onAnswersBlur,
+    onItemBlur,
+    onSubmit,
+    boardUrl,
+    categories,
+  } = useCreateBoard();
 
   return (
     <div>
@@ -118,7 +94,7 @@ export default function Create() {
       <main style={{ padding: 40 }}>
         <h1>יצירת לוח</h1>
 
-        <form ref={ref}>
+        <form onSubmit={onSubmit}>
           <h2>כמה פרטים עליך</h2>
 
           <FieldGroup>
@@ -132,6 +108,7 @@ export default function Create() {
               onChange={(e) => setUsername(e.target.value)}
               variant="outlined"
               onKeyPress={validateIsEnglish}
+              required
             />
           </FieldGroup>
 
@@ -157,7 +134,7 @@ export default function Create() {
             />
           ))}
 
-          <Button onClick={onSubmit} variant="contained" color="primary">
+          <Button variant="contained" color="primary" type="submit">
             סיימתי
           </Button>
         </form>

@@ -13,7 +13,7 @@ import {
   getConnectionCategory,
   shuffle,
   toggleSelection,
-} from "../utils/board.utils";
+} from "../utils";
 
 export enum Actions {
   SelectItem,

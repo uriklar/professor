@@ -3,14 +3,13 @@ import styles from "../styles/Home.module.css";
 import Grid from "../components/Grid";
 import { IBoard } from "../types";
 import Store from "../components/Store";
-import db from "../db";
 import { MOCK_BOARD } from "../mocks";
 
 interface Props {
   board: IBoard;
 }
 
-export default function Home({ board, ids }: Props) {
+export default function Home({ board }: Props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -27,31 +26,11 @@ export default function Home({ board, ids }: Props) {
   );
 }
 
+// Uncomment this instead of the existing function if you don't want to use firebase
 export async function getServerSideProps() {
-  // I tried creating a node script to seed the data, but had issues
-  // If you feel like giving this a shot for a better solution then what I did here, feel free
-  // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
-  // const docRef = db.collection("boards").doc("testing");
-  // await docRef.set(MOCK_BOARD);
-  // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
-
-  const snapshot = await db.collection("boards").doc("testing").get();
-  const querySnapshot = await db.collection("boards").select().get();
-  const ids = querySnapshot.docs.map((doc) => doc.id);
-
   return {
     props: {
-      board: snapshot.data(),
-      ids,
+      board: MOCK_BOARD,
     },
   };
 }
-
-// Uncomment this instead of the existing function if you don't want to use firebase
-// export async function getServerSideProps() {
-//   return {
-//     props: {
-//       board: MOCK_BOARD,
-//     },
-//   };
-// }
