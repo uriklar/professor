@@ -38,13 +38,12 @@ export default function Board({ board, ids }: Props) {
 
   return (
     <>
-      <Head>
-        <title>פרופסור קהילתי</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+     
 
       <header>
-        <div>פרופסור</div>
+        <Link href="/">
+          <a>פרופסור</a>
+        </Link>
         <div>
           <Link href="/create">
             <a>+ ליצירת לוח</a>

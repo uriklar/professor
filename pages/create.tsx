@@ -84,11 +84,6 @@ export default function Create() {
 
   return (
     <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main style={{ padding: 40 }}>
         <h1>יצירת לוח</h1>
 
