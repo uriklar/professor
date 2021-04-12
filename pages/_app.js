@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import "../styles/globals.css";
-import Heade from "next/head";
-
-const Container = styled.div``;
+import Head from "next/head";
 
 function App({ Component, pageProps }) {
   return (
