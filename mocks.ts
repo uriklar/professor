@@ -1,6 +1,7 @@
 import { IBoard } from "./types";
 
 export const MOCK_BOARD: IBoard = {
+  id: "uriklar-testing",
   items: [
     { text: "אחת", categoryId: "1" },
     { text: "שתיים", categoryId: "1" },
