@@ -174,10 +174,12 @@ export default function Store({ children, board }: Props) {
       );
 
       const boardStorage = localStorageBoardAnswers[board.id];
-      dispatch({
-        type: Actions.HydrateBoard,
-        payload: { answers: boardStorage.answers },
-      });
+      if (boardStorage) {
+        dispatch({
+          type: Actions.HydrateBoard,
+          payload: { answers: boardStorage.answers },
+        });
+      }
     }
   }, [isBrowser()]);
 
