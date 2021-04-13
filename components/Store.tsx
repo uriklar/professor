@@ -11,6 +11,7 @@ import {
 import { IAnswer, IBoard, ActionMap, IItem, AnswerState } from "../types";
 import {
   getConnectionCategory,
+  isBrowser,
   shuffle,
   toggleSelection,
 } from "../utils";
@@ -20,6 +21,7 @@ export enum Actions {
   FoundConnection,
   ResetSelection,
   FoundAnswer,
+  HydrateBoard,
 }
 
 type TPayloads = {
@@ -33,17 +35,22 @@ type TPayloads = {
   [Actions.FoundAnswer]: {
     categoryId: string;
   };
+  [Actions.HydrateBoard]: {
+    answers: IAnswer[];
+  };
 };
 
 export type TActions = ActionMap<TPayloads>[keyof ActionMap<TPayloads>];
 
 export interface IState {
+  boardId: string;
   items: IItem[];
   selection: IItem[];
   answers: IAnswer[];
 }
 
 const INITIAL_STATE: IState = {
+  boardId: null,
   items: [],
   selection: [],
   answers: [],
@@ -55,7 +62,28 @@ const StoreContext = createContext({
   board: null,
 });
 
+const LOCAL_STORAGE_KEY = "openprofessor";
+
+function setLocalStorage(boardId: string, answers: IAnswer[]) {
+  if (!isBrowser()) {
+    return;
+  }
+
+  const currentData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  localStorage.setItem(
+    LOCAL_STORAGE_KEY,
+    JSON.stringify({
+      ...currentData,
+      [boardId]: {
+        ...(currentData[boardId] || {}),
+        answers,
+      },
+    })
+  );
+}
+
 function reducer(state: IState, action: TActions) {
+  let nextAnswers;
   switch (action.type) {
     // Toggles the selected item in/out of selection array
     case Actions.SelectItem:
@@ -69,25 +97,34 @@ function reducer(state: IState, action: TActions) {
         selection: [],
       };
     case Actions.FoundConnection:
-      return {
-        ...state,
-        selection: [],
-        answers: [
-          ...state.answers,
-          { categoryId: action.payload.categoryId, state: AnswerState.Matched },
-        ],
-      };
-    case Actions.FoundAnswer:
-      const { categoryId } = action.payload;
-      const nextAnswers = state.answers.map((answer) =>
-        answer.categoryId === categoryId
-          ? { categoryId, state: AnswerState.Answered }
-          : answer
-      );
+      nextAnswers = [
+        ...state.answers,
+        { categoryId: action.payload.categoryId, state: AnswerState.Matched },
+      ];
+
+      setLocalStorage(state.boardId, nextAnswers);
       return {
         ...state,
         selection: [],
         answers: nextAnswers,
+      };
+    case Actions.FoundAnswer:
+      const { categoryId } = action.payload;
+      nextAnswers = state.answers.map((answer) =>
+        answer.categoryId === categoryId
+          ? { categoryId, state: AnswerState.Answered }
+          : answer
+      );
+      setLocalStorage(state.boardId, nextAnswers);
+      return {
+        ...state,
+        selection: [],
+        answers: nextAnswers,
+      };
+    case Actions.HydrateBoard:
+      return {
+        ...state,
+        answers: action.payload.answers || [],
       };
     default:
       return state;
@@ -105,7 +142,11 @@ export default function Store({ children, board }: Props) {
   const [state, dispatch] = useReducer(
     reducer,
     INITIAL_STATE,
-    (initialState) => ({ ...initialState, items: shuffle(board.items) })
+    (initialState) => ({
+      ...initialState,
+      boardId: board.id,
+      items: shuffle(board.items),
+    })
   );
 
   const value = useMemo(() => ({ state, dispatch, board }), [state]);
@@ -125,6 +166,20 @@ export default function Store({ children, board }: Props) {
       }
     }
   }, [state.selection?.length]);
+
+  useEffect(() => {
+    if (isBrowser()) {
+      const localStorageBoardAnswers = JSON.parse(
+        window.localStorage.getItem(LOCAL_STORAGE_KEY) || "{}"
+      );
+
+      const boardStorage = localStorageBoardAnswers[board.id];
+      dispatch({
+        type: Actions.HydrateBoard,
+        payload: { answers: boardStorage.answers },
+      });
+    }
+  }, [isBrowser()]);
 
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

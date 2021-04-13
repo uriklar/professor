@@ -18,6 +18,7 @@ export interface IAnswers {
   [categoryId: string]: string[];
 }
 export interface IBoard {
+  id: string;
   items: IItem[];
   answers: IAnswers;
 }
