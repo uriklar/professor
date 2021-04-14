@@ -2,13 +2,13 @@ import { KeyboardEvent } from "react";
 import slugify from "slugify";
 import { IAnswer, IItem } from "./types";
 
-export function makeid(length) {
-  var result = [];
+export function makeid(length: number) {
+  const result = [];
   // Right now I just use numbers for ids as each board is under the
   // username path. To get more complex ids you can add letter here too
-  var characters = "123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
+  const characters = "123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
     result.push(
       characters.charAt(Math.floor(Math.random() * charactersLength))
     );
@@ -18,7 +18,7 @@ export function makeid(length) {
 
 // Shuffles an array
 export function shuffle(array) {
-  var currentIndex = array.length,
+  let currentIndex = array.length,
     temporaryValue,
     randomIndex;
 
@@ -128,8 +128,8 @@ export const EMPTY_BOARD = {
 export const isBrowser = () => typeof window !== "undefined";
 
 export const validateIsEnglish = (e: KeyboardEvent) => {
-  var regex = new RegExp("^[a-zA-Z0-9 ]+$");
-  var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+  const regex = new RegExp("^[a-zA-Z0-9 ]+$");
+  const str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
   if (regex.test(str)) return true;
   e.preventDefault();
   return false;
