@@ -7,7 +7,7 @@
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["@typescript-eslint", "plugin:import/typescript"],
+  "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
     "commonjs": true,
