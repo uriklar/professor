@@ -79,13 +79,17 @@ header {
   font-weight: bold;
 }
 
-a:hover {
+a {
   text-decoration: underline;
   transition: all 200ms;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 main {
-  padding: 80px;
+  padding: 20px 80px;
   display: grid;
   grid-template-columns: 200px 1fr;
   flex: 1;
@@ -142,4 +146,9 @@ form button {
 form button:focus-within {
   background: #6971e0;
   transition: 200ms ease;
+}
+
+footer {
+  text-align: center;
+  padding-bottom: 20px;
 }

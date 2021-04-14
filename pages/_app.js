@@ -10,6 +10,14 @@ function App({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
+
+      <footer>
+        <p>
+          פרויקט זה הוא פרויקט{" "}
+          <a href="https://github.com/uriklar/professor/">קוד פתוח</a> בהשראת{" "}
+          <a href="http://professor.amiacyb.org/">אתר הפרופסור</a>
+        </p>
+      </footer>
     </>
   );
 }
