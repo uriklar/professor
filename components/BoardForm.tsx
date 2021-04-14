@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import slugify from "slugify";
 import { IBoard, IItem } from "../types";
 import {
   EMPTY_BOARD,
@@ -9,8 +8,8 @@ import {
 } from "../utils";
 import CategoryForm from "./CategoryForm";
 
-function useCreateBoard(id: string) {
-  const [board, setBoard] = useState(EMPTY_BOARD);
+function useCreateBoard(id: string, initialBoard: IBoard) {
+  const [board, setBoard] = useState(initialBoard || EMPTY_BOARD);
   const [username, setUsername] = useState("");
 
   const onItemBlur = (value: string, index: number) => {
@@ -57,9 +56,10 @@ interface Props {
     board: IBoard,
     boardUrl: string
   ) => void;
+  initialBoard?: IBoard;
 }
 
-export default function CreateBoard({ id, onSubmit }: Props) {
+export default function CreateBoard({ id, onSubmit, initialBoard }: Props) {
   const {
     board,
     username,
@@ -68,7 +68,7 @@ export default function CreateBoard({ id, onSubmit }: Props) {
     onItemBlur,
     boardUrl,
     categories,
-  } = useCreateBoard(id);
+  } = useCreateBoard(id, initialBoard);
 
   return (
     <div>
