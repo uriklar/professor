@@ -7,7 +7,7 @@
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["@typescript-eslint", "plugin:import/typescript"],
+  "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
     "commonjs": true,
@@ -33,7 +33,12 @@
     }
   },
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "no-empty": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "globals": {
     "React": "writable"
