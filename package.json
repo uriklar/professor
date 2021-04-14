@@ -41,7 +41,7 @@
   "lint-prepush": {
     "tasks": {
       "base": "main",
-      "src/**/*.{js,jsx,ts,tsx}": [
+      "./**/*.{js,jsx,ts,tsx}": [
         "npm run lint-eslint -- --fix",
         "npm run lint-prettier -- --write",
         "git add"
