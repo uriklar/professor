@@ -42,7 +42,7 @@
     "tasks": {
       "base": "main",
       "./**/*.{js,jsx,ts,tsx}": [
-        "npm run lint-eslint -- --fix",
+        //"npm run lint-eslint -- --fix",
         "npm run lint-prettier -- --write",
         "git add"
       ]
