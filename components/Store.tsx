@@ -114,8 +114,6 @@ function reducer(state: IState, action: TActions) {
           ...nextAnswers,
           { categoryId: missingCategoryId, state: AnswerState.Matched },
         ];
-
-        console.log({ nextAnswers });
       }
 
       setLocalStorage(state.boardId, nextAnswers);
