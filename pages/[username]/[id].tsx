@@ -38,8 +38,6 @@ export default function Board({ board, ids }: Props) {
 
   return (
     <>
-     
-
       <header>
         <Link href="/">
           <a>פרופסור</a>
