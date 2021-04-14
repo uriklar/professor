@@ -2,7 +2,7 @@ import { KeyboardEvent } from "react";
 import slugify from "slugify";
 import { IAnswer, IItem } from "./types";
 
-export function makeid(length) {
+export function makeid(length: number) {
   const result = [];
   // Right now I just use numbers for ids as each board is under the
   // username path. To get more complex ids you can add letter here too
