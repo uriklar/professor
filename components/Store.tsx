@@ -10,6 +10,7 @@ import {
 } from "react";
 import { IAnswer, IBoard, ActionMap, IItem, AnswerState } from "../types";
 import {
+  difference,
   getConnectionCategory,
   isBrowser,
   shuffle,
@@ -101,6 +102,21 @@ function reducer(state: IState, action: TActions) {
         ...state.answers,
         { categoryId: action.payload.categoryId, state: AnswerState.Matched },
       ];
+
+      // When finding the 3rd category, match the 4th as well
+      if (nextAnswers.length === 3) {
+        const missingCategoryId = difference(
+          ["1", "2", "3", "4"],
+          nextAnswers.map((answer) => answer.categoryId)
+        )[0];
+
+        nextAnswers = [
+          ...nextAnswers,
+          { categoryId: missingCategoryId, state: AnswerState.Matched },
+        ];
+
+        console.log({ nextAnswers });
+      }
 
       setLocalStorage(state.boardId, nextAnswers);
       return {
