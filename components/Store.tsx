@@ -162,7 +162,10 @@ export default function Store({ children, board }: Props) {
           payload: { categoryId: connectionCategory },
         });
       } else {
-        dispatch({ type: Actions.ResetSelection, payload: {} });
+        setTimeout(
+          () => dispatch({ type: Actions.ResetSelection, payload: {} }),
+          150
+        );
       }
     }
   }, [state.selection?.length]);
