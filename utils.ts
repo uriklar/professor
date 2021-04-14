@@ -39,6 +39,7 @@ export function shuffle(array) {
 
 // Returns an array with the difference between two arrays
 export function difference(arr1
+  
   , arr2) {
   return arr1.filter((value) => !arr2.includes(value));
 }
