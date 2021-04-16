@@ -58,11 +58,17 @@ export default function Board({ board, ids }: Props) {
         <aside>
           <h3>לוחות קיימים:</h3>
           <ul>
-            {ids.map((id) => (
-              <li key={id}>
-                <a href={getBoardUrlFromId(id)}>{id}</a>
-              </li>
-            ))}
+            {ids.map((id) => {
+              const isCurrent = board.id === id;
+              const style = isCurrent
+                ? { color: "#E0C353", textDecoration: "underline" }
+                : {};
+              return (
+                <li key={id} style={style}>
+                  <a href={getBoardUrlFromId(id)}>{id}</a>
+                </li>
+              );
+            })}
           </ul>
         </aside>
 

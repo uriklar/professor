@@ -7,7 +7,7 @@ import { IBoard } from "../../types";
 import styles from "../../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getBoardUrlFromId } from "../../utils";
+import { getBoardUrlFromId, isBrowser, pathNameToId } from "../../utils";
 import { MOCK_BOARD } from "../../mocks";
 
 interface Props {
@@ -53,16 +53,24 @@ export default function Board({ board, ids }: Props) {
         <aside>
           <h3>לוחות קיימים:</h3>
           <ul>
-            {ids.map((id) => (
-              <li key={id}>
-                <a href={getBoardUrlFromId(id)}>{id}</a>
-              </li>
-            ))}
+            {ids.map((id) => {
+              const isCurrent = board.id === id;
+              const style = isCurrent
+                ? { color: "#E0C353", textDecoration: "underline" }
+                : {};
+              return (
+                <li key={id} style={style}>
+                  <a href={getBoardUrlFromId(id)}>{id}</a>
+                </li>
+              );
+            })}
           </ul>
         </aside>
 
         <Store board={board}>
           <div className="grid-container">
+            <h3>{board.id}</h3>
+
             <Grid />
           </div>
         </Store>

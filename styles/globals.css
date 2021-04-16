@@ -104,7 +104,8 @@ aside {
   width: 100%;
   padding: 40px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 form {
