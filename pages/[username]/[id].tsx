@@ -1,13 +1,11 @@
-import Head from "next/head";
 import Link from "next/link";
 import Grid from "../../components/Grid";
 import Store from "../../components/Store";
 import db from "../../db";
 import { IBoard } from "../../types";
-import styles from "../../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getBoardUrlFromId, isBrowser, pathNameToId } from "../../utils";
+import { getBoardUrlFromId } from "../../utils";
 import { MOCK_BOARD } from "../../mocks";
 
 interface Props {
