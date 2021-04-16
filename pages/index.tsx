@@ -1,90 +1,9 @@
-import Head from "next/head";
-import Link from "next/link";
-import Grid from "../components/Grid";
-import Store from "../components/Store";
 import db from "../db";
-import { IBoard } from "../types";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { getBoardUrlFromId } from "../utils";
+import Board, { Props } from "../components/Board";
 //import { MOCK_BOARD } from "../../mocks";
 
-interface Props {
-  board: IBoard;
-  ids: string[];
-}
-
-function useToast() {
-  const [showToast, setShowToast] = useState(false);
-  const closeToast = () => setShowToast(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const { toast } = router.query;
-    if (toast === "new") {
-      setShowToast(true);
-    }
-  }, []);
-
-  return {
-    showToast,
-    closeToast,
-  };
-}
-
-export default function Board({ board, ids }: Props) {
-  const { showToast, closeToast } = useToast();
-
-  return (
-    <>
-      <Head>
-        <title>פרופסור קהילתי</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <header>
-        <Link href="/">
-          <a>פרופסור</a>
-        </Link>
-
-        <div>
-          <Link href="/create">
-            <a>+ ליצירת לוח</a>
-          </Link>
-        </div>
-      </header>
-      <main>
-        {/* Existing boards */}
-        <aside>
-          <h3>לוחות קיימים:</h3>
-          <ul>
-            {ids.map((id) => {
-              const isCurrent = board.id === id;
-              const style = isCurrent
-                ? { color: "#E0C353", textDecoration: "underline" }
-                : {};
-              return (
-                <li key={id} style={style}>
-                  <a href={getBoardUrlFromId(id)}>{id}</a>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
-
-        <Store board={board}>
-          <div className="grid-container">
-            <Grid />
-          </div>
-        </Store>
-      </main>
-      {/* Toast in case of new board */}
-      <dialog open={showToast}>
-        <p> הלוח נוצר בהצלחה!</p>
-        <button onClick={closeToast}>הבנתי, תודה</button>
-      </dialog>
-    </>
-  );
+export default function Home({ board, ids }: Props) {
+  return <Board board={board} ids={ids} />;
 }
 
 export async function getServerSideProps({ params }) {
@@ -95,9 +14,10 @@ export async function getServerSideProps({ params }) {
   // await docRef.set(MOCK_BOARD);
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
 
-  const snapshot = await db.collection("boards").doc("uriklar-testing").get();
   const querySnapshot = await db.collection("boards").select().get();
   const ids = querySnapshot.docs.map((doc) => doc.id);
+  const randomBoard = ids[Math.floor(Math.random() * ids.length)];
+  const snapshot = await db.collection("boards").doc(randomBoard).get();
 
   return {
     props: {
