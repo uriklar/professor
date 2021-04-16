@@ -96,6 +96,7 @@ export default function CreateBoard({ id, onSubmit }: Props) {
                 onChange={(e) => setUsername(e.target.value)}
                 onKeyPress={validateIsEnglish}
                 required
+                className="input"
               />
             </label>
           </fieldset>
@@ -118,7 +119,7 @@ export default function CreateBoard({ id, onSubmit }: Props) {
             />
           ))}
 
-          <button type="submit">סיימתי</button>
+          <button type="submit" className='button'>סיימתי</button>
         </form>
       </main>
     </div>

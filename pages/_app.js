@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import "../styles/globals.css";
+import "../styles/tailwind.scss";
 import Head from "next/head";
 
 function App({ Component, pageProps }) {

@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+@layer components {
+	.input {
+		@apply border border-indigo-600 rounded min-w-[10vmin] px-4 py-2;
+	}
+
+	.button {
+		@apply rounded px-4 py-2 bg-indigo-600 text-white;
+	}
+}

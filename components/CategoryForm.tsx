@@ -48,6 +48,7 @@ const CategoryForm = ({
             onBlur={(e) =>
               onItemBlur(e.target.value, categoryIndex * 4 + index)
             }
+            className='input'
             required
           />
         ))}
@@ -65,7 +66,7 @@ const CategoryForm = ({
               font-size: 14px;
             `}
           >
-            נא להזין ערכים מופרדים ע"י פסיקים
+            נא להזין ערכים מופרדים על-ידי פסיקים
           </div>
           <input
             css={`
@@ -84,6 +85,7 @@ const CategoryForm = ({
                 items[0].categoryId
               )
             }
+            className="input"
             required
           />
         </div>
