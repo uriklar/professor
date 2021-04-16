@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+$headerSize: 80px;
+
+@layer components {
+	* { box-sizing: border-box; }
+
+	html,
+	body {
+		padding: 0;
+		margin: 0;
+		font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+		height: 100vh;
+	}
+
+	html, body,
+	input,
+	textarea {
+		direction: rtl;
+	}
+
+	#__next {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	dialog {
+		background-color: gray;
+		color: black;
+		text-align: center;
+		border: none;
+		padding: 2rem;
+		border-radius: 6px;
+		box-shadow: 0 0 40px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.25);
+		max-width: 90vw;
+
+		&[open] {
+			animation: appear 0.15s cubic-bezier(0, 1.8, 1, 1.8);
+		}
+
+		&:backdrop {
+			background: linear-gradient(
+							45deg,
+							rgba(0, 143, 104, 0.5),
+							rgba(250, 224, 66, 0.5)
+			);
+		}
+	}
+
+	@keyframes appear {
+		from {
+			opacity: 0;
+			transform: translateX(-3rem);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	a {
+		text-decoration: underline;
+		transition: all 200ms;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	main {
+		padding: 20px 80px;
+		/*display: grid;*/
+		gap: 1rem;
+		grid-template-columns: 200px 1fr;
+		flex: 1;
+		position: relative;
+	}
+
+	.grid-container {
+		width: 100%;
+		padding: 40px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-rows: repeat(4, 1fr);
+		gap: 16px;
+		padding: 8px;
+		width: 50vmax;
+		height: 50vmax;
+		border: 0.5rem solid;
+		border-image: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
+		border-image-slice: 9;
+		@media (max-width:720px) {
+			gap:8px;
+			width:90vw;
+			height:90vw;
+		}
+	}
+
+	form {
+		max-width: 85vw;
+	}
+
+	fieldset {
+		border: none;
+		padding: 20px 0;
+
+		input {
+			//display: block;
+			margin-top: 12px;
+			//font-size: 1rem;
+			//padding: 8px 12px;
+		}
+	}
+
+	.boardList {
+		LI {
+			@apply my-2
+		}
+	}
+
+	.board-url-notice {
+		background-color: #b1b4e6;
+		padding: 20px 36px;
+		margin-bottom: 20px;
+	}
+
+	.category-form-input-group input {
+		width: 80px;
+		font-size: 1rem;
+		padding: 8px 12px;
+		margin-left: 8px;
+	}
+
+	form {
+		button {
+			margin-top: 24px;
+			padding: 16px 32px;
+			background: #2e3161;
+			color: white;
+		}
+
+		button:focus-within {
+			background: #6971e0;
+			transition: 200ms ease;
+		}
+	}
+
+	footer {
+		text-align: center;
+		padding-bottom: 20px;
+	}
+
+	.header {
+		@apply w-full h-[#{$headerSize}] px-6 py-3;
+		//padding: 20px 40px;
+		//width: 100%;
+		height: $headerSize;
+		background: #6971e0;
+		background: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		font-size: 1.5rem;
+		color: white;
+		font-weight: bold;
+	}
+
+
+	.selectBoards {
+		@apply p-4 fixed top-0 bottom-0 w-1/6 bg-white border-l shadow transition transition-all duration-200 right-0 transform translate-x-full;
+		&.open {
+			@apply translate-x-0;
+		}
+
+		.tab {
+			@apply absolute left-0 top-0 bottom-0 m-auto bg-green-300 px-2 py-4 rounded-l text-2xl;
+			transform: translateX(-100%);
+			writing-mode: tb;
+		}
+	}
+
+	.input {
+		@apply border border-indigo-600 rounded min-w-[10vmin] px-4 py-2;
+		&:focus {
+			@apply border-[2px] border-purple-600
+		}
+	}
+
+	.button {
+		@apply rounded px-4 py-2 bg-indigo-600 text-white;
+		&:active {
+			@apply bg-indigo-800;
+		}
+	}
+
+	.answerInput {
+		@apply col-span-4 flex gap-3;
+		//grid-column: span 4;
+		//display: flex;
+		align-items: center;
+
+		.input {
+			@apply w-1/2
+		}
+
+		.button {
+			@apply w-1/5 font-bold
+		}
+	}
+}

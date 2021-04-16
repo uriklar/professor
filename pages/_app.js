@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import "../styles/globals.css";
-import "../styles/tailwind.scss";
+// import styled from "styled-components";
+import "../styles/globals.scss";
 import Head from "next/head";
 
 function App({ Component, pageProps }) {
@@ -18,9 +17,10 @@ function App({ Component, pageProps }) {
 
       <footer>
         <p>
-          פרויקט זה הוא פרויקט{" "}
+            <span>פרויקט זה הוא פרויקט{" "}</span>
           <a href="https://github.com/uriklar/professor/">קוד פתוח</a> בהשראת{" "}
-          <a href="http://professor.amiacyb.org/">אתר הפרופסור</a>
+          <span>אתר </span>
+          <a href="http://professor.amiacyb.org/">הפרופסור</a>
         </p>
       </footer>
     </>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import slugify from "slugify";
 import { IBoard, IItem } from "../types";
 import {

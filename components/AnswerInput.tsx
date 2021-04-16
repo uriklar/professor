@@ -7,9 +7,9 @@ interface Props {
 }
 
 const Container = styled(motion.div)`
-  grid-column: span 4;
-  display: flex;
-  align-items: center;
+  //grid-column: span 4;
+  //display: flex;
+  //align-items: center;
 
   input {
     width: 50%;
@@ -18,16 +18,16 @@ const Container = styled(motion.div)`
   }
 
   button {
-    padding: 4px 16px;
-    background: #2e3161;
-    color: white;
-    margin-right: 16px;
-    font-size: 18px;
+    //padding: 4px 16px;
+    //background: #2e3161;
+    //color: white;
+    //margin-right: 16px;
+    //font-size: 18px;
 
-    &:focus-within {
-      background: #6971e0;
-      transition: 200ms ease;
-    }
+    //&:focus-within {
+    //  background: #6971e0;
+    //  transition: 200ms ease;
+    //}
   }
 `;
 
@@ -53,7 +53,7 @@ export default function AnswerInput({ categoryId }: Props) {
   };
 
   return (
-    <Container>
+    <Container className="answerInput">
       <input
         placeholder="מה הקשר?"
         value={value}
