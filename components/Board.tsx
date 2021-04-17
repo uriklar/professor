@@ -6,6 +6,7 @@ import { IBoard } from "../types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getBoardUrlFromId } from "../utils";
+import BoardNavigator from "./BoardNavigator";
 //import { MOCK_BOARD } from "../../mocks";
 
 export interface Props {
@@ -75,6 +76,7 @@ export default function Board({ board, ids }: Props) {
           <div className="grid-container">
             <h3>{board.id}</h3>
             <Grid />
+            <BoardNavigator ids={ids} id={board.id} />
           </div>
         </Store>
       </main>
