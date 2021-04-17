@@ -5,8 +5,9 @@ import Store from "../components/Store";
 import { IBoard } from "../types";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getBoardUrlFromId } from "../utils";
+import { getLocalStorage } from "../utils";
 import BoardNavigator from "./BoardNavigator";
+import BoardListItem from "./BoardListItem";
 //import { MOCK_BOARD } from "../../mocks";
 
 export interface Props {
@@ -35,6 +36,8 @@ function useToast() {
 export default function Board({ board, ids }: Props) {
   const { showToast, closeToast } = useToast();
 
+  const localStorage = getLocalStorage();
+
   return (
     <>
       <Head>
@@ -58,17 +61,14 @@ export default function Board({ board, ids }: Props) {
         <aside>
           <h3>לוחות קיימים:</h3>
           <ul>
-            {ids.map((id) => {
-              const isCurrent = board.id === id;
-              const style = isCurrent
-                ? { color: "#E0C353", textDecoration: "underline" }
-                : {};
-              return (
-                <li key={id} style={style}>
-                  <a href={getBoardUrlFromId(id)}>{id}</a>
-                </li>
-              );
-            })}
+            {ids.map((id) => (
+              <BoardListItem
+                key={id}
+                id={id}
+                currentId={board.id}
+                answers={localStorage[id]?.answers}
+              />
+            ))}
           </ul>
         </aside>
 

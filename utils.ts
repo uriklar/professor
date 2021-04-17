@@ -152,3 +152,29 @@ export function isFullySolved(answers: IAnswer[]): boolean {
 
   return answeredCategories.length === 4;
 }
+
+export const LOCAL_STORAGE_KEY = "openprofessor";
+
+export function getLocalStorage(boardId: number = null) {
+  if (!isBrowser()) {
+    return {};
+  }
+  const storage = JSON.parse(
+    window.localStorage.getItem(LOCAL_STORAGE_KEY) || "{}"
+  );
+
+  return boardId ? storage[boardId] : storage;
+}
+
+export function squareColorByState(state: AnswerState | "selected") {
+  switch (state) {
+    case "selected":
+      return "#E0C353";
+    case AnswerState.Matched:
+      return "#5158AD";
+    case AnswerState.Answered:
+      return "#4B4C61";
+    default:
+      return "#64B5ED";
+  }
+}

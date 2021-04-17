@@ -12,7 +12,9 @@ import { IAnswer, IBoard, ActionMap, IItem, AnswerState } from "../types";
 import {
   difference,
   getConnectionCategory,
+  getLocalStorage,
   isBrowser,
+  LOCAL_STORAGE_KEY,
   shuffle,
   toggleSelection,
 } from "../utils";
@@ -63,8 +65,6 @@ const StoreContext = createContext({
   board: null,
   ids: [],
 });
-
-const LOCAL_STORAGE_KEY = "openprofessor";
 
 function setLocalStorage(boardId: string, answers: IAnswer[]) {
   if (!isBrowser()) {
@@ -192,9 +192,7 @@ export default function Store({ children, board, ids }: Props) {
 
   useEffect(() => {
     if (isBrowser()) {
-      const localStorageBoardAnswers = JSON.parse(
-        window.localStorage.getItem(LOCAL_STORAGE_KEY) || "{}"
-      );
+      const localStorageBoardAnswers = getLocalStorage();
 
       const boardStorage = localStorageBoardAnswers[board.id];
       if (boardStorage) {
