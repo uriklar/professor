@@ -40,11 +40,6 @@ export default function Board({ board, ids }: Props) {
 
   return (
     <>
-      <Head>
-        <title>פרופסור קהילתי</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <header>
         <Link href="/">
           <a>פרופסור</a>

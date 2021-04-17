@@ -19,6 +19,7 @@ const SquaresContainer = styled.div`
   grid-template-columns: 8px 8px 8px 8px;
   grid-template-rows: 12px;
   gap: 4px;
+  padding-right: 8px;
 `;
 
 const Square = styled.div<{ state: AnswerState }>`

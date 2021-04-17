@@ -6,11 +6,11 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>פרופסור קהילתי - יוצרים לוחות פרופסור ומשחקים</title>
+        <title>משחק פרופסור קהילתי</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="פרופסור קהילתי - יוצרים לוחות פרופסור ומשחקים"
+          content="משחק פרופסור קהילתי - יוצרים לוחות פרופסור ומשחקים"
         />
       </Head>
       <Component {...pageProps} />

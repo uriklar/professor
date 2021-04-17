@@ -1,9 +1,18 @@
 import db from "../../db";
 import Board, { Props } from "../../components/Board";
+import React from "react";
+import Head from "next/head";
 //import { MOCK_BOARD } from "../../mocks";
 
 export default function Id({ board, ids }: Props) {
-  return <Board board={board} ids={ids} />;
+  return (
+    <>
+      <Head>
+        <title>משחק פרופסור קהילתי - {board.id.replace("-", " ")}</title>
+      </Head>
+      <Board board={board} ids={ids} />
+    </>
+  );
 }
 
 export async function getServerSideProps({ params }) {
