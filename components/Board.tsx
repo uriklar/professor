@@ -72,11 +72,11 @@ export default function Board({ board, ids }: Props) {
           </ul>
         </aside>
 
-        <Store board={board}>
+        <Store board={board} ids={ids}>
           <div className="grid-container">
             <h3>{board.id}</h3>
             <Grid />
-            <BoardNavigator ids={ids} id={board.id} />
+            <BoardNavigator />
           </div>
         </Store>
       </main>

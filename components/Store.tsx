@@ -61,6 +61,7 @@ const StoreContext = createContext({
   state: INITIAL_STATE,
   dispatch: null,
   board: null,
+  ids: [],
 });
 
 const LOCAL_STORAGE_KEY = "openprofessor";
@@ -148,9 +149,10 @@ function reducer(state: IState, action: TActions) {
 interface Props {
   board: IBoard;
   children: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
+  ids: string[];
 }
 
-export default function Store({ children, board }: Props) {
+export default function Store({ children, board, ids }: Props) {
   // The 3rd argument get's the 2nd argument as a parameter
   // and initializes the state only once
   const [state, dispatch] = useReducer(
@@ -163,7 +165,11 @@ export default function Store({ children, board }: Props) {
     })
   );
 
-  const value = useMemo(() => ({ state, dispatch, board }), [state]);
+  const value = useMemo(() => ({ state, dispatch, board, ids }), [
+    board,
+    ids,
+    state,
+  ]);
 
   // Triggeres when 4 items have been selected,
   // Checks if selection is a category or not
@@ -182,7 +188,7 @@ export default function Store({ children, board }: Props) {
         );
       }
     }
-  }, [state.selection?.length]);
+  }, [state.selection, state.selection.length]);
 
   useEffect(() => {
     if (isBrowser()) {
@@ -198,7 +204,7 @@ export default function Store({ children, board }: Props) {
         });
       }
     }
-  }, [isBrowser()]);
+  }, [isBrowser(), board.id]);
 
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
@@ -209,6 +215,7 @@ export function useStore(): {
   state: IState;
   dispatch: Dispatch<TActions>;
   board: IBoard;
+  ids: string[];
 } {
   return useContext(StoreContext);
 }

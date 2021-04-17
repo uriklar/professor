@@ -12,6 +12,7 @@
     "lint-prettier": "prettier --ignore-path .prettierignore"
   },
   "dependencies": {
+    "@giphy/js-fetch-api": "^3.0.0",
     "firebase": "^8.3.3",
     "firebase-admin": "^9.6.0",
     "framer-motion": "^4.1.2",

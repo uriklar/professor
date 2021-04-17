@@ -1,6 +1,11 @@
 import { getBoardUrlFromId } from "../utils";
+import { useStore } from "./Store";
 
-export default function BoardNavigator({ ids, id }) {
+export default function BoardNavigator() {
+  const {
+    ids,
+    board: { id },
+  } = useStore();
   const index = ids.findIndex((_id) => _id === id);
   return (
     <div

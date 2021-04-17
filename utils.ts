@@ -1,6 +1,6 @@
 import { KeyboardEvent } from "react";
 import slugify from "slugify";
-import { IAnswer, IItem } from "./types";
+import { AnswerState, IAnswer, IItem } from "./types";
 
 export function makeid(length: number) {
   const result = [];
@@ -144,3 +144,11 @@ export const getBoardUrlFromId = (id: string) => {
   splitId.splice(-1, 1);
   return `/${splitId.join("-")}/${boardId}`;
 };
+
+export function isFullySolved(answers: IAnswer[]): boolean {
+  const answeredCategories = answers.filter(
+    (answer) => answer.state === AnswerState.Answered
+  );
+
+  return answeredCategories.length === 4;
+}
