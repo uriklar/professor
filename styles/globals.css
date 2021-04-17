@@ -65,7 +65,7 @@ dialog::backdrop {
 }
 
 @media (max-width: 768px) {
-  dialog {
+  dialog.toast-dialog {
     display: none;
   }
 }

@@ -81,7 +81,7 @@ export default function Board({ board, ids }: Props) {
         </Store>
       </main>
       {/* Toast in case of new board */}
-      <dialog open={showToast}>
+      <dialog className="toast-dialog" open={showToast}>
         <p> הלוח נוצר בהצלחה!</p>
         <button onClick={closeToast}>הבנתי, תודה</button>
       </dialog>
