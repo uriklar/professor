@@ -64,6 +64,12 @@ dialog::backdrop {
   );
 }
 
+@media (max-width: 768px) {
+  dialog {
+    display: none;
+  }
+}
+
 header {
   padding: 20px 40px;
   width: 100%;
