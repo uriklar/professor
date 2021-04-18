@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import Link from "next/link";
 import "../styles/globals.css";
 import Head from "next/head";
 
@@ -13,6 +13,17 @@ function App({ Component, pageProps }) {
           content="משחק פרופסור קהילתי - יוצרים לוחות פרופסור ומשחקים"
         />
       </Head>
+      <header>
+        <Link href="/">
+          <a>פרופסור</a>
+        </Link>
+
+        <div>
+          <Link href="/create">
+            <a>+ ליצירת לוח</a>
+          </Link>
+        </div>
+      </header>
       <Component {...pageProps} />
 
       <footer>

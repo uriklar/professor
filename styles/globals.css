@@ -8,11 +8,57 @@ body {
   height: 100vh;
 }
 
+/* Main layout */
 #__next {
   width: 100%;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  display: grid;
+  grid-template-rows: 80px auto 35px;
+}
+
+header {
+  padding: 20px 40px;
+  width: 100%;
+  height: 80px;
+  background: #6971e0;
+  background: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  padding: 20px 80px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  flex: 1;
+  max-height: 100%;
+  overflow: auto;
+}
+
+aside {
+  border-radius: 8px;
+  padding: 12px;
+  overflow: auto;
+}
+
+.grid-container {
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 input,
@@ -70,21 +116,6 @@ dialog::backdrop {
   }
 }
 
-header {
-  padding: 20px 40px;
-  width: 100%;
-  height: 80px;
-  background: #6971e0;
-  background: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: 24px;
-  color: white;
-  font-weight: bold;
-}
-
 a {
   text-decoration: underline;
   transition: all 200ms;
@@ -92,26 +123,6 @@ a {
 
 a:hover {
   text-decoration: none;
-}
-
-main {
-  padding: 20px 80px;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  flex: 1;
-}
-
-aside {
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.grid-container {
-  width: 100%;
-  padding: 40px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
 }
 
 form {
@@ -153,9 +164,4 @@ form button {
 form button:focus-within {
   background: #6971e0;
   transition: 200ms ease;
-}
-
-footer {
-  text-align: center;
-  padding-bottom: 20px;
 }

@@ -40,17 +40,6 @@ export default function Board({ board, ids }: Props) {
 
   return (
     <>
-      <header>
-        <Link href="/">
-          <a>פרופסור</a>
-        </Link>
-
-        <div>
-          <Link href="/create">
-            <a>+ ליצירת לוח</a>
-          </Link>
-        </div>
-      </header>
       <main>
         {/* Existing boards */}
         <aside>
