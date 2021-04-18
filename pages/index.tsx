@@ -4,9 +4,10 @@ import Grid from "../components/Grid";
 import Store from "../components/Store";
 import db from "../db";
 import { IBoard } from "../types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getBoardUrlFromId } from "../utils";
+import Sidebar from "../components/ui/Sidebar";
 //import { MOCK_BOARD } from "../../mocks";
 
 interface Props {
@@ -34,6 +35,11 @@ function useToast() {
 
 export default function Board({ board, ids }: Props) {
   const { showToast, closeToast } = useToast();
+  const [showBoardSelect, setShowBoardSelection] = useState(true);
+
+  const toggleBoardSelection = () => {
+    setShowBoardSelection(!showBoardSelect)
+  }
 
   return (
     <>
@@ -42,7 +48,7 @@ export default function Board({ board, ids }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
+      <header className="header">
         <Link href="/">
           <a>פרופסור</a>
         </Link>
@@ -55,17 +61,7 @@ export default function Board({ board, ids }: Props) {
       </header>
       <main>
         {/* Existing boards */}
-        <aside>
-          <h3>לוחות קיימים:</h3>
-          <ul>
-            {ids.map((id) => (
-              <li key={id}>
-                <a href={getBoardUrlFromId(id)}>{id}</a>
-              </li>
-            ))}
-          </ul>
-        </aside>
-
+        <Sidebar show={showBoardSelect} ids={ids} toggleBoard={toggleBoardSelection}/>
         <Store board={board}>
           <div className="grid-container">
             <Grid />
