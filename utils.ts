@@ -178,3 +178,7 @@ export function squareColorByState(state: AnswerState | "selected") {
       return "#64B5ED";
   }
 }
+
+export function stripCharsForStringCompare(string: string) {
+  return string.replace("'", "");
+}

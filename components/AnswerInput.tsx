@@ -2,6 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Actions, useStore } from "./Store";
+import { compareTwoStrings } from "string-similarity";
+import { stripCharsForStringCompare } from "../utils";
+
 interface Props {
   categoryId: string;
 }
@@ -37,7 +40,15 @@ export default function AnswerInput({ categoryId }: Props) {
 
   const onSubmit = () => {
     const categoryAnswers = board.answers[categoryId];
-    if (categoryAnswers.includes(value)) {
+    if (
+      categoryAnswers.some(
+        (answer) =>
+          compareTwoStrings(
+            stripCharsForStringCompare(value),
+            stripCharsForStringCompare(answer)
+          ) > 0.85
+      )
+    ) {
       dispatch({ type: Actions.FoundAnswer, payload: { categoryId } });
     } else {
       setValue("");

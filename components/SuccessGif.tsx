@@ -10,7 +10,7 @@ export default function SuccessGif() {
   useEffect(() => {
     async function fetchData() {
       const gf = new GiphyFetch(API_KEY);
-      const { data: _gif } = await gf.random({ tag: "yay" });
+      const { data: _gif } = await gf.random({ tag: "yay", rating: "pg-13" });
       setGif(_gif);
     }
     fetchData();
