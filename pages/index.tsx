@@ -38,8 +38,8 @@ export default function Board({ board, ids }: Props) {
   const [showBoardSelect, setShowBoardSelection] = useState(true);
 
   const toggleBoardSelection = () => {
-    setShowBoardSelection(!showBoardSelect)
-  }
+    setShowBoardSelection(!showBoardSelect);
+  };
 
   return (
     <>
@@ -61,7 +61,11 @@ export default function Board({ board, ids }: Props) {
       </header>
       <main>
         {/* Existing boards */}
-        <Sidebar show={showBoardSelect} ids={ids} toggleBoard={toggleBoardSelection}/>
+        <Sidebar
+          show={showBoardSelect}
+          ids={ids}
+          toggleBoard={toggleBoardSelection}
+        />
         <Store board={board}>
           <div className="grid-container">
             <Grid />

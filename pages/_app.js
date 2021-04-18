@@ -17,9 +17,10 @@ function App({ Component, pageProps }) {
 
       <footer>
         <p>
-            <span>פרויקט זה הוא פרויקט{" "}</span>
-          <a href="https://github.com/uriklar/professor/">קוד פתוח</a> בהשראת{" "}
-          <span>אתר </span>
+          <span>פרויקט זה הוא פרויקט </span>
+          <a href="https://github.com/uriklar/professor/">
+            קוד פתוח
+          </a> בהשראת <span>אתר </span>
           <a href="http://professor.amiacyb.org/">הפרופסור</a>
         </p>
       </footer>

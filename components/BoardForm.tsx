@@ -119,7 +119,9 @@ export default function CreateBoard({ id, onSubmit }: Props) {
             />
           ))}
 
-          <button type="submit" className='button'>סיימתי</button>
+          <button type="submit" className="button">
+            סיימתי
+          </button>
         </form>
       </main>
     </div>

@@ -48,7 +48,7 @@ const CategoryForm = ({
             onBlur={(e) =>
               onItemBlur(e.target.value, categoryIndex * 4 + index)
             }
-            className='input'
+            className="input"
             required
           />
         ))}

@@ -61,7 +61,9 @@ export default function AnswerInput({ categoryId }: Props) {
         onChange={(e) => setValue(e.target.value)}
         className="input"
       />
-      <button onClick={onSubmit} className='button'>בום</button>
+      <button onClick={onSubmit} className="button">
+        בום
+      </button>
     </Container>
   );
 }
