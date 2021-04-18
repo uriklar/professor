@@ -1,6 +1,17 @@
-import Link from "next/link";
 import "../styles/globals.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Head from "next/head";
+import styled from "styled-components";
+
+const AppContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 55px auto 35px;
+`;
 
 function App({ Component, pageProps }) {
   return (
@@ -13,26 +24,12 @@ function App({ Component, pageProps }) {
           content="משחק פרופסור קהילתי - יוצרים לוחות פרופסור ומשחקים"
         />
       </Head>
-      <header>
-        <Link href="/">
-          <a>פרופסור</a>
-        </Link>
 
-        <div>
-          <Link href="/create">
-            <a>+ ליצירת לוח</a>
-          </Link>
-        </div>
-      </header>
-      <Component {...pageProps} />
-
-      <footer>
-        <p>
-          פרויקט זה הוא פרויקט{" "}
-          <a href="https://github.com/uriklar/professor/">קוד פתוח</a> בהשראת{" "}
-          <a href="http://professor.amiacyb.org/">אתר הפרופסור</a>
-        </p>
-      </footer>
+      <AppContainer>
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
+      </AppContainer>
     </>
   );
 }

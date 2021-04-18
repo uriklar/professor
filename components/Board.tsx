@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Link from "next/link";
 import Grid from "../components/Grid";
 import Store from "../components/Store";
 import { IBoard } from "../types";
@@ -8,8 +6,19 @@ import { useRouter } from "next/router";
 import { getLocalStorage } from "../utils";
 import BoardNavigator from "./BoardNavigator";
 import BoardListItem from "./BoardListItem";
+import styled from "styled-components";
 //import { MOCK_BOARD } from "../../mocks";
 
+const Container = styled.main`
+  padding: 10px;
+`;
+
+const GridContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
 export interface Props {
   board: IBoard;
   ids: string[];
@@ -40,30 +49,29 @@ export default function Board({ board, ids }: Props) {
 
   return (
     <>
-      <main>
-        {/* Existing boards */}
-        <aside>
-          <h3>לוחות קיימים:</h3>
-          <ul>
-            {ids.map((id) => (
-              <BoardListItem
-                key={id}
-                id={id}
-                currentId={board.id}
-                answers={localStorage[id]?.answers}
-              />
-            ))}
-          </ul>
-        </aside>
-
+      <Container>
         <Store board={board} ids={ids}>
-          <div className="grid-container">
+          <GridContainer>
             <h3>{board.id}</h3>
             <Grid />
             <BoardNavigator />
-          </div>
+          </GridContainer>
+          {/* Existing boards */}
+          <aside>
+            <h3>לוחות קיימים:</h3>
+            <ul>
+              {ids.map((id) => (
+                <BoardListItem
+                  key={id}
+                  id={id}
+                  currentId={board.id}
+                  answers={localStorage[id]?.answers}
+                />
+              ))}
+            </ul>
+          </aside>
         </Store>
-      </main>
+      </Container>
       {/* Toast in case of new board */}
       <dialog className="toast-dialog" open={showToast}>
         <p> הלוח נוצר בהצלחה!</p>

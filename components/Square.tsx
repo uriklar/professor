@@ -21,6 +21,7 @@ const Container = styled(motion.div)`
   /* padding: 24px 48px; */
   font-weight: bold;
   color: white;
+  font-size: 14px;
 `;
 
 interface Props {
