@@ -4,6 +4,9 @@ const Container = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #6971e0;
+  background: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
+  color: white;
 `;
 export default function Footer() {
   return (

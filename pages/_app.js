@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Head from "next/head";
 import styled from "styled-components";
+import { useState } from "react";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -14,6 +15,7 @@ const AppContainer = styled.div`
 `;
 
 function App({ Component, pageProps }) {
+  const [showSelect, setShowSelect] = useState(false);
   return (
     <>
       <Head>
@@ -26,8 +28,8 @@ function App({ Component, pageProps }) {
       </Head>
 
       <AppContainer>
-        <Header />
-        <Component {...pageProps} />
+        <Header setShowSelect={setShowSelect} />
+        <Component {...pageProps} showSelect={showSelect} />
         <Footer />
       </AppContainer>
     </>

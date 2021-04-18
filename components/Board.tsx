@@ -7,10 +7,12 @@ import { getLocalStorage } from "../utils";
 import BoardNavigator from "./BoardNavigator";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
+import BoardList from "./BoardList";
 //import { MOCK_BOARD } from "../../mocks";
 
 const Container = styled.main`
   padding: 10px;
+  position: relative;
 `;
 
 const GridContainer = styled.div`
@@ -22,6 +24,7 @@ const GridContainer = styled.div`
 export interface Props {
   board: IBoard;
   ids: string[];
+  showSelect: boolean;
 }
 
 function useToast() {
@@ -42,10 +45,8 @@ function useToast() {
   };
 }
 
-export default function Board({ board, ids }: Props) {
+export default function Board({ board, ids, showSelect }: Props) {
   const { showToast, closeToast } = useToast();
-
-  const localStorage = getLocalStorage();
 
   return (
     <>
@@ -56,24 +57,11 @@ export default function Board({ board, ids }: Props) {
             <Grid />
             <BoardNavigator />
           </GridContainer>
-          {/* Existing boards */}
-          <aside>
-            <h3>לוחות קיימים:</h3>
-            <ul>
-              {ids.map((id) => (
-                <BoardListItem
-                  key={id}
-                  id={id}
-                  currentId={board.id}
-                  answers={localStorage[id]?.answers}
-                />
-              ))}
-            </ul>
-          </aside>
+          <BoardList ids={ids} board={board} open={showSelect} />
         </Store>
       </Container>
       {/* Toast in case of new board */}
-      <dialog className="toast-dialog" open={showToast}>
+      <dialog className="toast-dialog" open={showToast} style={{ zIndex: 1 }}>
         <p> הלוח נוצר בהצלחה!</p>
         <button onClick={closeToast}>הבנתי, תודה</button>
       </dialog>

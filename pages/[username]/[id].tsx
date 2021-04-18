@@ -4,13 +4,13 @@ import React from "react";
 import Head from "next/head";
 //import { MOCK_BOARD } from "../../mocks";
 
-export default function Id({ board, ids }: Props) {
+export default function Id({ board, ids, showSelect }: Props) {
   return (
     <>
       <Head>
         <title>משחק פרופסור קהילתי - {board.id.replace("-", " ")}</title>
       </Head>
-      <Board board={board} ids={ids} />
+      <Board board={board} ids={ids} showSelect={showSelect} />
     </>
   );
 }

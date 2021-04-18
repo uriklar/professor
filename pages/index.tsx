@@ -2,8 +2,8 @@ import db from "../db";
 import Board, { Props } from "../components/Board";
 //import { MOCK_BOARD } from "../../mocks";
 
-export default function Home({ board, ids }: Props) {
-  return <Board board={board} ids={ids} />;
+export default function Home({ board, ids, showSelect }: Props) {
+  return <Board board={board} ids={ids} showSelect={showSelect} />;
 }
 
 export async function getServerSideProps({ params }) {

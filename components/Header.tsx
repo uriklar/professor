@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
+import { isBrowser } from "../utils";
 
 const Container = styled.header`
   padding: 0 40px;
@@ -14,14 +15,36 @@ const Container = styled.header`
   color: white;
   font-weight: bold;
 `;
-export default function Header() {
+
+const SelectBoardButton = styled.div`
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 200ms;
+
+  &:hover {
+    text-decoration: none;
+  }
+`;
+export default function Header({ setShowSelect }) {
   return (
     <Container>
       <Link href="/">
         <a>פרופסור</a>
       </Link>
 
-      <div>
+      <div
+        css={`
+          grid-template-columns: 1fr 1fr;
+          display: grid;
+          gap: 8px;
+        `}
+      >
+        {isBrowser() && window.location.pathname !== "/create" && (
+          <SelectBoardButton onClick={() => setShowSelect((prev) => !prev)}>
+            בחירת לוח
+          </SelectBoardButton>
+        )}
+
         <Link href="/create">
           <a>+ ליצירת לוח</a>
         </Link>
