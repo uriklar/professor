@@ -30,6 +30,7 @@ export default function BoardList({ ids, board, open }: Props) {
       <ul>
         {ids.map((id) => (
           <BoardListItem
+            open={open}
             key={id}
             id={id}
             currentId={board.id}

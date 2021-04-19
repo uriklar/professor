@@ -30,7 +30,7 @@ export default function SuccessGif() {
   }, []);
 
   return (
-    <dialog open={!!gif} ref={dialog}>
+    <dialog open={!!gif} ref={dialog} style={{ zIndex: 1 }}>
       {gif && (
         <iframe
           src={gif.embed_url}

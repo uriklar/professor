@@ -4,7 +4,7 @@ import { Actions, useStore } from "./Store";
 import { AnswerState, IItem } from "../types";
 import { getItemState, squareColorByState } from "../utils";
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div).attrs({ role: "button", tabIndex: 0 })`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +41,12 @@ export default function Square({ item }: Props) {
   };
 
   return (
-    <Container layout state={itemState} onClick={onSelect}>
+    <Container
+      layout
+      state={itemState}
+      onClick={onSelect}
+      onKeyPress={onSelect}
+    >
       {item.text}
     </Container>
   );

@@ -20,10 +20,54 @@ function App({ Component, pageProps }) {
     <>
       <Head>
         <title>משחק פרופסור קהילתי</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
         <meta
           name="description"
-          content="משחק פרופסור קהילתי - יוצרים לוחות פרופסור ומשחקים"
+          content=" משחק פרופסור קהילתי - יוצרים לוחות ומשחקים. משחק זה נוצר בהשראת אתר הפרופסור ומאפשר לכם ליצור לוחות פרופסור  ​משלכם ולשחק בלוחות שנוצרו על ידי הקהילה"
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://open-professor.vercel.app" />
+        <meta property="og:title" content="משחק פרופסור קהילתי" />
+        <meta
+          property="og:description"
+          content=" משחק פרופסור קהילתי - יוצרים לוחות ומשחקים. משחק זה נוצר בהשראת אתר הפרופסור ומאפשר לכם ליצור לוחות פרופסור  ​משלכם ולשחק בלוחות שנוצרו על ידי הקהילה"
+        />
+        <meta
+          property="og:image"
+          content="https://open-professor.vercel.app/android-chrome-512x512.png"
+        />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content="https://open-professor.vercel.app"
+        />
+        <meta property="twitter:title" content="משחק פרופסור קהילתי" />
+        <meta
+          property="twitter:description"
+          content=" משחק פרופסור קהילתי - יוצרים לוחות ומשחקים. משחק זה נוצר בהשראת אתר הפרופסור ומאפשר לכם ליצור לוחות פרופסור  ​משלכם ולשחק בלוחות שנוצרו על ידי הקהילה"
+        />
+        <meta
+          property="twitter:image"
+          content="https://open-professor.vercel.app/android-chrome-512x512.png"
         />
       </Head>
 

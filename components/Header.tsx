@@ -16,7 +16,10 @@ const Container = styled.header`
   font-weight: bold;
 `;
 
-const SelectBoardButton = styled.div`
+const SelectBoardButton = styled.div.attrs({
+  tabIndex: 0,
+  role: "button",
+})`
   text-decoration: underline;
   cursor: pointer;
   transition: all 200ms;
@@ -29,7 +32,9 @@ export default function Header({ setShowSelect }) {
   return (
     <Container>
       <Link href="/">
-        <a>פרופסור</a>
+        <a>
+          פרופסור <span>🤓</span>
+        </a>
       </Link>
 
       <div
@@ -41,12 +46,12 @@ export default function Header({ setShowSelect }) {
       >
         {isBrowser() && window.location.pathname !== "/create" && (
           <SelectBoardButton onClick={() => setShowSelect((prev) => !prev)}>
-            בחירת לוח
+            🎲 בחירת לוח
           </SelectBoardButton>
         )}
 
         <Link href="/create">
-          <a>+ ליצירת לוח</a>
+          <a>📝יצירת לוח</a>
         </Link>
       </div>
     </Container>

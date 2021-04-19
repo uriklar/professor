@@ -9,7 +9,9 @@ const Container = styled.li`
   margin-bottom: 8px;
 `;
 
-const Title = styled.a<{ selected: boolean }>`
+const Title = styled.a.attrs((props) => ({
+  tabIndex: props.open ? 0 : -1,
+}))<{ selected: boolean; open: boolean }>`
   margin-bottom: 8px;
   ${({ selected }) => selected && `color: #E0C353; font-weight: bold;`}
 `;
@@ -31,9 +33,10 @@ interface Props {
   id: string;
   currentId: string;
   answers: IAnswer[];
+  open: boolean;
 }
 
-export default function BoardListItem({ id, currentId, answers }: Props) {
+export default function BoardListItem({ id, currentId, answers, open }: Props) {
   const selected = currentId === id;
 
   const filledAnswers = useMemo(
@@ -43,7 +46,7 @@ export default function BoardListItem({ id, currentId, answers }: Props) {
 
   return (
     <Container key={id}>
-      <Title selected={selected} href={getBoardUrlFromId(id)}>
+      <Title selected={selected} href={getBoardUrlFromId(id)} open={open}>
         {id.replace("-", " ")}
       </Title>
       {answers && (
