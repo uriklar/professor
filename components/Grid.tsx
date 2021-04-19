@@ -2,10 +2,9 @@ import { AnimateSharedLayout, motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import { mediumUp } from "../styles/tokens";
-import { getSortedItems, isFullySolved } from "../utils";
+import { getSortedItems } from "../utils";
 import Row from "./Row";
 import { useStore } from "./Store";
-import SuccessGif from "./SuccessGif";
 
 const BorderContainer = styled.div`
   border-style: solid;
@@ -26,7 +25,7 @@ const BorderContainer = styled.div`
 `;
 
 const Container = styled(motion.div)`
-  display: grid;
+  display: grid; // The container has to be display: grid because of Safari mobile something...
   grid-template-rows: repeat(4, 1fr);
   gap: 16px;
   position: absolute;
@@ -43,11 +42,13 @@ export default function Grid() {
   } = useStore();
 
   const { matchedItems, remainingItems } = getSortedItems(items, answers);
-  const fullySolved = isFullySolved(answers);
+  //const fullySolved = isFullySolved(answers);
 
   return (
     <>
-      {fullySolved && <SuccessGif />}
+      {/* Removed this for now, but we'll defenitly want to pop something up once
+      the board is fully solved  */}
+      {/*<SuccessGif />*/}
       <AnimateSharedLayout>
         <BorderContainer>
           <Container layout>

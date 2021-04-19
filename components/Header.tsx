@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
-import { isBrowser } from "../utils";
 
 const Container = styled.header`
   padding: 0 40px;
@@ -52,17 +51,9 @@ export default function Header({ setShowSelect }) {
         <a>🤓 פרופסור</a>
       </Link>
 
-      <div
-        css={`
-          grid-template-columns: 1fr 1fr;
-          display: grid;
-          gap: 8px;
-        `}
-      >
-        <Link href="/create">
-          <a>📝 יצירת לוח</a>
-        </Link>
-      </div>
+      <Link href="/create">
+        <a>📝 יצירת לוח</a>
+      </Link>
     </Container>
   );
 }
