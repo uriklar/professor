@@ -9,32 +9,47 @@ const Container = styled.header`
   background: #6971e0;
   background: linear-gradient(90deg, #6971e0 12%, #5157ad 98%);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   font-size: 20px;
   color: white;
   font-weight: bold;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 const SelectBoardButton = styled.div.attrs({
   tabIndex: 0,
   role: "button",
 })`
-  text-decoration: underline;
   cursor: pointer;
   transition: all 200ms;
 
   &:hover {
-    text-decoration: none;
+    text-decoration: underline;
   }
 `;
 export default function Header({ setShowSelect }) {
+  const showSelect =
+    typeof window !== "undefined" && window.location.pathname !== "/create";
   return (
     <Container>
+      <div>
+        {showSelect && (
+          <SelectBoardButton onClick={() => setShowSelect((prev) => !prev)}>
+            🎲 בחירת לוח
+          </SelectBoardButton>
+        )}
+      </div>
+
       <Link href="/">
-        <a>
-          פרופסור <span>🤓</span>
-        </a>
+        <a>🤓 פרופסור</a>
       </Link>
 
       <div
@@ -44,14 +59,8 @@ export default function Header({ setShowSelect }) {
           gap: 8px;
         `}
       >
-        {isBrowser() && window.location.pathname !== "/create" && (
-          <SelectBoardButton onClick={() => setShowSelect((prev) => !prev)}>
-            🎲 בחירת לוח
-          </SelectBoardButton>
-        )}
-
         <Link href="/create">
-          <a>📝יצירת לוח</a>
+          <a>📝 יצירת לוח</a>
         </Link>
       </div>
     </Container>

@@ -37,7 +37,6 @@ function App({ Component, pageProps }) {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
         <meta
           name="description"
           content=" משחק פרופסור קהילתי - יוצרים לוחות ומשחקים. משחק זה נוצר בהשראת אתר הפרופסור ומאפשר לכם ליצור לוחות פרופסור  ​משלכם ולשחק בלוחות שנוצרו על ידי הקהילה"
