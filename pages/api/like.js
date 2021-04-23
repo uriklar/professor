@@ -1,12 +1,17 @@
 import db from "../../db";
 
-export default async (req, res) => {
-  const { id } = JSON.parse(req.body);
+const updateStrategies = new Map([
+  ['increment', (number)=> number+1],
+  ['discrement', (number)=> number-1]
+])
 
-  try {
-    const docRef = await db.collection("boards").doc(id)
+export default async (req, res) => {
+  const { id, strategy } = JSON.parse(req.body);
+    try {
+    const docRef = await db.collection("boards").doc(id);
     let currentLikes = docRef.likes;
-    const response = await docRef.update({likes: ++currentLikes})
+    const data = { likes : updateStrategies.get(strategy)(currentLikes)};
+    const response = await docRef.update(data);
     res.status(200).json(response);
     
   } catch (error) {
