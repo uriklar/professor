@@ -6,6 +6,7 @@ import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
 import BoardList from "./BoardList";
 import BoardCreatedDialog from "./BoardCreatedDialog";
+import WhatsNew from "./WhatsNew";
 //import { MOCK_BOARD } from "../../mocks";
 
 const Container = styled.main`
@@ -38,6 +39,7 @@ export default function Board({ board, ids, showSelect }: Props) {
           <BoardList ids={ids} board={board} open={showSelect} />
         </Store>
         <BoardCreatedDialog />
+        <WhatsNew />
       </Container>
     </>
   );
