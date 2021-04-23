@@ -1,11 +1,12 @@
 import Grid from "../components/Grid";
 import Store from "../components/Store";
 import { IBoard } from "../types";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
 import BoardList from "./BoardList";
+import BoardCreatedDialog from "./BoardCreatedDialog";
+import WhatsNew from "./WhatsNew";
 //import { MOCK_BOARD } from "../../mocks";
 
 const Container = styled.main`
@@ -25,27 +26,7 @@ export interface Props {
   showSelect: boolean;
 }
 
-function useToast() {
-  const [showToast, setShowToast] = useState(false);
-  const closeToast = () => setShowToast(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const { toast } = router.query;
-    if (toast === "new") {
-      setShowToast(true);
-    }
-  }, [router.query]);
-
-  return {
-    showToast,
-    closeToast,
-  };
-}
-
 export default function Board({ board, ids, showSelect }: Props) {
-  const { showToast, closeToast } = useToast();
-
   return (
     <>
       <Container>
@@ -57,12 +38,9 @@ export default function Board({ board, ids, showSelect }: Props) {
           </GridContainer>
           <BoardList ids={ids} board={board} open={showSelect} />
         </Store>
+        <BoardCreatedDialog />
+        <WhatsNew />
       </Container>
-      {/* Toast in case of new board */}
-      <dialog className="toast-dialog" open={showToast} style={{ zIndex: 1 }}>
-        <p> הלוח נוצר בהצלחה!</p>
-        <button onClick={closeToast}>הבנתי, תודה</button>
-      </dialog>
     </>
   );
 }
