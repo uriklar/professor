@@ -34,7 +34,7 @@ type TPayloads = {
   [Actions.FoundConnection]: {
     categoryId: string;
   };
-  [Actions.ResetSelection]: {};
+  [Actions.ResetSelection]: Record<string, never>;
   [Actions.FoundAnswer]: {
     categoryId: string;
   };
@@ -124,6 +124,7 @@ function reducer(state: IState, action: TActions) {
         answers: nextAnswers,
       };
     case Actions.FoundAnswer:
+      // eslint-disable-next-line no-case-declarations
       const { categoryId } = action.payload;
       nextAnswers = state.answers.map((answer) =>
         answer.categoryId === categoryId
