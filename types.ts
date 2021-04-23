@@ -21,6 +21,7 @@ export interface IBoard {
   id: string;
   items: IItem[];
   answers: IAnswers;
+  likes: number;
 }
 
 export enum AnswerState {
