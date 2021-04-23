@@ -10,6 +10,11 @@ const ContentContainer = styled.div`
   align-items: center;
 `;
 
+// removes query parameter
+function delQuery(asPath) {
+  return asPath.split("?")[0];
+}
+
 function useDialog() {
   const [showDialog, setShowDialog] = useState(false);
   const closeDialog = () => setShowDialog(false);
@@ -19,8 +24,10 @@ function useDialog() {
     const { toast } = router.query;
     if (toast === "new") {
       setShowDialog(true);
+      // remove the toast=new query param
+      router.replace(delQuery(router.asPath));
     }
-  }, [router.query]);
+  }, [router]);
 
   return {
     showDialog,
