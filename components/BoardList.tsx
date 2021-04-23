@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { IBoard } from "../types";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
 import { getLocalStorage } from "../utils";
-//@apply p-4 fixed top-0 bottom-0 w-1/6 bg-white border-l shadow
-// transition transition-all duration-200 right-0 transform translate-x-full;
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+
 const Container = styled.div<{ open: boolean }>`
   position: absolute;
   top: 0;
@@ -22,11 +22,15 @@ interface Props {
   ids: string[];
   board: IBoard;
   open: boolean;
+  onClose: () => void;
 }
-export default function BoardList({ ids, board, open }: Props) {
+export default function BoardList({ ids, board, open, onClose }: Props) {
   const localStorage = getLocalStorage();
+  const ref = useRef();
+  useOnClickOutside(ref, onClose);
+
   return (
-    <Container open={open}>
+    <Container open={open} ref={ref}>
       <ul>
         {ids.map((id) => (
           <BoardListItem

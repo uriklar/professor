@@ -24,9 +24,15 @@ export interface Props {
   board: IBoard;
   ids: string[];
   showSelect: boolean;
+  setShowSelect: (show: boolean) => void;
 }
 
-export default function Board({ board, ids, showSelect }: Props) {
+export default function Board({
+  board,
+  ids,
+  showSelect,
+  setShowSelect,
+}: Props) {
   return (
     <>
       <Container>
@@ -36,7 +42,12 @@ export default function Board({ board, ids, showSelect }: Props) {
             <Grid />
             <BoardNavigator />
           </GridContainer>
-          <BoardList ids={ids} board={board} open={showSelect} />
+          <BoardList
+            ids={ids}
+            board={board}
+            open={showSelect}
+            onClose={() => setShowSelect(false)}
+          />
         </Store>
         <BoardCreatedDialog />
         <WhatsNew />
