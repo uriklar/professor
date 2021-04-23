@@ -72,7 +72,11 @@ function App({ Component, pageProps }) {
 
       <AppContainer>
         <Header setShowSelect={setShowSelect} />
-        <Component {...pageProps} showSelect={showSelect} setShowSelect={setShowSelect} />
+        <Component
+          {...pageProps}
+          showSelect={showSelect}
+          setShowSelect={setShowSelect}
+        />
         <Footer />
       </AppContainer>
     </>
