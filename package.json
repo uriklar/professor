@@ -6,6 +6,7 @@
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev -p 3002",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
     "postbuild": "next-sitemap",
     "type-check": "tsc --noEmit -p tsconfig.json",
     "lint-eslint": "eslint --ignore-path .eslintignore --ext .js,.jsx,.ts,.tsx",
@@ -26,6 +27,7 @@
     "styled-components": "^5.2.3"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
     "@types/string-similarity": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
@@ -39,6 +41,7 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.2.3",
+    "jest": "^26.6.3",
     "lint-prepush": "^2.1.0",
     "next-sitemap": "^1.6.25",
     "prettier": "^2.2.1",

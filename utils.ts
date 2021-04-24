@@ -182,3 +182,7 @@ export function squareColorByState(state: AnswerState | "selected") {
 export function stripCharsForStringCompare(string: string) {
   return string.replace("'", "");
 }
+
+export function generateID(username, ids) {
+  
+}
