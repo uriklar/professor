@@ -26,4 +26,5 @@ export const MOCK_BOARD: IBoard = {
     "3": ["חיות"],
     "4": ["ערים בישראל"],
   },
+  likes: 22,
 };

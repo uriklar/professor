@@ -10,10 +10,10 @@ const Button = styled.button`
 `;
 export default function LikesList() {
   return (
-      <>
+    <>
       <button>Like</button>
       <button>Dislike</button>
-      </>
+    </>
     // <Button>
     //   <button>
     //     פרויקט זה הוא פרויקט{" "}
