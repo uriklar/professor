@@ -24,7 +24,7 @@ export interface IBoard {
   id: string;
   items: IItem[];
   answers: IAnswers;
-  clues: IClue;
+  clues?: IClue;
 }
 
 export enum AnswerState {
