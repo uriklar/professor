@@ -8,7 +8,14 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { IAnswer, IBoard, ActionMap, IItem, AnswerState, IClue } from "../types";
+import {
+  IAnswer,
+  IBoard,
+  ActionMap,
+  IItem,
+  AnswerState,
+  IClue,
+} from "../types";
 import {
   difference,
   getConnectionCategory,

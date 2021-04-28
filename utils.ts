@@ -117,7 +117,7 @@ export const EMPTY_BOARD = {
     { text: "", categoryId: "4" },
     { text: "", categoryId: "4" },
   ],
-  clues:{
+  clues: {
     "1": "",
     "2": "",
     "3": "",

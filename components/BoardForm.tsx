@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import slugify from "slugify";
-import { IBoard, IItem ,IClue} from "../types";
+import { IBoard, IItem, IClue } from "../types";
 import {
   EMPTY_BOARD,
   generateBoardUrl,
@@ -24,15 +24,15 @@ function useCreateBoard(id: string) {
       items: nextItems,
     });
   };
-  const onClueBlur = (categoryId: string,value: string) => {
+  const onClueBlur = (categoryId: string, value: string) => {
     setBoard({
       ...board,
-      clues:{
+      clues: {
         ...board.clues,
         [categoryId]: value,
-      }
-    })
-  }
+      },
+    });
+  };
   const onAnswersBlur = (value: string[], categoryId: string) => {
     setBoard({
       ...board,

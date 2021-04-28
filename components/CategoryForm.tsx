@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IItem , IClue } from "../types";
+import { IItem, IClue } from "../types";
 
 interface Props {
   items: IItem[];
@@ -7,7 +7,7 @@ interface Props {
   index: number;
   onItemBlur: (value: string, index: number) => void;
   onAnswersBlur: (value: string[], categoryIndex: string) => void;
-  onClueBlur: (categoryIndex: string ,value: string) => void;
+  onClueBlur: (categoryIndex: string, value: string) => void;
 }
 
 const CategoryForm = ({
@@ -26,7 +26,6 @@ const CategoryForm = ({
   });
   const [clues, setClues] = useState("");
   const [answers, setAnswers] = useState("");
-  
 
   const onItemTextChange = (value, index) =>
     setItemValues({
@@ -34,10 +33,9 @@ const CategoryForm = ({
       [index]: value,
     });
 
-    const onCluetextChange = (value) => {
+  const onCluetextChange = (value) => {
     setClues(value);
-    }
-
+  };
 
   const allItemsFilled = Object.values(itemValues).filter(Boolean).length === 4;
 
@@ -92,11 +90,10 @@ const CategoryForm = ({
                   .filter(Boolean),
                 items[0].categoryId
               )
-              
             }
             required
           />
-            <input
+          <input
             css={`
               padding: 6px 24px;
               width: 80%;
@@ -104,17 +101,10 @@ const CategoryForm = ({
             placeholder="רמז"
             value={clues}
             onChange={(e) => onCluetextChange(e.target.value)}
-            onBlur={() =>
-              onClueBlur(
-                items[0].categoryId,
-                clues
-              )
-              
-            }
-
+            onBlur={() => onClueBlur(items[0].categoryId, clues)}
             required
-            />
-            </div>
+          />
+        </div>
       )}
     </div>
   );
