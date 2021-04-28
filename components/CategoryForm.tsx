@@ -7,7 +7,7 @@ interface Props {
   index: number;
   onItemBlur: (value: string, index: number) => void;
   onAnswersBlur: (value: string[], categoryIndex: string) => void;
-  onClueBlur: (value: string[], categoryIndex: string) => void;
+  onClueBlur: (categoryIndex: string ,value: string) => void;
 }
 
 const CategoryForm = ({
@@ -106,11 +106,8 @@ const CategoryForm = ({
             onChange={(e) => onCluetextChange(e.target.value)}
             onBlur={() =>
               onClueBlur(
+                items[0].categoryId,
                 clues
-                  .split(",")
-                  .map((a) => a.trim())
-                  .filter(Boolean),
-                items[0].categoryId
               )
               
             }

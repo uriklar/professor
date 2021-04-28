@@ -24,7 +24,7 @@ function useCreateBoard(id: string) {
       items: nextItems,
     });
   };
-  const onClueBlur = (value: string[], categoryId: string) => {
+  const onClueBlur = (categoryId: string,value: string) => {
     setBoard({
       ...board,
       clues:{

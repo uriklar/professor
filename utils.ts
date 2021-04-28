@@ -117,12 +117,12 @@ export const EMPTY_BOARD = {
     { text: "", categoryId: "4" },
     { text: "", categoryId: "4" },
   ],
-  clues:[
-    {categoryId: "1" ,text: ""},
-    {categoryId: "2" ,text: ""},
-    {categoryId: "3" ,text: ""},
-    {categoryId: "4" ,text: ""}
-  ],
+  clues:{
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+  },
   answers: {
     "1": [],
     "2": [],
