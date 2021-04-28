@@ -62,7 +62,7 @@ export default function AnswerInput({ categoryId }: Props) {
       onSubmit();
     }
   };
-
+  if(board.clues[categoryId] === undefined || board.clues[categoryId] === ""){
   return (
     <Container>
       <input
@@ -74,4 +74,18 @@ export default function AnswerInput({ categoryId }: Props) {
       <button onClick={onSubmit}>בום</button>
     </Container>
   );
+  }else{
+  return (
+    <Container>
+      <input
+        placeholder="מה הקשר?"
+        value={value}
+        onKeyPress={onKeyPress}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <button onClick={onSubmit}>בום</button>
+      <button onClick={()=> {alert(board.clues[categoryId])}}>💡 רמז</button>
+    </Container>
+  );
+  }
 }
