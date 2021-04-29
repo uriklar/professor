@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IBoard } from "../types";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
@@ -45,11 +45,19 @@ export default function BoardList({ ids, board, open, onClose }: Props) {
   const [query, setQuery] = useState("");
   const localStorage = getLocalStorage();
   const ref = useRef();
+  const inputRef = useRef<HTMLInputElement>();
   useOnClickOutside(ref, onClose);
+
+  useEffect(() => {
+    if (open) {
+      inputRef.current.focus();
+    }
+  }, [open]);
 
   return (
     <Container open={open} ref={ref}>
       <input
+        ref={inputRef}
         placeholder="חיפוש..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
