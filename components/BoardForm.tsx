@@ -77,7 +77,7 @@ export default function CreateBoard({ id, onSubmit }: Props) {
 
         <form
           onSubmit={(e) =>
-            onSubmit(e, username, { id, ...board, likes: 0 }, boardUrl)
+            onSubmit(e, username, { id, ...board }, boardUrl)
           }
         >
           {/* <h2>כמה פרטים עליך</h2> */}
