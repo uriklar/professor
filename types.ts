@@ -13,7 +13,7 @@ export interface IItem {
   text: string;
   categoryId: string;
 }
-export interface IClue {
+export interface IClues {
   [categoryId: string]: string;
 }
 
@@ -24,7 +24,7 @@ export interface IBoard {
   id: string;
   items: IItem[];
   answers: IAnswers;
-  clues?: IClue;
+  clues?: IClues;
 }
 
 export enum AnswerState {

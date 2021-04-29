@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import slugify from "slugify";
-import { IBoard, IItem, IClue } from "../types";
+import { IBoard, IItem, IClues } from "../types";
 import {
   EMPTY_BOARD,
   generateBoardUrl,

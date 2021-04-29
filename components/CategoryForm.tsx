@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IItem, IClue } from "../types";
+import { IItem, IClues } from "../types";
 
 interface Props {
   items: IItem[];
@@ -33,7 +33,7 @@ const CategoryForm = ({
       [index]: value,
     });
 
-  const onCluetextChange = (value) => {
+  const onClueTextChange = (value) => {
     setClues(value);
   };
 
@@ -95,12 +95,13 @@ const CategoryForm = ({
           />
           <input
             css={`
+              margin-top: 5px;
               padding: 6px 24px;
               width: 80%;
             `}
-            placeholder="רמז"
+            placeholder="רמז (לא חובה)"
             value={clues}
-            onChange={(e) => onCluetextChange(e.target.value)}
+            onChange={(e) => onClueTextChange(e.target.value)}
             onBlur={() => onClueBlur(items[0].categoryId, clues)}
             required
           />

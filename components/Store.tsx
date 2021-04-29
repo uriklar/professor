@@ -14,7 +14,7 @@ import {
   ActionMap,
   IItem,
   AnswerState,
-  IClue,
+  IClues,
 } from "../types";
 import {
   difference,
@@ -57,7 +57,7 @@ export interface IState {
   items: IItem[];
   selection: IItem[];
   answers: IAnswer[];
-  clues: IClue[];
+  clues: IClues[];
 }
 
 const INITIAL_STATE: IState = {
