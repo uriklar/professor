@@ -182,3 +182,32 @@ export function squareColorByState(state: AnswerState | "selected") {
 export function stripCharsForStringCompare(string: string) {
   return string.replace("'", "");
 }
+
+export function getNextFreeId(username: string, ids: string[]) {
+  const userIds = ids
+    .reduce((acc, id) => {
+      const splitId = id.split("-");
+      const boardId = splitId[splitId.length - 1];
+      splitId.splice(-1, 1);
+      const boardUsername = splitId.join("-");
+
+      return boardUsername === username ? [...acc, Number(boardId)] : acc;
+    }, [])
+    .sort((a, b) => a - b);
+  let lowest = -1;
+  for (let i = 1; i < userIds.length + 1; ++i) {
+    if (userIds[i - 1] != i) {
+      lowest = i;
+      break;
+    }
+  }
+  if (lowest == -1) {
+    if (!userIds.length) {
+      lowest = 1;
+    } else {
+      lowest = userIds[userIds.length - 1] + 1;
+    }
+  }
+
+  return String(lowest);
+}
