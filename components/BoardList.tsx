@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IBoard } from "../types";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
@@ -24,23 +24,61 @@ interface Props {
   open: boolean;
   onClose: () => void;
 }
+
+function test(string, substring) {
+  const format = (arr) =>
+    [...arr].map((l) => l.toLowerCase()).filter((l) => l !== " " && l !== "-");
+
+  const lString = format(string);
+  const lSub = format(substring);
+
+  return lSub.every((x) => {
+    const index = lString.indexOf(x);
+    if (~index) {
+      lString.splice(index, 1);
+      return true;
+    }
+  });
+}
+
 export default function BoardList({ ids, board, open, onClose }: Props) {
+  const [query, setQuery] = useState("");
   const localStorage = getLocalStorage();
   const ref = useRef();
+  const inputRef = useRef<HTMLInputElement>();
   useOnClickOutside(ref, onClose);
+
+  useEffect(() => {
+    if (open) {
+      inputRef.current.focus();
+    }
+  }, [open]);
 
   return (
     <Container open={open} ref={ref}>
+      <input
+        ref={inputRef}
+        placeholder="חיפוש..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        css={`
+          margin-right: 40px;
+          padding: 4px;
+        `}
+      />
+
       <ul>
-        {ids.map((id) => (
-          <BoardListItem
-            open={open}
-            key={id}
-            id={id}
-            currentId={board.id}
-            answers={localStorage[id]?.answers}
-          />
-        ))}
+        {ids
+          .filter((id) => test(id, query))
+          .map((id) => (
+            <BoardListItem
+              open={open}
+              key={id}
+              id={id}
+              currentId={board.id}
+              answers={localStorage[id]?.answers}
+            />
+          ))}
       </ul>
     </Container>
   );

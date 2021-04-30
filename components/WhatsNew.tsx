@@ -10,7 +10,14 @@ interface IVersion {
   contributor: keyof typeof contributors;
 }
 
-const VERSIONS: IVersion[] = [];
+const VERSIONS: IVersion[] = [
+  {
+    number: 1,
+    contributor: 1,
+    text:
+      "שינוי באופן ייצור מזהיי הלוחות. מהיום, המזהה של הלוח כבר לא יהיה מספר אקראי בן 4 ספרות אלא מספר רץ. כרגע אין כוונה לשנות את מספרי הלוחות שכבר קיימים.",
+  },
+];
 
 const LOCAL_STORAGE_KEY = "openprofessor__version";
 

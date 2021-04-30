@@ -4,14 +4,17 @@ import { IBoard, IItem, IClues } from "../types";
 import {
   EMPTY_BOARD,
   generateBoardUrl,
+  getNextFreeId,
   toChunks,
   validateIsEnglish,
 } from "../utils";
 import CategoryForm from "./CategoryForm";
 
-function useCreateBoard(id: string) {
+function useCreateBoard(ids: string[]) {
   const [board, setBoard] = useState(EMPTY_BOARD);
   const [username, setUsername] = useState("");
+
+  const id = getNextFreeId(username, ids);
 
   const onItemBlur = (value: string, index: number) => {
     const nextItems = board.items.map((item, i) => {
@@ -47,6 +50,7 @@ function useCreateBoard(id: string) {
   const categories = toChunks<IItem>(board.items, 4);
 
   return {
+    id,
     board,
     username,
     boardUrl,
@@ -59,7 +63,7 @@ function useCreateBoard(id: string) {
 }
 
 interface Props {
-  id: string;
+  ids: string[];
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
     username: string,
@@ -68,8 +72,9 @@ interface Props {
   ) => void;
 }
 
-export default function CreateBoard({ id, onSubmit }: Props) {
+export default function CreateBoard({ onSubmit, ids }: Props) {
   const {
+    id,
     board,
     username,
     setUsername,
@@ -78,7 +83,7 @@ export default function CreateBoard({ id, onSubmit }: Props) {
     onClueBlur,
     boardUrl,
     categories,
-  } = useCreateBoard(id);
+  } = useCreateBoard(ids);
 
   return (
     <div>
