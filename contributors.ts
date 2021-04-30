@@ -11,6 +11,10 @@ const contributors = {
     name: "ניר כץ",
     linkedin: "https://www.linkedin.com/in/nir102030/",
   },
+  4: {
+    name: "אמיר בר חיים",
+    linkedin: "https://www.linkedin.com/in/amir-bar-haim-786383139",
+  },
 } as const;
 
 export default contributors;
