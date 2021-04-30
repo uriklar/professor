@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IItem, IClues } from "../types";
+import { IItem } from "../types";
 
 interface Props {
   items: IItem[];
@@ -72,12 +72,12 @@ const CategoryForm = ({
               font-size: 14px;
             `}
           >
-            נא להזין ערכים מופרדים ע"י פסיקים
+            נא להזין ערכים מופרדים ע&quot;י פסיקים
           </div>
           <input
             css={`
               padding: 6px 24px;
-              width: 80%;
+              width: 60%;
             `}
             placeholder="תשובות"
             value={answers}
@@ -97,7 +97,7 @@ const CategoryForm = ({
             css={`
               margin-top: 5px;
               padding: 6px 24px;
-              width: 80%;
+              width: 60%;
             `}
             placeholder="רמז (לא חובה)"
             value={clues}
