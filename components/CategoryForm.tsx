@@ -103,7 +103,6 @@ const CategoryForm = ({
             value={clues}
             onChange={(e) => onClueTextChange(e.target.value)}
             onBlur={() => onClueBlur(items[0].categoryId, clues)}
-            required
           />
         </div>
       )}

@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Actions, useStore } from "./Store";
 import { compareTwoStrings } from "string-similarity";
-import { stripCharsForStringCompare } from "../utils";
+import { isFullySolved, stripCharsForStringCompare } from "../utils";
+import { AnswerState, IBoard } from "../types";
 
 interface Props {
   categoryId: string;
 }
+
+const TWO_MINUTES = 120000;
 
 const Container = styled(motion.div)`
   grid-column: span 4;
@@ -33,6 +36,24 @@ const Container = styled(motion.div)`
     }
   }
 `;
+
+function useSholdShowClues(board: IBoard, categoryId: string) {
+  const {
+    state: { answers },
+  } = useStore();
+
+  const [showClues, setShowClues] = useState(false);
+
+  const fullySolved = isFullySolved(answers, AnswerState.Matched);
+
+  useEffect(() => {
+    if (fullySolved && !!board.clues?.[categoryId]) {
+      setTimeout(() => setShowClues(true), TWO_MINUTES);
+    }
+  }, [board.clues, categoryId, fullySolved]);
+
+  return showClues;
+}
 
 export default function AnswerInput({ categoryId }: Props) {
   const [value, setValue] = useState("");
@@ -63,7 +84,7 @@ export default function AnswerInput({ categoryId }: Props) {
     }
   };
 
-  const shouldShowClues = board.clues === undefined;
+  const shouldShowClues = useSholdShowClues(board, categoryId);
 
   return (
     <Container>
@@ -74,14 +95,27 @@ export default function AnswerInput({ categoryId }: Props) {
         onChange={(e) => setValue(e.target.value)}
       />
       <button onClick={onSubmit}>בום</button>
-      {!shouldShowClues && (
+      {shouldShowClues && (
         <button
           onClick={() => {
-            alert(board.clues[categoryId][0]);
+            alert(board.clues[categoryId]);
           }}
+          css={`
+            position: relative;
+          `}
         >
-          {" "}
-          💡 רמז{" "}
+          <span
+            css={`
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 0;
+              font-size: 16px;
+            `}
+          >
+            💡
+          </span>{" "}
+          רמז
         </button>
       )}
     </Container>
