@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import slugify from "slugify";
-import { IBoard, IItem, IClues } from "../types";
+import { IBoard, IItem } from "../types";
 import {
   EMPTY_BOARD,
   generateBoardUrl,
@@ -9,6 +8,7 @@ import {
   validateIsEnglish,
 } from "../utils";
 import CategoryForm from "./CategoryForm";
+import Button from "./common/Button";
 
 function useCreateBoard(ids: string[]) {
   const [board, setBoard] = useState(EMPTY_BOARD);
@@ -134,7 +134,7 @@ export default function CreateBoard({ onSubmit, ids }: Props) {
             />
           ))}
 
-          <button type="submit">סיימתי</button>
+          <Button type="submit">סיימתי</Button>
         </form>
       </main>
     </div>

@@ -5,6 +5,7 @@ import { Actions, useStore } from "./Store";
 import { compareTwoStrings } from "string-similarity";
 import { isFullySolved, stripCharsForStringCompare } from "../utils";
 import { AnswerState, IBoard } from "../types";
+import Button from "./common/Button";
 
 interface Props {
   categoryId: string;
@@ -16,24 +17,12 @@ const Container = styled(motion.div)`
   grid-column: span 4;
   display: flex;
   align-items: center;
+  gap: 10px;
 
   input {
     width: 50%;
     padding: 4px;
     font-size: 18px;
-  }
-
-  button {
-    padding: 4px 16px;
-    background: #2e3161;
-    color: white;
-    margin-right: 16px;
-    font-size: 18px;
-
-    &:focus-within {
-      background: #6971e0;
-      transition: 200ms ease;
-    }
   }
 `;
 
@@ -94,15 +83,12 @@ export default function AnswerInput({ categoryId }: Props) {
         onKeyPress={onKeyPress}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button onClick={onSubmit}>בום</button>
-      {shouldShowClues && (
-        <button
+      <Button onClick={onSubmit}>בום</Button>
+      {true && (
+        <ClueButton
           onClick={() => {
             alert(board.clues[categoryId]);
           }}
-          css={`
-            position: relative;
-          `}
         >
           <span
             css={`
@@ -116,8 +102,12 @@ export default function AnswerInput({ categoryId }: Props) {
             💡
           </span>{" "}
           רמז
-        </button>
+        </ClueButton>
       )}
     </Container>
   );
 }
+
+const ClueButton = styled(Button)`
+  position: relative;
+`;

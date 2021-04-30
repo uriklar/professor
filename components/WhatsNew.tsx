@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import contributors from "../contributors";
 import { isBrowser } from "../utils";
 import { mediumUp } from "../styles/tokens";
+import Button from "./common/Button";
 
 const StyledDialog = styled(Dialog)`
   width: 80vw;
@@ -114,7 +115,7 @@ export default function WhatsNew() {
           text-align: center;
         `}
       >
-        <button onClick={dismissModal}>מגניב, תודה</button>
+        <Button onClick={dismissModal}>מגניב, תודה</Button>
       </div>
     </StyledDialog>
   );
