@@ -12,7 +12,6 @@ interface Props {
 const Container = styled(motion.div)`
   grid-column: span 4;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   input {
@@ -63,7 +62,8 @@ export default function AnswerInput({ categoryId }: Props) {
       onSubmit();
     }
   };
-  const shouldShowClues = (board.clues[categoryId] !== undefined || board.clues[categoryId] !== "");
+  
+    const shouldShowClues = (board.clues === undefined || board.clues === "");
 
     return (
       <Container>
@@ -74,7 +74,7 @@ export default function AnswerInput({ categoryId }: Props) {
           onChange={(e) => setValue(e.target.value)}
         />
         <button onClick={onSubmit}>בום</button>
-        {shouldShowClues && <button onClick={() => { alert(board.clues[categoryId]);}}> 💡 רמז </button>}
+        {!shouldShowClues && <button onClick={() => { alert(board.clues[categoryId]);}}> 💡 רמז </button>}
       </Container>
     );
   }
