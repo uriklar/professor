@@ -62,19 +62,28 @@ export default function AnswerInput({ categoryId }: Props) {
       onSubmit();
     }
   };
-  
-    const shouldShowClues = (board.clues === undefined || board.clues === "");
 
-    return (
-      <Container>
-        <input
-          placeholder="מה הקשר?"
-          value={value}
-          onKeyPress={onKeyPress}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <button onClick={onSubmit}>בום</button>
-        {!shouldShowClues && <button onClick={() => { alert(board.clues[categoryId]);}}> 💡 רמז </button>}
-      </Container>
-    );
-  }
+  const shouldShowClues = board.clues === undefined;
+
+  return (
+    <Container>
+      <input
+        placeholder="מה הקשר?"
+        value={value}
+        onKeyPress={onKeyPress}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <button onClick={onSubmit}>בום</button>
+      {!shouldShowClues && (
+        <button
+          onClick={() => {
+            alert(board.clues[categoryId][0]);
+          }}
+        >
+          {" "}
+          💡 רמז{" "}
+        </button>
+      )}
+    </Container>
+  );
+}
