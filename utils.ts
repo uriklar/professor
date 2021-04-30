@@ -117,6 +117,12 @@ export const EMPTY_BOARD = {
     { text: "", categoryId: "4" },
     { text: "", categoryId: "4" },
   ],
+  clues: {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+  },
   answers: {
     "1": [],
     "2": [],
@@ -145,10 +151,11 @@ export const getBoardUrlFromId = (id: string) => {
   return `/${splitId.join("-")}/${boardId}`;
 };
 
-export function isFullySolved(answers: IAnswer[]): boolean {
-  const answeredCategories = answers.filter(
-    (answer) => answer.state === AnswerState.Answered
-  );
+export function isFullySolved(
+  answers: IAnswer[],
+  state: AnswerState = AnswerState.Answered
+): boolean {
+  const answeredCategories = answers.filter((answer) => answer.state === state);
 
   return answeredCategories.length === 4;
 }

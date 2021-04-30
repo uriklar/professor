@@ -7,6 +7,7 @@ interface Props {
   index: number;
   onItemBlur: (value: string, index: number) => void;
   onAnswersBlur: (value: string[], categoryIndex: string) => void;
+  onClueBlur: (categoryIndex: string, value: string) => void;
 }
 
 const CategoryForm = ({
@@ -14,6 +15,7 @@ const CategoryForm = ({
   categoryIndex,
   onItemBlur,
   onAnswersBlur,
+  onClueBlur,
   index,
 }: Props) => {
   const [itemValues, setItemValues] = useState({
@@ -22,6 +24,7 @@ const CategoryForm = ({
     "2": "",
     "3": "",
   });
+  const [clues, setClues] = useState("");
   const [answers, setAnswers] = useState("");
 
   const onItemTextChange = (value, index) =>
@@ -29,6 +32,10 @@ const CategoryForm = ({
       ...itemValues,
       [index]: value,
     });
+
+  const onClueTextChange = (value) => {
+    setClues(value);
+  };
 
   const allItemsFilled = Object.values(itemValues).filter(Boolean).length === 4;
 
@@ -65,12 +72,12 @@ const CategoryForm = ({
               font-size: 14px;
             `}
           >
-            נא להזין ערכים מופרדים ע"י פסיקים
+            נא להזין ערכים מופרדים ע&quot;י פסיקים
           </div>
           <input
             css={`
               padding: 6px 24px;
-              width: 80%;
+              width: 60%;
             `}
             placeholder="תשובות"
             value={answers}
@@ -85,6 +92,17 @@ const CategoryForm = ({
               )
             }
             required
+          />
+          <input
+            css={`
+              margin-top: 5px;
+              padding: 6px 24px;
+              width: 60%;
+            `}
+            placeholder="רמז (לא חובה)"
+            value={clues}
+            onChange={(e) => onClueTextChange(e.target.value)}
+            onBlur={() => onClueBlur(items[0].categoryId, clues)}
           />
         </div>
       )}

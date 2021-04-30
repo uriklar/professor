@@ -8,7 +8,14 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { IAnswer, IBoard, ActionMap, IItem, AnswerState } from "../types";
+import {
+  IAnswer,
+  IBoard,
+  ActionMap,
+  IItem,
+  AnswerState,
+  IClues,
+} from "../types";
 import {
   difference,
   getConnectionCategory,
@@ -50,6 +57,7 @@ export interface IState {
   items: IItem[];
   selection: IItem[];
   answers: IAnswer[];
+  clues: IClues[];
 }
 
 const INITIAL_STATE: IState = {
@@ -57,6 +65,7 @@ const INITIAL_STATE: IState = {
   items: [],
   selection: [],
   answers: [],
+  clues: [],
 };
 
 const StoreContext = createContext({

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import slugify from "slugify";
-import { IBoard, IItem } from "../types";
+import { IBoard, IItem, IClues } from "../types";
 import {
   EMPTY_BOARD,
   generateBoardUrl,
@@ -27,7 +27,15 @@ function useCreateBoard(ids: string[]) {
       items: nextItems,
     });
   };
-
+  const onClueBlur = (categoryId: string, value: string) => {
+    setBoard({
+      ...board,
+      clues: {
+        ...board.clues,
+        [categoryId]: value,
+      },
+    });
+  };
   const onAnswersBlur = (value: string[], categoryId: string) => {
     setBoard({
       ...board,
@@ -50,6 +58,7 @@ function useCreateBoard(ids: string[]) {
     setUsername,
     onItemBlur,
     onAnswersBlur,
+    onClueBlur,
   };
 }
 
@@ -71,6 +80,7 @@ export default function CreateBoard({ onSubmit, ids }: Props) {
     setUsername,
     onAnswersBlur,
     onItemBlur,
+    onClueBlur,
     boardUrl,
     categories,
   } = useCreateBoard(ids);
@@ -120,6 +130,7 @@ export default function CreateBoard({ onSubmit, ids }: Props) {
               categoryIndex={index}
               onItemBlur={onItemBlur}
               onAnswersBlur={onAnswersBlur}
+              onClueBlur={onClueBlur}
             />
           ))}
 
