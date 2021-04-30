@@ -1,6 +1,7 @@
 import React from "react";
 import slugify from "slugify";
 import BoardForm from "../components/BoardForm";
+import db from "../db";
 import { IBoard } from "../types";
 import { makeid } from "../utils";
 
@@ -17,7 +18,7 @@ const onSubmit = async (
     const response = await fetch("/api/create", {
       method: "POST",
       body: JSON.stringify({
-        board: { ...board, id: slugify(`${username} ${ID}`) },
+        board: { ...board, id: slugify(`${username} ${board.id}`) },
       }),
     });
     const responseJson = await response.json();
@@ -28,6 +29,17 @@ const onSubmit = async (
   } catch {}
 };
 
-export default function Create() {
-  return <BoardForm id={ID} onSubmit={onSubmit} />;
+export default function Create({ ids }) {
+  return <BoardForm onSubmit={onSubmit} ids={ids} />;
+}
+
+export async function getServerSideProps({ params }) {
+  const querySnapshot = await db.collection("boards").select().get();
+  const ids = querySnapshot.docs.map((doc) => doc.id);
+
+  return {
+    props: {
+      ids,
+    },
+  };
 }
