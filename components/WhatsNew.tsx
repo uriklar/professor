@@ -1,9 +1,17 @@
 import Dialog from "@reach/dialog";
 import "@reach/dialog/styles.css";
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import contributors from "../contributors";
 import { isBrowser } from "../utils";
+import { mediumUp } from "../styles/tokens";
 
+const StyledDialog = styled(Dialog)`
+  width: 80vw;
+  ${mediumUp} {
+    width: 50vw;
+  }
+`;
 interface IVersion {
   number: number;
   text: string;
@@ -84,7 +92,7 @@ export default function WhatsNew() {
   };
 
   return (
-    <Dialog isOpen={modalOpen} onDismiss={dismissModal}>
+    <StyledDialog isOpen={modalOpen} onDismiss={dismissModal}>
       <h2
         css={`
           text-align: center;
@@ -92,7 +100,11 @@ export default function WhatsNew() {
       >
         מה חדש בפרופסור?
       </h2>
-      <ul>
+      <ul
+        css={`
+          padding: 0;
+        `}
+      >
         {whatsNew.map((version) => (
           <NewItem key={version.number} version={version} />
         ))}
@@ -104,6 +116,6 @@ export default function WhatsNew() {
       >
         <button onClick={dismissModal}>מגניב, תודה</button>
       </div>
-    </Dialog>
+    </StyledDialog>
   );
 }
