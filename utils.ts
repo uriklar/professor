@@ -219,9 +219,23 @@ export function getNextFreeId(username: string, ids: string[]) {
   return String(lowest);
 }
 
-export function sortBySolvedState(a: IAnswer[], b: IAnswer[]) {
+export function sortBySolvedState(
+  _a: IAnswer[],
+  _b: IAnswer[],
+  sortDir: "asc" | "desc"
+) {
+  let a, b;
+
+  if (sortDir === "asc") {
+    a = _a;
+    b = _b;
+  } else {
+    b = _a;
+    a = _b;
+  }
+
   if (!a && !b) {
-    return 0;
+    return 1;
   }
 
   if (a && !b) {

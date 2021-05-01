@@ -48,15 +48,15 @@ function getSortedAndFilteredIds(
   query: string,
   sortDir: "asc" | "desc"
 ) {
-  const result = ids.filter((id) => test(id, query));
-  // .sort((a, b) =>
-  //   sortDir === "asc"
-  //     ? sortBySolvedState(localStorage[a]?.answers, localStorage[b]?.answers)
-  //     : sortBySolvedState(localStorage[b]?.answers, localStorage[a]?.answers)
-  // );
-
-  console.log(result);
-  return result;
+  return ids
+    .filter((id) => test(id, query))
+    .sort((a, b) =>
+      sortBySolvedState(
+        localStorage[a]?.answers,
+        localStorage[b]?.answers,
+        sortDir
+      )
+    );
 }
 
 export default function BoardList({ ids, board, open, onClose }: Props) {
@@ -77,7 +77,7 @@ export default function BoardList({ ids, board, open, onClose }: Props) {
       />
 
       <ul>
-        {getSortedAndFilteredIds(ids, query, sortDir, localStorage).map(
+        {getSortedAndFilteredIds(ids, localStorage, query, sortDir).map(
           (id) => (
             <BoardListItem
               open={open}
