@@ -11,16 +11,19 @@ const Container = styled.div`
 `;
 const Text = styled.span`
   margin: auto;
-`
+`;
 
-const getText = (number:number): string =>{
-  return number === 1 ? 
-  ' מישהו אהב את הלוח הזה ' :
-  String(number) + ' אהבו את הלוח הזה '
-}
+const getText = (number: number): string => {
+  return number === 1
+    ? " מישהו אהב את הלוח הזה "
+    : String(number) + " אהבו את הלוח הזה ";
+};
 
-export default function LikesCounter({current}: Props) {
-  return current ?
-    (<Container><Image src="/../public/main-ok.svg" height={30} width={30} /><Text>{getText(current)}</Text></Container>) :
-    null
+export default function LikesCounter({ current }: Props) {
+  return current ? (
+    <Container>
+      <Image src="/public/like.svg" height={30} width={30} />
+      <Text>{getText(current)}</Text>
+    </Container>
+  ) : null;
 }

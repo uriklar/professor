@@ -1,18 +1,14 @@
 import db from "../../db";
+import admin from "firebase-admin";
 
-const updateStrategies = new Map([
-  ["INCREMENT", (number) => number + 1],
-  ["DISCREMENT", (number) => number - 1],
-]);
+const incrementByOne = admin.firestore.FieldValue.increment(1);
 
 export default async (req, res) => {
-  const { id, strategy } = JSON.parse(req.body);
+  const { id } = JSON.parse(req.body);
   try {
-    const docRef = await db.collection("boards").doc(id);
-    let currentLikes = docRef.likes;
-    const data = { likes: updateStrategies.get(strategy)(currentLikes) };
-    const response = await docRef.update(data);
-    res.status(200).json(response);
+    const boardRef = await db.collection("boards").doc(id);
+    const writeResult = await boardRef.update({ likes: incrementByOne });
+    return res.status(200).json(writeResult);
   } catch (error) {
     return res.status(400).json({
       error,

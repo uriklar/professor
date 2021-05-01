@@ -32,8 +32,3 @@ export interface IAnswer {
   categoryId: string;
   state: AnswerState;
 }
-
-export enum LikeStrategy {
-  Like = 'INCREMENT',
-  Dislike = 'DISCREMENT'
-}
