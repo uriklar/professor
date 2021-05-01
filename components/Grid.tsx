@@ -43,7 +43,7 @@ export default function Grid() {
   } = useStore();
   const fullySolved = isFullySolved(answers);
 
-  const [showLikeOverlay, setShowLikeOverlay] = useState(null);
+  const [showLikeOverlay, setShowLikeOverlay] = useState(false);
 
   useEffect(() => {
     if (fullySolved && !isLiked) {
@@ -54,13 +54,14 @@ export default function Grid() {
   const { matchedItems, remainingItems } = getSortedItems(items, answers);
   return (
     <>
-      <LikeOverlay
-        show={showLikeOverlay}
-        boardId={boardId}
-        close={() => setShowLikeOverlay(false)}
-      ></LikeOverlay>
       <AnimateSharedLayout>
         <BorderContainer>
+          <LikeOverlay
+            show={showLikeOverlay}
+            setShow={setShowLikeOverlay}
+            boardId={boardId}
+            isLiked={isLiked}
+          />
           <Container layout>
             {matchedItems.map((itemRow) => (
               <Row items={itemRow} key={itemRow[0].text} />
