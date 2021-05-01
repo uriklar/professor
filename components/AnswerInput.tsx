@@ -26,7 +26,7 @@ const Container = styled(motion.div)`
   }
 `;
 
-function useSholdShowClues(board: IBoard, categoryId: string) {
+function useShouldShowClues(board: IBoard, categoryId: string) {
   const {
     state: { answers },
   } = useStore();
@@ -73,7 +73,7 @@ export default function AnswerInput({ categoryId }: Props) {
     }
   };
 
-  const shouldShowClues = useSholdShowClues(board, categoryId);
+  const shouldShowClues = useShouldShowClues(board, categoryId);
 
   return (
     <Container>
@@ -84,7 +84,7 @@ export default function AnswerInput({ categoryId }: Props) {
         onChange={(e) => setValue(e.target.value)}
       />
       <Button onClick={onSubmit}>בום</Button>
-      {true && (
+      {shouldShowClues && (
         <ClueButton
           onClick={() => {
             alert(board.clues[categoryId]);
