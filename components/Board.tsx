@@ -7,6 +7,7 @@ import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
 import BoardList from "./BoardList";
 //import { MOCK_BOARD } from "../../mocks";
+import LikesCounter from "./LikesCounter";
 
 const Container = styled.main`
   padding: 10px;
@@ -45,7 +46,6 @@ function useToast() {
 
 export default function Board({ board, ids, showSelect }: Props) {
   const { showToast, closeToast } = useToast();
-
   return (
     <>
       <Container>
@@ -54,9 +54,9 @@ export default function Board({ board, ids, showSelect }: Props) {
             <h3>{board.id}</h3>
             <Grid />
             <BoardNavigator />
-            <div>Like</div>
           </GridContainer>
           <BoardList ids={ids} board={board} open={showSelect} />
+          <LikesCounter current={board.likes}></LikesCounter>
         </Store>
       </Container>
       {/* Toast in case of new board */}

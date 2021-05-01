@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { LOCAL_STORAGE_KEY } from "../utils";
 
 interface LikeProps {
-  display: boolean;
+  show: boolean;
   boardId: string;
 }
 
@@ -43,34 +43,31 @@ const Link = styled.a`
   padding: 0.5em;
 `;
 
-async function onLike(answer: string, id: string): Promise<any> {
-  if (answer === "yes") {
-    try {
-      const response = await fetch("/api/like", {
-        method: "POST",
-        body: JSON.stringify({ id }),
-      });
-      console.log(response);
-      if (response.status === 200) {
-        const currentData =
-          JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-        localStorage.setItem(
-          LOCAL_STORAGE_KEY,
-          JSON.stringify({
-            ...currentData,
-            [id]: {
-              ...(currentData[id] || {}),
-              isLiked: true,
-            },
-          })
-        );
-      }
-    } catch (e) {}
-  }
+async function onLike(id: string): Promise<any> {
+  try {
+    const response = await fetch("/api/like", {
+      method: "POST",
+      body: JSON.stringify({ id }),
+    });
+    if (response.status === 200) {
+      const currentData =
+        JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        JSON.stringify({
+          ...currentData,
+          [id]: {
+            ...(currentData[id] || {}),
+            isLiked: true,
+          },
+        })
+      );
+    }
+  } catch (e) {}
 }
 
-export default function SuccessDialog({ display, boardId }: LikeProps) {
-  return display ? (
+export default function SuccessDialog({ show, boardId }: LikeProps) {
+  return show ? (
     <FlexContainer>
       <Dialog>
         <Title>בשעה טובה ומוצלחת,פתרת את הלוח!🥳</Title>
@@ -78,7 +75,7 @@ export default function SuccessDialog({ display, boardId }: LikeProps) {
         <ButtonsContainer>
           <Link
             onClick={() => {
-              onLike("yes", boardId);
+              onLike(boardId);
             }}
           >
             כן

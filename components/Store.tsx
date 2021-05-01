@@ -39,7 +39,7 @@ type TPayloads = {
     categoryId: string;
   };
   [Actions.HydrateBoard]: {
-    answers: IAnswer[];
+    board: IState;
   };
 };
 
@@ -50,6 +50,7 @@ export interface IState {
   items: IItem[];
   selection: IItem[];
   answers: IAnswer[];
+  isLiked: boolean;
 }
 
 const INITIAL_STATE: IState = {
@@ -57,6 +58,7 @@ const INITIAL_STATE: IState = {
   items: [],
   selection: [],
   answers: [],
+  isLiked: null,
 };
 
 const StoreContext = createContext({
@@ -139,7 +141,10 @@ function reducer(state: IState, action: TActions) {
     case Actions.HydrateBoard:
       return {
         ...state,
-        answers: action.payload.answers || [],
+        ...{
+          answers: action.payload.board.answers || [],
+          isLiked: action.payload.board.isLiked || false,
+        },
       };
     default:
       return state;
@@ -198,7 +203,7 @@ export default function Store({ children, board, ids }: Props) {
       if (boardStorage) {
         dispatch({
           type: Actions.HydrateBoard,
-          payload: { answers: boardStorage.answers },
+          payload: { board: boardStorage },
         });
       }
     }

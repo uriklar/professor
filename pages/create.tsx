@@ -17,7 +17,7 @@ const onSubmit = async (
     const response = await fetch("/api/create", {
       method: "POST",
       body: JSON.stringify({
-        board: { ...board, id: slugify(`${username} ${ID}`) }
+        board: { ...board, id: slugify(`${username} ${ID}`) },
       }),
     });
     const responseJson = await response.json();

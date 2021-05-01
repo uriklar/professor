@@ -8,10 +8,10 @@ interface Props {
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: baseline;
 `;
-const Text = styled.span`
-  margin: auto;
-`;
+const Text = styled.span``;
 
 const getText = (number: number): string => {
   return number === 1
@@ -22,7 +22,7 @@ const getText = (number: number): string => {
 export default function LikesCounter({ current }: Props) {
   return current ? (
     <Container>
-      <Image src="/public/like.svg" height={30} width={30} />
+      <Image src="/../public/like.svg" height={30} width={30} />
       <Text>{getText(current)}</Text>
     </Container>
   ) : null;
