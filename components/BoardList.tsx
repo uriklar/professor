@@ -42,6 +42,23 @@ function test(string, substring) {
   });
 }
 
+function getSortedAndFilteredIds(
+  ids: string[],
+  localStorage: any,
+  query: string,
+  sortDir: "asc" | "desc"
+) {
+  const result = ids.filter((id) => test(id, query));
+  // .sort((a, b) =>
+  //   sortDir === "asc"
+  //     ? sortBySolvedState(localStorage[a]?.answers, localStorage[b]?.answers)
+  //     : sortBySolvedState(localStorage[b]?.answers, localStorage[a]?.answers)
+  // );
+
+  console.log(result);
+  return result;
+}
+
 export default function BoardList({ ids, board, open, onClose }: Props) {
   const [query, setQuery] = useState("");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -60,20 +77,8 @@ export default function BoardList({ ids, board, open, onClose }: Props) {
       />
 
       <ul>
-        {ids
-          .filter((id) => test(id, query))
-          .sort((a, b) =>
-            sortDir === "asc"
-              ? sortBySolvedState(
-                  localStorage[a]?.answers,
-                  localStorage[b]?.answers
-                )
-              : sortBySolvedState(
-                  localStorage[b]?.answers,
-                  localStorage[a]?.answers
-                )
-          )
-          .map((id) => (
+        {getSortedAndFilteredIds(ids, query, sortDir, localStorage).map(
+          (id) => (
             <BoardListItem
               open={open}
               key={id}
@@ -81,7 +86,8 @@ export default function BoardList({ ids, board, open, onClose }: Props) {
               currentId={board.id}
               answers={localStorage[id]?.answers}
             />
-          ))}
+          )
+        )}
       </ul>
     </Container>
   );
