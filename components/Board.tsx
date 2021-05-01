@@ -54,7 +54,6 @@ export default function Board({ board, ids, showSelect }: Props) {
             <h3>{board.id}</h3>
             <Grid />
             <BoardNavigator />
-            <div>Like</div>
           </GridContainer>
           <BoardList ids={ids} board={board} open={showSelect} />
         </Store>

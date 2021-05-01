@@ -2,7 +2,8 @@ import { AnimateSharedLayout, motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import { mediumUp } from "../styles/tokens";
-import { getSortedItems } from "../utils";
+import { getSortedItems, isFullySolved } from "../utils";
+import LikeOverlay from "./LikeOverlay";
 import Row from "./Row";
 import { useStore } from "./Store";
 
@@ -42,7 +43,7 @@ export default function Grid() {
   } = useStore();
 
   const { matchedItems, remainingItems } = getSortedItems(items, answers);
-  //const fullySolved = isFullySolved(answers);
+  const fullySolved = isFullySolved(answers);
 
   return (
     <>
@@ -51,6 +52,7 @@ export default function Grid() {
       {/*<SuccessGif />*/}
       <AnimateSharedLayout>
         <BorderContainer>
+          <LikeOverlay />
           <Container layout>
             {matchedItems.map((itemRow) => (
               <Row items={itemRow} key={itemRow[0].text} />
