@@ -32,6 +32,7 @@ export enum Actions {
   ResetSelection,
   FoundAnswer,
   HydrateBoard,
+  LikeBoard,
 }
 
 type TPayloads = {
@@ -48,6 +49,7 @@ type TPayloads = {
   [Actions.HydrateBoard]: {
     board: IState;
   };
+  [Actions.LikeBoard]: Record<string, never>;
 };
 
 export type TActions = ActionMap<TPayloads>[keyof ActionMap<TPayloads>];
@@ -58,6 +60,7 @@ export interface IState {
   selection: IItem[];
   answers: IAnswer[];
   isLiked: boolean;
+  likes: number;
   clues: IClues[];
 }
 
@@ -67,6 +70,7 @@ const INITIAL_STATE: IState = {
   selection: [],
   answers: [],
   isLiked: null,
+  likes: null,
   clues: [],
 };
 
@@ -90,6 +94,33 @@ function setLocalStorage(boardId: string, answers: IAnswer[]) {
       [boardId]: {
         ...(currentData[boardId] || {}),
         answers,
+      },
+    })
+  );
+}
+
+function snapShot(boarId: string, boardState: IState) {
+  if (!isBrowser()) {
+    return;
+  }
+  console.log("boardState:", boardState);
+  debugger;
+  const currentData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  const test = {
+    ...currentData,
+    [boarId]: {
+      ...(currentData[boarId] || {}),
+      ...boardState,
+    },
+  };
+  console.log(test);
+  localStorage.setItem(
+    LOCAL_STORAGE_KEY,
+    JSON.stringify({
+      ...currentData,
+      [boarId]: {
+        ...(currentData[boarId] || {}),
+        ...boardState,
       },
     })
   );
@@ -154,8 +185,19 @@ function reducer(state: IState, action: TActions) {
         ...{
           answers: action.payload.board.answers || [],
           isLiked: action.payload.board.isLiked || false,
+          likes: action.payload.board.likes,
         },
       };
+    case Actions.LikeBoard:
+      // eslint-disable-next-line no-case-declarations
+      const newState = {
+        ...state,
+        likes: state.likes + 1,
+        isLiked: true,
+      };
+      console.log("newState", newState);
+      snapShot(state.boardId, newState);
+      return newState;
     default:
       return state;
   }
@@ -170,16 +212,18 @@ interface Props {
 export default function Store({ children, board, ids }: Props) {
   // The 3rd argument get's the 2nd argument as a parameter
   // and initializes the state only once
+  console.log(board);
   const [state, dispatch] = useReducer(
     reducer,
     INITIAL_STATE,
     (initialState) => ({
       ...initialState,
       boardId: board.id,
+      likes: board.likes,
       items: shuffle(board.items),
     })
   );
-
+  console.log(state);
   const value = useMemo(() => ({ state, dispatch, board, ids }), [
     board,
     ids,

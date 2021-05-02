@@ -41,6 +41,7 @@ export default function Grid() {
   const {
     state: { items, answers, boardId, isLiked },
   } = useStore();
+
   const fullySolved = isFullySolved(answers);
 
   const [showLikeOverlay, setShowLikeOverlay] = useState(false);

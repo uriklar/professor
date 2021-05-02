@@ -8,7 +8,7 @@ import BoardList from "./BoardList";
 import BoardCreatedDialog from "./BoardCreatedDialog";
 import WhatsNew from "./WhatsNew";
 import { useRouter } from "next/router";
-
+import { useStore } from "./Store";
 //import { MOCK_BOARD } from "../../mocks";
 import LikesCounter from "./LikesCounter";
 
@@ -53,6 +53,8 @@ export default function Board({
   showSelect,
   setShowSelect,
 }: Props) {
+  const { state } = useStore();
+  console.log("Board", state);
   return (
     <>
       <Container>

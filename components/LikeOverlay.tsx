@@ -2,6 +2,8 @@ import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { LOCAL_STORAGE_KEY } from "../utils";
+import { Actions, useStore } from "./Store";
+// dispatch({ type: Actions.SelectItem, payload: { item } });
 
 const Container = styled(motion.div)`
   position: absolute;
@@ -71,32 +73,6 @@ const X = styled(motion.div)`
   cursor: pointer;
 `;
 
-async function onLike(id: string, cb: () => any): Promise<any> {
-  try {
-    const response = await fetch("/api/like", {
-      method: "POST",
-      body: JSON.stringify({ id }),
-    });
-    if (response.status === 200) {
-      const currentData =
-        JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-      localStorage.setItem(
-        LOCAL_STORAGE_KEY,
-        JSON.stringify({
-          ...currentData,
-          [id]: {
-            ...(currentData[id] || {}),
-            isLiked: true,
-          },
-        })
-      );
-    }
-  } catch (e) {
-  } finally {
-    setTimeout(cb, 2000);
-  }
-}
-
 interface Props {
   show: boolean;
   boardId: string;
@@ -111,8 +87,23 @@ const animatePresenceProps = {
 };
 
 const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
+  const { dispatch } = useStore();
   const [innerLike, setInnerLike] = useState(isLiked);
   const animation = useAnimation();
+
+  async function onLike(id: string): Promise<any> {
+    try {
+      const response = await fetch("/api/like", {
+        method: "POST",
+        body: JSON.stringify({ id }),
+      });
+      if (response.status === 200) {
+        dispatch({ type: Actions.LikeBoard, payload: {} });
+        setShow(false);
+      }
+    } catch (e) {}
+  }
+
   return (
     <AnimatePresence>
       {show && (
@@ -138,7 +129,7 @@ const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
                 rotate: ["0deg", "20deg", "0deg"],
                 transition: { duration: 0.2, ease: "easeInOut" },
               });
-              onLike(boardId, () => setShow(false));
+              onLike(boardId);
             }}
           >
             {innerLike ? "😍" : "🤩"}
