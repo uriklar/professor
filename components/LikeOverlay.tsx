@@ -24,7 +24,7 @@ const Like = styled(motion.div)`
   display: inline-block;
   font-size: 40px;
   cursor: pointer;
-  margin-top: 32px;
+  margin-top: 8px;
 `;
 
 const Heart = styled.div<{ isLiked: boolean }>`
