@@ -1,7 +1,7 @@
 const contributors = {
   1: {
     name: "אורי קלר",
-    linkedin: "https://www.linkedin.com/in/uriklar/",
+    linkedin: "https://uriklar.dev",
   },
   2: {
     name: "מרקוס מולינה",
