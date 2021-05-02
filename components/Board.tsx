@@ -1,6 +1,6 @@
 import Grid from "../components/Grid";
 import Store from "../components/Store";
-import { IBoard } from "../types";
+import { IBoard, ILikes } from "../types";
 import React, { useState, useEffect } from "react";
 import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
@@ -23,9 +23,14 @@ const GridContainer = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
+const BoardTitle = styled.h3`
+  margin-bottom: 6px;
+`;
 export interface Props {
   board: IBoard;
   ids: string[];
+  likes: ILikes;
   showSelect: boolean;
   setShowSelect: (show: boolean) => void;
 }
@@ -52,19 +57,20 @@ export default function Board({
   ids,
   showSelect,
   setShowSelect,
+  likes,
 }: Props) {
   const { state } = useStore();
   console.log("Board", state);
   return (
     <>
       <Container>
-        <Store board={board} ids={ids}>
+        <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
-            <h3>{board.id}</h3>
+            <BoardTitle>{board.id}</BoardTitle>
+            <LikesCounter current={likes[board.id]?.likes}></LikesCounter>
             <Grid />
             <BoardNavigator />
           </GridContainer>
-          <LikesCounter current={board.likes}></LikesCounter>
           <BoardList
             ids={ids}
             board={board}

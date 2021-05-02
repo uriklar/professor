@@ -11,4 +11,25 @@ if (!admin.apps.length) {
   }
 }
 
-export default admin.firestore();
+const db = admin.firestore();
+
+export default db;
+
+export const getIds = async () => {
+  const querySnapshot = await db.collection("boards").select().get();
+  return querySnapshot.docs.map((doc) => doc.id);
+};
+
+export const getBoard = async (id) => {
+  const snapshot = await db.collection("boards").doc(id).get();
+  return snapshot.data();
+};
+
+export const getLikes = async () => {
+  const querySnapshot = await db.collection("likes").get();
+  console.log(querySnapshot.docs);
+  return querySnapshot.docs.reduce((acc, doc) => {
+    acc[doc.id] = doc.data();
+    return acc;
+  }, {});
+};

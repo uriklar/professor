@@ -15,6 +15,7 @@ import {
   IItem,
   AnswerState,
   IClues,
+  ILikes,
 } from "../types";
 import {
   difference,
@@ -79,6 +80,7 @@ const StoreContext = createContext({
   dispatch: null,
   board: null,
   ids: [],
+  likes: {},
 });
 
 function setLocalStorage(boardId: string, answers: IAnswer[]) {
@@ -207,9 +209,10 @@ interface Props {
   board: IBoard;
   children: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
   ids: string[];
+  likes: ILikes;
 }
 
-export default function Store({ children, board, ids }: Props) {
+export default function Store({ children, board, ids, likes }: Props) {
   // The 3rd argument get's the 2nd argument as a parameter
   // and initializes the state only once
   console.log(board);
@@ -219,14 +222,15 @@ export default function Store({ children, board, ids }: Props) {
     (initialState) => ({
       ...initialState,
       boardId: board.id,
-      likes: board.likes,
       items: shuffle(board.items),
+      likes: likes[board.id]?.likes,
     })
   );
-  console.log(state);
-  const value = useMemo(() => ({ state, dispatch, board, ids }), [
+
+  const value = useMemo(() => ({ state, dispatch, board, ids, likes }), [
     board,
     ids,
+    likes,
     state,
   ]);
 
@@ -273,6 +277,7 @@ export function useStore(): {
   dispatch: Dispatch<TActions>;
   board: IBoard;
   ids: string[];
+  likes: ILikes;
 } {
   return useContext(StoreContext);
 }

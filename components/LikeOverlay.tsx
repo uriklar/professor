@@ -18,43 +18,12 @@ const Container = styled(motion.div)`
   background-color: rgb(100, 181, 237, 0.8);
   z-index: 1;
   font-size: 20px;
-  color: white;
-  text-shadow: 1px 1px #5158ad;
 `;
 
 const Like = styled(motion.div)`
   display: inline-block;
   font-size: 40px;
   cursor: pointer;
-  margin-top: 8px;
-`;
-
-const Heart = styled.div<{ isLiked: boolean }>`
-  position: relative;
-  width: 100px;
-  height: 90px;
-  float: left;
-  cursor: pointer;
-  :before,
-  :after {
-    position: absolute;
-    content: "";
-    top: 0;
-    width: 25px;
-    height: 40px;
-    border-radius: 25px 25px 0 0;
-    transform: rotate(-45deg);
-    transform-origin: 0 100%;
-    background: ${({ isLiked }) => (isLiked ? "#fc2e5a" : "#ffb0c1")};
-  }
-  :after {
-    right: 50%;
-    transform: rotate(45deg);
-    transform-origin: 100% 100%;
-  }
-  :before {
-    left: 50%;
-  }
 `;
 
 const Text = styled.p`
@@ -63,6 +32,9 @@ const Text = styled.p`
   line-height: 1.4;
   font-weight: bold;
   margin-bottom: 32px;
+  background: white;
+  padding: 16px 32px;
+  box-shadow: 3px 2px 8px -1px #000000;
 `;
 
 const X = styled(motion.div)`
@@ -71,6 +43,8 @@ const X = styled(motion.div)`
   right: 16px;
   font-size: 30px;
   cursor: pointer;
+  color: white;
+  font-weight: bold;
 `;
 
 interface Props {
@@ -113,10 +87,6 @@ const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
           </X>
           <Text>אהבת את הלוח? כדאי לתת לו לייק שכולם ידעו כמה הוא טוב</Text>
 
-          {/* <Heart
-            isLiked={isLiked}
-            onClick={() => onLike(boardId, () => setShow(false))}
-          /> */}
           <Like
             animate={animation}
             onClick={async () => {
