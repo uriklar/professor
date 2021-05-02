@@ -16,15 +16,12 @@ const Container = styled(motion.div)`
   background-color: rgb(100, 181, 237, 0.8);
   z-index: 1;
   font-size: 20px;
-  color: white;
-  text-shadow: 1px 1px #5158ad;
 `;
 
 const Like = styled(motion.div)`
   display: inline-block;
   font-size: 40px;
   cursor: pointer;
-  margin-top: 8px;
 `;
 
 const Heart = styled.div<{ isLiked: boolean }>`
@@ -61,6 +58,9 @@ const Text = styled.p`
   line-height: 1.4;
   font-weight: bold;
   margin-bottom: 32px;
+  background: white;
+  padding: 16px 32px;
+  box-shadow: 3px 2px 8px -1px #000000;
 `;
 
 const X = styled(motion.div)`
@@ -69,6 +69,8 @@ const X = styled(motion.div)`
   right: 16px;
   font-size: 30px;
   cursor: pointer;
+  color: white;
+  font-weight: bold;
 `;
 
 async function onLike(id: string, cb: () => any): Promise<any> {
