@@ -8,7 +8,14 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { IAnswer, IBoard, ActionMap, IItem, AnswerState } from "../types";
+import {
+  IAnswer,
+  IBoard,
+  ActionMap,
+  IItem,
+  AnswerState,
+  IClues,
+} from "../types";
 import {
   difference,
   getConnectionCategory,
@@ -34,7 +41,7 @@ type TPayloads = {
   [Actions.FoundConnection]: {
     categoryId: string;
   };
-  [Actions.ResetSelection]: {};
+  [Actions.ResetSelection]: Record<string, never>;
   [Actions.FoundAnswer]: {
     categoryId: string;
   };
@@ -51,6 +58,7 @@ export interface IState {
   selection: IItem[];
   answers: IAnswer[];
   isLiked: boolean;
+  clues: IClues[];
 }
 
 const INITIAL_STATE: IState = {
@@ -59,6 +67,7 @@ const INITIAL_STATE: IState = {
   selection: [],
   answers: [],
   isLiked: null,
+  clues: [],
 };
 
 const StoreContext = createContext({
@@ -126,6 +135,7 @@ function reducer(state: IState, action: TActions) {
         answers: nextAnswers,
       };
     case Actions.FoundAnswer:
+      // eslint-disable-next-line no-case-declarations
       const { categoryId } = action.payload;
       nextAnswers = state.answers.map((answer) =>
         answer.categoryId === categoryId

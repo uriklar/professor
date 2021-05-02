@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IBoard } from "../types";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
 import { getLocalStorage } from "../utils";
-//@apply p-4 fixed top-0 bottom-0 w-1/6 bg-white border-l shadow
-// transition transition-all duration-200 right-0 transform translate-x-full;
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+
 const Container = styled.div<{ open: boolean }>`
   position: absolute;
   top: 0;
@@ -22,21 +22,63 @@ interface Props {
   ids: string[];
   board: IBoard;
   open: boolean;
+  onClose: () => void;
 }
-export default function BoardList({ ids, board, open }: Props) {
+
+function test(string, substring) {
+  const format = (arr) =>
+    [...arr].map((l) => l.toLowerCase()).filter((l) => l !== " " && l !== "-");
+
+  const lString = format(string);
+  const lSub = format(substring);
+
+  return lSub.every((x) => {
+    const index = lString.indexOf(x);
+    if (~index) {
+      lString.splice(index, 1);
+      return true;
+    }
+  });
+}
+
+export default function BoardList({ ids, board, open, onClose }: Props) {
+  const [query, setQuery] = useState("");
   const localStorage = getLocalStorage();
+  const ref = useRef();
+  const inputRef = useRef<HTMLInputElement>();
+  useOnClickOutside(ref, onClose);
+
+  useEffect(() => {
+    if (open) {
+      inputRef.current.focus();
+    }
+  }, [open]);
+
   return (
-    <Container open={open}>
+    <Container open={open} ref={ref}>
+      <input
+        ref={inputRef}
+        placeholder="חיפוש..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        css={`
+          margin-right: 40px;
+          padding: 4px;
+        `}
+      />
+
       <ul>
-        {ids.map((id) => (
-          <BoardListItem
-            open={open}
-            key={id}
-            id={id}
-            currentId={board.id}
-            answers={localStorage[id]?.answers}
-          />
-        ))}
+        {ids
+          .filter((id) => test(id, query))
+          .map((id) => (
+            <BoardListItem
+              open={open}
+              key={id}
+              id={id}
+              currentId={board.id}
+              answers={localStorage[id]?.answers}
+            />
+          ))}
       </ul>
     </Container>
   );
