@@ -1,14 +1,22 @@
-import db, { getBoard, getIds } from "../db";
+import { getBoard, getIds, getLikes } from "../db";
 import Board, { Props } from "../components/Board";
-import { MOCK_BOARD } from "../mocks";
+//import { MOCK_BOARD } from "../mocks";
 
-export default function Home({ board, ids, showSelect, setShowSelect }: Props) {
+export default function Home({
+  board,
+  ids,
+  showSelect,
+  setShowSelect,
+  likes,
+}: Props) {
+  console.log(likes);
   return (
     <Board
       board={board}
       ids={ids}
       showSelect={showSelect}
       setShowSelect={setShowSelect}
+      likes={likes}
     />
   );
 }
@@ -23,11 +31,12 @@ export async function getServerSideProps({ params }) {
 
   const ids = await getIds();
   const randomBoard = ids[Math.floor(Math.random() * ids.length)];
-  const board = await getBoard(randomBoard);
+  const [board, likes] = await Promise.all([getBoard(randomBoard), getLikes()]);
   return {
     props: {
       board,
       ids,
+      likes,
     },
   };
 }

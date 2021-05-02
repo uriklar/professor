@@ -24,3 +24,12 @@ export const getBoard = async (id) => {
   const snapshot = await db.collection("boards").doc(id).get();
   return snapshot.data();
 };
+
+export const getLikes = async () => {
+  const querySnapshot = await db.collection("likes").get();
+  console.log(querySnapshot.docs);
+  return querySnapshot.docs.reduce((acc, doc) => {
+    acc[doc.id] = doc.data();
+    return acc;
+  }, {});
+};

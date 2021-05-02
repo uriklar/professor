@@ -36,3 +36,7 @@ export interface IAnswer {
   categoryId: string;
   state: AnswerState;
 }
+
+export interface ILikes {
+  [boardId: string]: { likes: number };
+}
