@@ -41,25 +41,27 @@ const BoardListFilters = ({
         `}
       />
 
-      <div
-        css={`
-          font-size: 14px;
-          cursor: pointer;
-        `}
-        role="button"
-        tabIndex={0}
-        onClick={() => setSortDir(sortDir === "asc" ? "desc" : "asc")}
-      >
+      {false && (
         <div
           css={`
-            margin-bottom: 4px;
+            font-size: 14px;
+            cursor: pointer;
           `}
+          role="button"
+          tabIndex={0}
+          onClick={() => setSortDir(sortDir === "asc" ? "desc" : "asc")}
         >
-          מיון לפי:
+          <div
+            css={`
+              margin-bottom: 4px;
+            `}
+          >
+            מיון לפי:
+          </div>
+          פנויים {sortDir === "asc" ? "למעלה" : "למטה"}{" "}
+          {sortDir === "asc" ? "⬆" : "⬇"}
         </div>
-        פנויים {sortDir === "asc" ? "למעלה" : "למטה"}{" "}
-        {sortDir === "asc" ? "⬆" : "⬇"}
-      </div>
+      )}
     </div>
   );
 };
