@@ -1,4 +1,4 @@
-import db from "../../db";
+import db, { getBoard, getIds } from "../../db";
 import Board, { Props } from "../../components/Board";
 import React from "react";
 import Head from "next/head";
@@ -28,16 +28,14 @@ export async function getServerSideProps({ params }) {
   // await docRef.set(MOCK_BOARD);
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
 
-  const snapshot = await db
-    .collection("boards")
-    .doc(`${params.username}-${params.id}`)
-    .get();
-  const querySnapshot = await db.collection("boards").select().get();
-  const ids = querySnapshot.docs.map((doc) => doc.id);
+  const [board, ids] = await Promise.all([
+    getBoard(`${params.username}-${params.id}`),
+    getIds(),
+  ]);
 
   return {
     props: {
-      board: snapshot.data(),
+      board,
       ids,
     },
   };
