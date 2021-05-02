@@ -24,34 +24,6 @@ const Like = styled(motion.div)`
   cursor: pointer;
 `;
 
-const Heart = styled.div<{ isLiked: boolean }>`
-  position: relative;
-  width: 100px;
-  height: 90px;
-  float: left;
-  cursor: pointer;
-  :before,
-  :after {
-    position: absolute;
-    content: "";
-    top: 0;
-    width: 25px;
-    height: 40px;
-    border-radius: 25px 25px 0 0;
-    transform: rotate(-45deg);
-    transform-origin: 0 100%;
-    background: ${({ isLiked }) => (isLiked ? "#fc2e5a" : "#ffb0c1")};
-  }
-  :after {
-    right: 50%;
-    transform: rotate(45deg);
-    transform-origin: 100% 100%;
-  }
-  :before {
-    left: 50%;
-  }
-`;
-
 const Text = styled.p`
   width: 70%;
   text-align: center;
@@ -124,10 +96,6 @@ const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
           </X>
           <Text>אהבת את הלוח? כדאי לתת לו לייק שכולם ידעו כמה הוא טוב</Text>
 
-          {/* <Heart
-            isLiked={isLiked}
-            onClick={() => onLike(boardId, () => setShow(false))}
-          /> */}
           <Like
             animate={animation}
             onClick={async () => {
