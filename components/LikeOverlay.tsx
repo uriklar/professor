@@ -1,8 +1,9 @@
-import React from "react";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { LOCAL_STORAGE_KEY } from "../utils";
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -12,56 +13,63 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(124, 124, 124, 0.842);
+  background-color: rgb(100, 181, 237, 0.8);
   z-index: 1;
   font-size: 20px;
-  .heart {
-    position: relative;
-    width: 100px;
-    height: 90px;
-    float: left;
-  }
-  .heart:before,
-  .heart:after {
+  color: white;
+  text-shadow: 1px 1px #5158ad;
+`;
+
+const Like = styled(motion.div)`
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  margin-top: 8px;
+`;
+
+const Heart = styled.div<{ isLiked: boolean }>`
+  position: relative;
+  width: 100px;
+  height: 90px;
+  float: left;
+  cursor: pointer;
+  :before,
+  :after {
     position: absolute;
     content: "";
-    left: 50px;
     top: 0;
-    width: 50px;
-    height: 80px;
-    background: #fc2e5a;
-    -moz-border-radius: 50px 50px 0 0;
-    border-radius: 50px 50px 0 0;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
+    width: 25px;
+    height: 40px;
+    border-radius: 25px 25px 0 0;
     transform: rotate(-45deg);
-    -webkit-transform-origin: 0 100%;
-    -moz-transform-origin: 0 100%;
-    -ms-transform-origin: 0 100%;
-    -o-transform-origin: 0 100%;
     transform-origin: 0 100%;
+    background: ${({ isLiked }) => (isLiked ? "#fc2e5a" : "#ffb0c1")};
   }
-  .heart:after {
-    left: 0;
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
+  :after {
+    right: 50%;
     transform: rotate(45deg);
-    -webkit-transform-origin: 100% 100%;
-    -moz-transform-origin: 100% 100%;
-    -ms-transform-origin: 100% 100%;
-    -o-transform-origin: 100% 100%;
     transform-origin: 100% 100%;
   }
+  :before {
+    left: 50%;
+  }
 `;
-interface Props {
-  show: boolean;
-  boardId: string;
-  close: () => void;
-}
+
+const Text = styled.p`
+  width: 70%;
+  text-align: center;
+  line-height: 1.4;
+  font-weight: bold;
+  margin-bottom: 32px;
+`;
+
+const X = styled(motion.div)`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 30px;
+  cursor: pointer;
+`;
 
 async function onLike(id: string, cb: () => any): Promise<any> {
   try {
@@ -85,46 +93,60 @@ async function onLike(id: string, cb: () => any): Promise<any> {
     }
   } catch (e) {
   } finally {
-    cb();
+    setTimeout(cb, 2000);
   }
 }
 
-const LikeOverlay = ({ show, boardId, close }: Props) => {
-  return show ? (
-    <Container>
-      <div
-        onClick={() => {
-          close();
-        }}
-        css={`
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          font-size: 30px;
-        `}
-      >
-        ⓧ
-      </div>
-      <p
-        css={`
-          width: 70%;
-          text-align: center;
-          line-height: 1.4;
-          font-weight: bold;
-        `}
-      >
-        אהבת את הלוח?? כדאי לתת לו לייק כדי שגם אחרים ידעו שהוא טוב
-      </p>
+interface Props {
+  show: boolean;
+  boardId: string;
+  setShow: (value: React.SetStateAction<boolean>) => void;
+  isLiked: boolean;
+}
 
-      <div
-        onClick={() => {
-          onLike(boardId, close);
-        }}
-      >
-        <div className="heart"></div>
-      </div>
-    </Container>
-  ) : null;
+const animatePresenceProps = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
+  const [innerLike, setInnerLike] = useState(isLiked);
+  const animation = useAnimation();
+  return (
+    <AnimatePresence>
+      {show && (
+        <Container {...animatePresenceProps}>
+          <X onClick={() => setShow(false)} {...animatePresenceProps}>
+            ⓧ
+          </X>
+          <Text>אהבת את הלוח? כדאי לתת לו לייק שכולם ידעו כמה הוא טוב</Text>
+
+          {/* <Heart
+            isLiked={isLiked}
+            onClick={() => onLike(boardId, () => setShow(false))}
+          /> */}
+          <Like
+            animate={animation}
+            onClick={async () => {
+              setInnerLike(true);
+              await animation.start({
+                scale: 2.5,
+                transition: { duration: 0.2, ease: "easeInOut" },
+              });
+              await animation.start({
+                rotate: ["0deg", "20deg", "0deg"],
+                transition: { duration: 0.2, ease: "easeInOut" },
+              });
+              onLike(boardId, () => setShow(false));
+            }}
+          >
+            {innerLike ? "😍" : "🤩"}
+          </Like>
+        </Container>
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default LikeOverlay;
