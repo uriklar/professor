@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
-import React from "react";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { LOCAL_STORAGE_KEY } from "../utils";
 
@@ -18,6 +18,13 @@ const Container = styled(motion.div)`
   font-size: 20px;
   color: white;
   text-shadow: 1px 1px #5158ad;
+`;
+
+const Like = styled(motion.div)`
+  display: inline-block;
+  font-size: 40px;
+  cursor: pointer;
+  margin-top: 32px;
 `;
 
 const Heart = styled.div<{ isLiked: boolean }>`
@@ -86,7 +93,7 @@ async function onLike(id: string, cb: () => any): Promise<any> {
     }
   } catch (e) {
   } finally {
-    setTimeout(cb, 1500);
+    setTimeout(cb, 2000);
   }
 }
 
@@ -104,6 +111,8 @@ const animatePresenceProps = {
 };
 
 const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
+  const [innerLike, setInnerLike] = useState(isLiked);
+  const animation = useAnimation();
   return (
     <AnimatePresence>
       {show && (
@@ -113,10 +122,23 @@ const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
           </X>
           <Text>אהבת את הלוח? כדאי לתת לו לייק שכולם ידעו כמה הוא טוב</Text>
 
-          <Heart
+          {/* <Heart
             isLiked={isLiked}
             onClick={() => onLike(boardId, () => setShow(false))}
-          />
+          /> */}
+          <Like
+            animate={animation}
+            onClick={async () => {
+              setInnerLike(true);
+              await animation.start({
+                scale: 2.5,
+                transition: { duration: 0.2, ease: "easeInOut" },
+              });
+              onLike(boardId, () => setShow(false));
+            }}
+          >
+            {innerLike ? "😍" : "🤩"}
+          </Like>
         </Container>
       )}
     </AnimatePresence>
