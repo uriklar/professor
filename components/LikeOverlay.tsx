@@ -134,6 +134,10 @@ const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
                 scale: 2.5,
                 transition: { duration: 0.2, ease: "easeInOut" },
               });
+              await animation.start({
+                rotate: ["0deg", "20deg", "0deg"],
+                transition: { duration: 0.2, ease: "easeInOut" },
+              });
               onLike(boardId, () => setShow(false));
             }}
           >
