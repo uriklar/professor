@@ -18,7 +18,7 @@ const Like = styled.span`
 `;
 const getText = (number: number): string => {
   return number === 1
-    ? " מישהו אהב את הלוח הזה "
+    ? "הלוח הזה קיבל לייק"
     : String(number) + " אנשים אהבו את הלוח הזה";
 };
 
