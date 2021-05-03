@@ -32,6 +32,12 @@ const VERSIONS: IVersion[] = [
     text:
       "מהיום אפשר להוסיף ללוחות רמז! את הרמזים מזינים בטופס יצירת הלוח, והאפשרות לקבל רמז תופיע 2 דקות לאחר מציאת כל הרביעיות",
   },
+  {
+    number: 3,
+    contributor: 2,
+    text:
+      ".אהבתם לוח? מהיום אפשר לתת לו 😍 ובכך לסמן למשתמשים אחרים שהלוח הזה טוב (האפשרות תופיע בסיום הלוח) ",
+  },
 ];
 
 const LOCAL_STORAGE_KEY = "openprofessor__version";

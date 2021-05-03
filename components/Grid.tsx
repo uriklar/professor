@@ -1,10 +1,11 @@
 import { AnimateSharedLayout, motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mediumUp } from "../styles/tokens";
-import { getSortedItems } from "../utils";
+import { getSortedItems, isFullySolved } from "../utils";
 import Row from "./Row";
 import { useStore } from "./Store";
+import LikeOverlay from "./LikeOverlay";
 
 const BorderContainer = styled.div`
   border-style: solid;
@@ -38,19 +39,30 @@ const Container = styled(motion.div)`
 
 export default function Grid() {
   const {
-    state: { items, answers },
+    state: { items, answers, boardId, isLiked },
   } = useStore();
 
-  const { matchedItems, remainingItems } = getSortedItems(items, answers);
-  //const fullySolved = isFullySolved(answers);
+  const fullySolved = isFullySolved(answers);
 
+  const [showLikeOverlay, setShowLikeOverlay] = useState(false);
+
+  useEffect(() => {
+    if (fullySolved && !isLiked) {
+      setShowLikeOverlay(true);
+    }
+  }, [fullySolved, isLiked]);
+
+  const { matchedItems, remainingItems } = getSortedItems(items, answers);
   return (
     <>
-      {/* Removed this for now, but we'll defenitly want to pop something up once
-      the board is fully solved  */}
-      {/*<SuccessGif />*/}
       <AnimateSharedLayout>
         <BorderContainer>
+          <LikeOverlay
+            show={showLikeOverlay}
+            setShow={setShowLikeOverlay}
+            boardId={boardId}
+            isLiked={isLiked}
+          />
           <Container layout>
             {matchedItems.map((itemRow) => (
               <Row items={itemRow} key={itemRow[0].text} />

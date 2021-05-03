@@ -129,6 +129,7 @@ export const EMPTY_BOARD = {
     "3": [],
     "4": [],
   },
+  likes: 0,
 };
 
 export const isBrowser = () => typeof window !== "undefined";
