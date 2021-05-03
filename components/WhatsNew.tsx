@@ -36,7 +36,7 @@ const VERSIONS: IVersion[] = [
     number: 3,
     contributor: 2,
     text:
-      ".אהבתם לוח? מהיום אפשר לתת לו 😍 ובכך לסמן למשתמשים אחרים שהלוח הזה טוב",
+      ".אהבתם לוח? מהיום אפשר לתת לו 😍 ובכך לסמן למשתמשים אחרים שהלוח הזה טוב (האפשרות תופיע בסיום הלוח) ",
   },
 ];
 
