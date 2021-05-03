@@ -7,7 +7,7 @@ export default async (req, res) => {
   const { id } = JSON.parse(req.body);
   try {
     const likeRef = db.collection("likes").doc(id);
-    const writeResult = await likeRef.update({ likes: incrementByOne });
+    const writeResult = await likeRef.set({ likes: incrementByOne });
     return res.status(200).json(writeResult);
   } catch (error) {
     return res.status(400).json({
