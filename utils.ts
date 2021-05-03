@@ -219,3 +219,40 @@ export function getNextFreeId(username: string, ids: string[]) {
 
   return String(lowest);
 }
+
+export function sortBySolvedState(
+  _a: IAnswer[],
+  _b: IAnswer[],
+  sortDir: "asc" | "desc"
+) {
+  let a, b;
+
+  if (sortDir === "asc") {
+    a = _a;
+    b = _b;
+  } else {
+    b = _a;
+    a = _b;
+  }
+
+  if (!a && !b) {
+    return 1;
+  }
+
+  if (a && !b) {
+    return 1;
+  }
+
+  if (b && !a) {
+    return -1;
+  }
+
+  if (a.length !== b.length) {
+    return a.length - b.length;
+  }
+
+  const aAnswered = a.filter((answer) => answer.state === AnswerState.Answered);
+  const bAnswered = b.filter((answer) => answer.state === AnswerState.Answered);
+
+  return aAnswered.length - bAnswered.length;
+}

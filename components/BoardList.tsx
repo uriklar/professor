@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { IBoard } from "../types";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
-import { getLocalStorage } from "../utils";
+import { getLocalStorage, sortBySolvedState } from "../utils";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import BoardListFilters from "./BoardListFilters";
 
 const Container = styled.div<{ open: boolean }>`
   position: absolute;
@@ -41,36 +42,42 @@ function test(string, substring) {
   });
 }
 
+function getSortedAndFilteredIds(
+  ids: string[],
+  localStorage: any,
+  query: string,
+  sortDir: "asc" | "desc"
+) {
+  return ids.filter((id) => test(id, query));
+  // .sort((a, b) =>
+  //   sortBySolvedState(
+  //     localStorage[a]?.answers,
+  //     localStorage[b]?.answers,
+  //     sortDir
+  //   )
+  // );
+}
+
 export default function BoardList({ ids, board, open, onClose }: Props) {
   const [query, setQuery] = useState("");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const localStorage = getLocalStorage();
   const ref = useRef();
-  const inputRef = useRef<HTMLInputElement>();
   useOnClickOutside(ref, onClose);
-
-  useEffect(() => {
-    if (open) {
-      inputRef.current.focus();
-    }
-  }, [open]);
 
   return (
     <Container open={open} ref={ref}>
-      <input
-        ref={inputRef}
-        placeholder="חיפוש..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        css={`
-          margin-right: 40px;
-          padding: 4px;
-        `}
+      <BoardListFilters
+        open={open}
+        query={query}
+        setQuery={setQuery}
+        sortDir={sortDir}
+        setSortDir={setSortDir}
       />
 
       <ul>
-        {ids
-          .filter((id) => test(id, query))
-          .map((id) => (
+        {getSortedAndFilteredIds(ids, localStorage, query, sortDir).map(
+          (id) => (
             <BoardListItem
               open={open}
               key={id}
@@ -78,7 +85,8 @@ export default function BoardList({ ids, board, open, onClose }: Props) {
               currentId={board.id}
               answers={localStorage[id]?.answers}
             />
-          ))}
+          )
+        )}
       </ul>
     </Container>
   );
