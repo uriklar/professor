@@ -9,7 +9,6 @@ export default function Home({
   setShowSelect,
   likes,
 }: Props) {
-  console.log(likes);
   return (
     <Board
       board={board}

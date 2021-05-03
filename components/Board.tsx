@@ -59,15 +59,13 @@ export default function Board({
   setShowSelect,
   likes,
 }: Props) {
-  const { state } = useStore();
-  console.log("Board", state);
   return (
     <>
       <Container>
         <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
             <BoardTitle>{board.id}</BoardTitle>
-            <LikesCounter current={likes[board.id]?.likes}></LikesCounter>
+            <LikesCounter />
             <Grid />
             <BoardNavigator />
           </GridContainer>

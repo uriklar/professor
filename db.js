@@ -27,7 +27,6 @@ export const getBoard = async (id) => {
 
 export const getLikes = async () => {
   const querySnapshot = await db.collection("likes").get();
-  console.log(querySnapshot.docs);
   return querySnapshot.docs.reduce((acc, doc) => {
     acc[doc.id] = doc.data();
     return acc;

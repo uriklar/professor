@@ -24,7 +24,6 @@ export interface IBoard {
   id: string;
   items: IItem[];
   answers: IAnswers;
-  likes: number;
   clues?: IClues;
 }
 

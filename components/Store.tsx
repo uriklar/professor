@@ -101,21 +101,12 @@ function setLocalStorage(boardId: string, answers: IAnswer[]) {
   );
 }
 
-function snapShot(boarId: string, boardState: IState) {
+function boardSnapShot(boarId: string, boardState: IState) {
   if (!isBrowser()) {
     return;
   }
-  console.log("boardState:", boardState);
-  debugger;
   const currentData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-  const test = {
-    ...currentData,
-    [boarId]: {
-      ...(currentData[boarId] || {}),
-      ...boardState,
-    },
-  };
-  console.log(test);
+
   localStorage.setItem(
     LOCAL_STORAGE_KEY,
     JSON.stringify({
@@ -187,19 +178,17 @@ function reducer(state: IState, action: TActions) {
         ...{
           answers: action.payload.board.answers || [],
           isLiked: action.payload.board.isLiked || false,
-          likes: action.payload.board.likes,
         },
       };
     case Actions.LikeBoard:
       // eslint-disable-next-line no-case-declarations
-      const newState = {
+      const nextState = {
         ...state,
         likes: state.likes + 1,
         isLiked: true,
       };
-      console.log("newState", newState);
-      snapShot(state.boardId, newState);
-      return newState;
+      boardSnapShot(state.boardId, nextState);
+      return nextState;
     default:
       return state;
   }
@@ -215,7 +204,6 @@ interface Props {
 export default function Store({ children, board, ids, likes }: Props) {
   // The 3rd argument get's the 2nd argument as a parameter
   // and initializes the state only once
-  console.log(board);
   const [state, dispatch] = useReducer(
     reducer,
     INITIAL_STATE,

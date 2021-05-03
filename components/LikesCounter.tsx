@@ -1,9 +1,5 @@
 import styled from "styled-components";
-
-interface Props {
-  current: number;
-}
-
+import { useStore } from "./Store";
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -26,11 +22,14 @@ const getText = (number: number): string => {
     : String(number) + " אנשים אהבו את הלוח הזה";
 };
 
-export default function LikesCounter({ current }: Props) {
-  return current ? (
+export default function LikesCounter() {
+  const {
+    state: { likes },
+  } = useStore();
+  return likes ? (
     <Container>
       <Like>😍</Like>
-      <Text>{getText(current)}</Text>
+      <Text>{getText(likes)}</Text>
     </Container>
   ) : null;
 }
