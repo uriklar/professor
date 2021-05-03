@@ -211,7 +211,7 @@ export default function Store({ children, board, ids, likes }: Props) {
       ...initialState,
       boardId: board.id,
       items: shuffle(board.items),
-      likes: likes[board.id]?.likes,
+      likes: likes[board.id]?.likes || 0,
     })
   );
 
