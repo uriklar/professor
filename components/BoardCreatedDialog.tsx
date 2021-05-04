@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "@reach/dialog/styles.css";
+import Button from "./common/Button";
 
 const ContentContainer = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ export default function BoardCreatedDialog() {
     <Dialog isOpen={showDialog} onDismiss={closeDialog}>
       <ContentContainer>
         <p> הלוח נוצר בהצלחה!</p>
-        <button onClick={closeDialog}>הבנתי, תודה</button>
+        <Button onClick={closeDialog}>הבנתי, תודה</Button>
       </ContentContainer>
     </Dialog>
   );

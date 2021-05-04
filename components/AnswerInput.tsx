@@ -1,38 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Actions, useStore } from "./Store";
 import { compareTwoStrings } from "string-similarity";
-import { stripCharsForStringCompare } from "../utils";
+import { isFullySolved, stripCharsForStringCompare } from "../utils";
+import { AnswerState, IBoard } from "../types";
+import Button from "./common/Button";
 
 interface Props {
   categoryId: string;
 }
 
+const TWO_MINUTES = 120000;
+
 const Container = styled(motion.div)`
   grid-column: span 4;
   display: flex;
   align-items: center;
+  gap: 10px;
 
   input {
     width: 50%;
     padding: 4px;
     font-size: 18px;
   }
-
-  button {
-    padding: 4px 16px;
-    background: #2e3161;
-    color: white;
-    margin-right: 16px;
-    font-size: 18px;
-
-    &:focus-within {
-      background: #6971e0;
-      transition: 200ms ease;
-    }
-  }
 `;
+
+function useShouldShowClues(board: IBoard, categoryId: string) {
+  const {
+    state: { answers },
+  } = useStore();
+
+  const [showClues, setShowClues] = useState(false);
+
+  const fullySolved = isFullySolved(answers, AnswerState.Matched);
+
+  useEffect(() => {
+    if (fullySolved && !!board.clues?.[categoryId]) {
+      setTimeout(() => setShowClues(true), TWO_MINUTES);
+    }
+  }, [board.clues, categoryId, fullySolved]);
+
+  return showClues;
+}
 
 export default function AnswerInput({ categoryId }: Props) {
   const [value, setValue] = useState("");
@@ -63,6 +73,8 @@ export default function AnswerInput({ categoryId }: Props) {
     }
   };
 
+  const shouldShowClues = useShouldShowClues(board, categoryId);
+
   return (
     <Container>
       <input
@@ -71,7 +83,31 @@ export default function AnswerInput({ categoryId }: Props) {
         onKeyPress={onKeyPress}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button onClick={onSubmit}>בום</button>
+      <Button onClick={onSubmit}>בום</Button>
+      {shouldShowClues && (
+        <ClueButton
+          onClick={() => {
+            alert(board.clues[categoryId]);
+          }}
+        >
+          <span
+            css={`
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              right: 0;
+              font-size: 16px;
+            `}
+          >
+            💡
+          </span>{" "}
+          רמז
+        </ClueButton>
+      )}
     </Container>
   );
 }
+
+const ClueButton = styled(Button)`
+  position: relative;
+`;

@@ -1,13 +1,16 @@
 import Grid from "../components/Grid";
 import Store from "../components/Store";
-import { IBoard } from "../types";
-import React from "react";
+import { IBoard, ILikes } from "../types";
+import React, { useState, useEffect } from "react";
 import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
 import BoardList from "./BoardList";
 import BoardCreatedDialog from "./BoardCreatedDialog";
 import WhatsNew from "./WhatsNew";
+import { useRouter } from "next/router";
+import { useStore } from "./Store";
 //import { MOCK_BOARD } from "../../mocks";
+import LikesCounter from "./LikesCounter";
 
 const Container = styled.main`
   padding: 10px;
@@ -20,25 +23,49 @@ const GridContainer = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
+const BoardTitle = styled.h3`
+  margin-bottom: 6px;
+`;
 export interface Props {
   board: IBoard;
   ids: string[];
+  likes: ILikes;
   showSelect: boolean;
   setShowSelect: (show: boolean) => void;
 }
 
+function useToast() {
+  const [showToast, setShowToast] = useState(false);
+  const closeToast = () => setShowToast(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const { toast } = router.query;
+    if (toast === "new") {
+      setShowToast(true);
+    }
+  }, [router.query]);
+
+  return {
+    showToast,
+    closeToast,
+  };
+}
 export default function Board({
   board,
   ids,
   showSelect,
   setShowSelect,
+  likes,
 }: Props) {
   return (
     <>
       <Container>
-        <Store board={board} ids={ids}>
+        <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
-            <h3>{board.id}</h3>
+            <BoardTitle>{board.id}</BoardTitle>
+            <LikesCounter />
             <Grid />
             <BoardNavigator />
           </GridContainer>

@@ -117,12 +117,19 @@ export const EMPTY_BOARD = {
     { text: "", categoryId: "4" },
     { text: "", categoryId: "4" },
   ],
+  clues: {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+  },
   answers: {
     "1": [],
     "2": [],
     "3": [],
     "4": [],
   },
+  likes: 0,
 };
 
 export const isBrowser = () => typeof window !== "undefined";
@@ -145,10 +152,11 @@ export const getBoardUrlFromId = (id: string) => {
   return `/${splitId.join("-")}/${boardId}`;
 };
 
-export function isFullySolved(answers: IAnswer[]): boolean {
-  const answeredCategories = answers.filter(
-    (answer) => answer.state === AnswerState.Answered
-  );
+export function isFullySolved(
+  answers: IAnswer[],
+  state: AnswerState = AnswerState.Answered
+): boolean {
+  const answeredCategories = answers.filter((answer) => answer.state === state);
 
   return answeredCategories.length === 4;
 }
@@ -181,4 +189,70 @@ export function squareColorByState(state: AnswerState | "selected") {
 
 export function stripCharsForStringCompare(string: string) {
   return string.replace("'", "");
+}
+
+export function getNextFreeId(username: string, ids: string[]) {
+  const userIds = ids
+    .reduce((acc, id) => {
+      const splitId = id.split("-");
+      const boardId = splitId[splitId.length - 1];
+      splitId.splice(-1, 1);
+      const boardUsername = splitId.join("-");
+
+      return boardUsername === username ? [...acc, Number(boardId)] : acc;
+    }, [])
+    .sort((a, b) => a - b);
+  let lowest = -1;
+  for (let i = 1; i < userIds.length + 1; ++i) {
+    if (userIds[i - 1] != i) {
+      lowest = i;
+      break;
+    }
+  }
+  if (lowest == -1) {
+    if (!userIds.length) {
+      lowest = 1;
+    } else {
+      lowest = userIds[userIds.length - 1] + 1;
+    }
+  }
+
+  return String(lowest);
+}
+
+export function sortBySolvedState(
+  _a: IAnswer[],
+  _b: IAnswer[],
+  sortDir: "asc" | "desc"
+) {
+  let a, b;
+
+  if (sortDir === "asc") {
+    a = _a;
+    b = _b;
+  } else {
+    b = _a;
+    a = _b;
+  }
+
+  if (!a && !b) {
+    return 1;
+  }
+
+  if (a && !b) {
+    return 1;
+  }
+
+  if (b && !a) {
+    return -1;
+  }
+
+  if (a.length !== b.length) {
+    return a.length - b.length;
+  }
+
+  const aAnswered = a.filter((answer) => answer.state === AnswerState.Answered);
+  const bAnswered = b.filter((answer) => answer.state === AnswerState.Answered);
+
+  return aAnswered.length - bAnswered.length;
 }

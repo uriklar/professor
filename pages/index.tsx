@@ -1,14 +1,21 @@
-import db from "../db";
+import { getBoard, getIds, getLikes } from "../db";
 import Board, { Props } from "../components/Board";
-//import { MOCK_BOARD } from "../../mocks";
+//import { MOCK_BOARD } from "../mocks";
 
-export default function Home({ board, ids, showSelect, setShowSelect }: Props) {
+export default function Home({
+  board,
+  ids,
+  showSelect,
+  setShowSelect,
+  likes,
+}: Props) {
   return (
     <Board
       board={board}
       ids={ids}
       showSelect={showSelect}
       setShowSelect={setShowSelect}
+      likes={likes}
     />
   );
 }
@@ -17,19 +24,18 @@ export async function getServerSideProps({ params }) {
   // I tried creating a node script to seed the data, but had issues
   // If you feel like giving this a shot for a better solution then what I did here, feel free
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
-  // const docRef = db.collection("boards").doc("testing");
+  // const docRef = db.collection("boards").doc("testing-1");
   // await docRef.set(MOCK_BOARD);
   // Seed data - COMMENT THESE LINES OUT AFTER FIRST TIME RUNNING THE APP
 
-  const querySnapshot = await db.collection("boards").select().get();
-  const ids = querySnapshot.docs.map((doc) => doc.id);
+  const ids = await getIds();
   const randomBoard = ids[Math.floor(Math.random() * ids.length)];
-  const snapshot = await db.collection("boards").doc(randomBoard).get();
-
+  const [board, likes] = await Promise.all([getBoard(randomBoard), getLikes()]);
   return {
     props: {
-      board: snapshot.data(),
+      board,
       ids,
+      likes,
     },
   };
 }

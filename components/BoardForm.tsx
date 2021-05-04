@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import slugify from "slugify";
 import { IBoard, IItem } from "../types";
 import {
   EMPTY_BOARD,
   generateBoardUrl,
+  getNextFreeId,
   toChunks,
   validateIsEnglish,
 } from "../utils";
 import CategoryForm from "./CategoryForm";
+import Button from "./common/Button";
 
-function useCreateBoard(id: string) {
+function useCreateBoard(ids: string[]) {
   const [board, setBoard] = useState(EMPTY_BOARD);
   const [username, setUsername] = useState("");
+
+  const id = getNextFreeId(username, ids);
 
   const onItemBlur = (value: string, index: number) => {
     const nextItems = board.items.map((item, i) => {
@@ -24,7 +27,15 @@ function useCreateBoard(id: string) {
       items: nextItems,
     });
   };
-
+  const onClueBlur = (categoryId: string, value: string) => {
+    setBoard({
+      ...board,
+      clues: {
+        ...board.clues,
+        [categoryId]: value,
+      },
+    });
+  };
   const onAnswersBlur = (value: string[], categoryId: string) => {
     setBoard({
       ...board,
@@ -39,6 +50,7 @@ function useCreateBoard(id: string) {
   const categories = toChunks<IItem>(board.items, 4);
 
   return {
+    id,
     board,
     username,
     boardUrl,
@@ -46,11 +58,12 @@ function useCreateBoard(id: string) {
     setUsername,
     onItemBlur,
     onAnswersBlur,
+    onClueBlur,
   };
 }
 
 interface Props {
-  id: string;
+  ids: string[];
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
     username: string,
@@ -59,16 +72,18 @@ interface Props {
   ) => void;
 }
 
-export default function CreateBoard({ id, onSubmit }: Props) {
+export default function CreateBoard({ onSubmit, ids }: Props) {
   const {
+    id,
     board,
     username,
     setUsername,
     onAnswersBlur,
     onItemBlur,
+    onClueBlur,
     boardUrl,
     categories,
-  } = useCreateBoard(id);
+  } = useCreateBoard(ids);
 
   return (
     <div>
@@ -115,10 +130,11 @@ export default function CreateBoard({ id, onSubmit }: Props) {
               categoryIndex={index}
               onItemBlur={onItemBlur}
               onAnswersBlur={onAnswersBlur}
+              onClueBlur={onClueBlur}
             />
           ))}
 
-          <button type="submit">סיימתי</button>
+          <Button type="submit">סיימתי</Button>
         </form>
       </main>
     </div>

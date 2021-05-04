@@ -8,7 +8,15 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { IAnswer, IBoard, ActionMap, IItem, AnswerState } from "../types";
+import {
+  IAnswer,
+  IBoard,
+  ActionMap,
+  IItem,
+  AnswerState,
+  IClues,
+  ILikes,
+} from "../types";
 import {
   difference,
   getConnectionCategory,
@@ -25,6 +33,7 @@ export enum Actions {
   ResetSelection,
   FoundAnswer,
   HydrateBoard,
+  LikeBoard,
 }
 
 type TPayloads = {
@@ -39,8 +48,9 @@ type TPayloads = {
     categoryId: string;
   };
   [Actions.HydrateBoard]: {
-    answers: IAnswer[];
+    board: IState;
   };
+  [Actions.LikeBoard]: Record<string, never>;
 };
 
 export type TActions = ActionMap<TPayloads>[keyof ActionMap<TPayloads>];
@@ -50,6 +60,9 @@ export interface IState {
   items: IItem[];
   selection: IItem[];
   answers: IAnswer[];
+  isLiked: boolean;
+  likes: number;
+  clues: IClues[];
 }
 
 const INITIAL_STATE: IState = {
@@ -57,6 +70,9 @@ const INITIAL_STATE: IState = {
   items: [],
   selection: [],
   answers: [],
+  isLiked: null,
+  likes: null,
+  clues: [],
 };
 
 const StoreContext = createContext({
@@ -64,6 +80,7 @@ const StoreContext = createContext({
   dispatch: null,
   board: null,
   ids: [],
+  likes: {},
 });
 
 function setLocalStorage(boardId: string, answers: IAnswer[]) {
@@ -79,6 +96,24 @@ function setLocalStorage(boardId: string, answers: IAnswer[]) {
       [boardId]: {
         ...(currentData[boardId] || {}),
         answers,
+      },
+    })
+  );
+}
+
+function boardSnapShot(boarId: string, boardState: IState) {
+  if (!isBrowser()) {
+    return;
+  }
+  const currentData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+
+  localStorage.setItem(
+    LOCAL_STORAGE_KEY,
+    JSON.stringify({
+      ...currentData,
+      [boarId]: {
+        ...(currentData[boarId] || {}),
+        ...boardState,
       },
     })
   );
@@ -140,8 +175,20 @@ function reducer(state: IState, action: TActions) {
     case Actions.HydrateBoard:
       return {
         ...state,
-        answers: action.payload.answers || [],
+        ...{
+          answers: action.payload.board.answers || [],
+          isLiked: action.payload.board.isLiked || false,
+        },
       };
+    case Actions.LikeBoard:
+      // eslint-disable-next-line no-case-declarations
+      const nextState = {
+        ...state,
+        likes: state.likes + 1,
+        isLiked: true,
+      };
+      boardSnapShot(state.boardId, nextState);
+      return nextState;
     default:
       return state;
   }
@@ -151,9 +198,10 @@ interface Props {
   board: IBoard;
   children: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
   ids: string[];
+  likes: ILikes;
 }
 
-export default function Store({ children, board, ids }: Props) {
+export default function Store({ children, board, ids, likes }: Props) {
   // The 3rd argument get's the 2nd argument as a parameter
   // and initializes the state only once
   const [state, dispatch] = useReducer(
@@ -163,12 +211,14 @@ export default function Store({ children, board, ids }: Props) {
       ...initialState,
       boardId: board.id,
       items: shuffle(board.items),
+      likes: likes[board.id]?.likes || 0,
     })
   );
 
-  const value = useMemo(() => ({ state, dispatch, board, ids }), [
+  const value = useMemo(() => ({ state, dispatch, board, ids, likes }), [
     board,
     ids,
+    likes,
     state,
   ]);
 
@@ -199,7 +249,7 @@ export default function Store({ children, board, ids }: Props) {
       if (boardStorage) {
         dispatch({
           type: Actions.HydrateBoard,
-          payload: { answers: boardStorage.answers },
+          payload: { board: boardStorage },
         });
       }
     }
@@ -215,6 +265,7 @@ export function useStore(): {
   dispatch: Dispatch<TActions>;
   board: IBoard;
   ids: string[];
+  likes: ILikes;
 } {
   return useContext(StoreContext);
 }

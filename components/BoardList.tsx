@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { IBoard } from "../types";
 import BoardListItem from "./BoardListItem";
 import styled from "styled-components";
-import { getLocalStorage } from "../utils";
+import { getLocalStorage, sortBySolvedState } from "../utils";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import BoardListFilters from "./BoardListFilters";
 
 const Container = styled.div<{ open: boolean }>`
   position: absolute;
@@ -24,23 +25,68 @@ interface Props {
   open: boolean;
   onClose: () => void;
 }
+
+function test(string, substring) {
+  const format = (arr) =>
+    [...arr].map((l) => l.toLowerCase()).filter((l) => l !== " " && l !== "-");
+
+  const lString = format(string);
+  const lSub = format(substring);
+
+  return lSub.every((x) => {
+    const index = lString.indexOf(x);
+    if (~index) {
+      lString.splice(index, 1);
+      return true;
+    }
+  });
+}
+
+function getSortedAndFilteredIds(
+  ids: string[],
+  localStorage: any,
+  query: string,
+  sortDir: "asc" | "desc"
+) {
+  return ids.filter((id) => test(id, query));
+  // .sort((a, b) =>
+  //   sortBySolvedState(
+  //     localStorage[a]?.answers,
+  //     localStorage[b]?.answers,
+  //     sortDir
+  //   )
+  // );
+}
+
 export default function BoardList({ ids, board, open, onClose }: Props) {
+  const [query, setQuery] = useState("");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const localStorage = getLocalStorage();
   const ref = useRef();
   useOnClickOutside(ref, onClose);
 
   return (
     <Container open={open} ref={ref}>
+      <BoardListFilters
+        open={open}
+        query={query}
+        setQuery={setQuery}
+        sortDir={sortDir}
+        setSortDir={setSortDir}
+      />
+
       <ul>
-        {ids.map((id) => (
-          <BoardListItem
-            open={open}
-            key={id}
-            id={id}
-            currentId={board.id}
-            answers={localStorage[id]?.answers}
-          />
-        ))}
+        {getSortedAndFilteredIds(ids, localStorage, query, sortDir).map(
+          (id) => (
+            <BoardListItem
+              open={open}
+              key={id}
+              id={id}
+              currentId={board.id}
+              answers={localStorage[id]?.answers}
+            />
+          )
+        )}
       </ul>
     </Container>
   );

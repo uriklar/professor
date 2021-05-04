@@ -13,6 +13,9 @@ export interface IItem {
   text: string;
   categoryId: string;
 }
+export interface IClues {
+  [categoryId: string]: string;
+}
 
 export interface IAnswers {
   [categoryId: string]: string[];
@@ -21,7 +24,7 @@ export interface IBoard {
   id: string;
   items: IItem[];
   answers: IAnswers;
-  likes: number;
+  clues?: IClues;
 }
 
 export enum AnswerState {
@@ -31,4 +34,8 @@ export enum AnswerState {
 export interface IAnswer {
   categoryId: string;
   state: AnswerState;
+}
+
+export interface ILikes {
+  [boardId: string]: { likes: number };
 }
