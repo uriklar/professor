@@ -1,6 +1,6 @@
 import Grid from "../components/Grid";
 import Store from "../components/Store";
-import { IBoard, ILikes, IAnswer } from "../types";
+import { IBoard, ILikes } from "../types";
 import React, { useState, useEffect } from "react";
 import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
