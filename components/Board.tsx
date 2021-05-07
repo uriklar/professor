@@ -25,8 +25,8 @@ const GridContainer = styled.div`
 `;
 
 const BoardTitle = styled.div`
-  margin-bottom: 6px; 
-  display:flex;
+  margin-bottom: 6px;
+  display: flex;
   flex-direction: row-reverse;
 `;
 
@@ -69,7 +69,7 @@ export default function Board({
           <GridContainer>
             <BoardTitle>
               <h3>{board.id}</h3>
-              <ClearBoard id={board.id}/>
+              <ClearBoard id={board.id} />
             </BoardTitle>
             <LikesCounter />
             <Grid />
