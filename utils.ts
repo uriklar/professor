@@ -174,6 +174,26 @@ export function getLocalStorage(boardId: number = null) {
   return boardId ? storage[boardId] : storage;
 }
 
+export function clearLocalStorage(boardId: string = null){
+  if (!boardId) {
+    return;
+  }
+
+  const storedData = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  delete storedData[boardId];
+
+  if (!Object.keys(storedData)){
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  }
+  else{
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify({...storedData})
+    );
+  }
+}
+
+
 export function squareColorByState(state: AnswerState | "selected") {
   switch (state) {
     case "selected":

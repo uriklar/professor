@@ -1,6 +1,6 @@
 import Grid from "../components/Grid";
 import Store from "../components/Store";
-import { IBoard, ILikes } from "../types";
+import { IBoard, ILikes, IAnswer } from "../types";
 import React, { useState, useEffect } from "react";
 import BoardNavigator from "./BoardNavigator";
 import styled from "styled-components";
@@ -8,9 +8,9 @@ import BoardList from "./BoardList";
 import BoardCreatedDialog from "./BoardCreatedDialog";
 import WhatsNew from "./WhatsNew";
 import { useRouter } from "next/router";
-import { useStore } from "./Store";
 //import { MOCK_BOARD } from "../../mocks";
 import LikesCounter from "./LikesCounter";
+import ClearBoard from "./ClearBoard";
 
 const Container = styled.main`
   padding: 10px;
@@ -24,9 +24,12 @@ const GridContainer = styled.div`
   flex-direction: column;
 `;
 
-const BoardTitle = styled.h3`
-  margin-bottom: 6px;
+const BoardTitle = styled.div`
+  margin-bottom: 6px; 
+  display:flex;
+  flex-direction: row-reverse;
 `;
+
 export interface Props {
   board: IBoard;
   ids: string[];
@@ -64,7 +67,10 @@ export default function Board({
       <Container>
         <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
-            <BoardTitle>{board.id}</BoardTitle>
+            <BoardTitle>
+              <h3>{board.id}</h3>
+              <ClearBoard id={board.id}/>
+            </BoardTitle>
             <LikesCounter />
             <Grid />
             <BoardNavigator />
