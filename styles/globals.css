@@ -144,13 +144,3 @@ form button:focus-within {
   background: #6971e0;
   transition: 200ms ease;
 }
-
-.clear-board-icon{
-  height: 50px;
-  width: 50px;
-  margin: auto 10px;
-}
-
-.clear-board-icon:hover{
-  cursor: pointer;
-}

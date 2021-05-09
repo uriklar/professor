@@ -25,9 +25,13 @@ const GridContainer = styled.div`
 `;
 
 const BoardTitle = styled.div`
-  margin-bottom: 6px;
   display: flex;
-  flex-direction: row-reverse;
+  align-items: center;
+
+  h3 {
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
 `;
 
 export interface Props {
@@ -55,6 +59,7 @@ function useToast() {
     closeToast,
   };
 }
+
 export default function Board({
   board,
   ids,
@@ -68,8 +73,8 @@ export default function Board({
         <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
             <BoardTitle>
-              <h3>{board.id}</h3>
               <ClearBoard id={board.id} />
+              <h3>{board.id}</h3>
             </BoardTitle>
             <LikesCounter />
             <Grid />

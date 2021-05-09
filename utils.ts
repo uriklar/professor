@@ -174,20 +174,20 @@ export function getLocalStorage(boardId: number = null) {
   return boardId ? storage[boardId] : storage;
 }
 
-export function clearLocalStorage(boardId: string = null) {
+export function clearBoardFromLocalStorage(boardId: string = null) {
   if (!boardId) {
     return;
   }
 
-  const storedData =
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-  delete storedData[boardId];
+  const storedData = getLocalStorage();  
+  const cleanBoard = { ...storedData[boardId] };
+  delete cleanBoard.answers
+  
+  storedData[boardId] = cleanBoard
 
-  if (!Object.keys(storedData)) {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
-  } else {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...storedData }));
-  }
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...storedData }));
+  
+  return cleanBoard;
 }
 
 export function squareColorByState(state: AnswerState | "selected") {

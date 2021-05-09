@@ -1,14 +1,22 @@
 import { Actions, useStore } from "./Store";
-import { getLocalStorage, clearLocalStorage } from "../utils";
+import { clearBoardFromLocalStorage } from "../utils";
+import styled from "styled-components";
+
+const ClearButton = styled.img.attrs({ role: "button", tabIndex: 0 })`
+  height: 35px;
+  width: 35px;
+  margin: 0;
+
+  :hover{
+    cursor: pointer;
+  }
+`
 
 export default function ClearBoard({ id }) {
   const { dispatch } = useStore();
 
   const onClickClearBoard = () => {
-    const boardStorage = getLocalStorage(id);
-    const cleanBoard = { ...boardStorage, answers: [] };
-
-    clearLocalStorage(id);
+    const cleanBoard = clearBoardFromLocalStorage(id);
 
     dispatch({
       type: Actions.HydrateBoard,
@@ -17,11 +25,11 @@ export default function ClearBoard({ id }) {
   };
 
   return (
-    <img
-      className="clear-board-icon"
+    <ClearButton
       title="נקה לוח"
       alt="נקה לוח"
       onClick={onClickClearBoard}
+      onKeyPress={onClickClearBoard}
       src="/images/clear-board.svg"
     />
   );
