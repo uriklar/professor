@@ -7,10 +7,10 @@ const ClearButton = styled.img.attrs({ role: "button", tabIndex: 0 })`
   width: 35px;
   margin: 0;
 
-  :hover{
+  :hover {
     cursor: pointer;
   }
-`
+`;
 
 export default function ClearBoard({ id }) {
   const { dispatch } = useStore();

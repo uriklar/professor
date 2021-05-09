@@ -179,14 +179,14 @@ export function clearBoardFromLocalStorage(boardId: string = null) {
     return;
   }
 
-  const storedData = getLocalStorage();  
+  const storedData = getLocalStorage();
   const cleanBoard = { ...storedData[boardId] };
-  delete cleanBoard.answers
-  
-  storedData[boardId] = cleanBoard
+  delete cleanBoard.answers;
+
+  storedData[boardId] = cleanBoard;
 
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...storedData }));
-  
+
   return cleanBoard;
 }
 
