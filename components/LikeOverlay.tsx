@@ -19,10 +19,11 @@ const Container = styled(motion.div)`
   font-size: 20px;
 `;
 
-const Like = styled(motion.div).attrs({ tabIndex: 0 })`
+const Like = styled<{ isDisabled: boolean }>(motion.div).attrs({ tabIndex: 0 })`
   display: inline-block;
   font-size: 40px;
   cursor: pointer;
+  ${({ isDisabled }) => isDisabled && `pointer-events: none;`}
 `;
 
 const Text = styled.p`
@@ -105,6 +106,7 @@ const LikeOverlay = ({ show, boardId, setShow, isLiked }: Props) => {
             animate={animation}
             onClick={onLikePress}
             onKeyPress={onLikePress}
+            isDisabled={innerLike}
           >
             {innerLike ? "😍" : "🤩"}
           </Like>
