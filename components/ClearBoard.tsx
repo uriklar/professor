@@ -16,10 +16,14 @@ const ClearButton = styled.img.attrs({ role: "button", tabIndex: 0 })`
 export default function ClearBoard({ board }) {
   const { dispatch } = useStore();
   const [showClear, setShowClear] = useState(false);
-  
+
   useEffect(() => {
     const storedData = getLocalStorage();
-    if (storedData[board.id] && storedData[board.id].answers && storedData[board.id].answers.length) {
+    if (
+      storedData[board.id] &&
+      storedData[board.id].answers &&
+      storedData[board.id].answers.length
+    ) {
       setShowClear(true);
     } else {
       setShowClear(false);
@@ -35,11 +39,15 @@ export default function ClearBoard({ board }) {
     });
   };
 
-  return showClear && <ClearButton
-      title="נקה לוח"
-      alt="נקה לוח"
-      onClick={onClickClearBoard}
-      onKeyPress={onClickClearBoard}
-      src="/images/clear-board.svg"
-    />;
+  return (
+    showClear && (
+      <ClearButton
+        title="נקה לוח"
+        alt="נקה לוח"
+        onClick={onClickClearBoard}
+        onKeyPress={onClickClearBoard}
+        src="/images/clear-board.svg"
+      />
+    )
+  );
 }
