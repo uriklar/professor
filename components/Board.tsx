@@ -73,7 +73,7 @@ export default function Board({
         <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
             <BoardTitle>
-              <ClearBoard id={board.id} />
+              <ClearBoard board={board} />
               <h3>{board.id}</h3>
             </BoardTitle>
             <LikesCounter />
