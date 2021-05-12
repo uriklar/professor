@@ -34,12 +34,16 @@ function useShouldShowClues(board: IBoard, categoryId: string) {
   const [showClues, setShowClues] = useState(false);
 
   const fullySolved = isFullySolved(answers, AnswerState.Matched);
-
+/* wating for reset boerd feture random clue button 
   useEffect(() => {
     if (fullySolved && !!board.clues?.[categoryId]) {
       setTimeout(() => setShowClues(true), TWO_MINUTES);
     }
   }, [board.clues, categoryId, fullySolved]);
+*/
+useEffect(() => {
+    setTimeout(() => setShowClues(true), TWO_MINUTES);
+}, []);
 
   return showClues;
 }
