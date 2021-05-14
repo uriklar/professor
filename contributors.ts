@@ -17,8 +17,8 @@ const contributors = {
   },
   5: {
     name: "רותם הורוביץ",
-    linkedin: "https://www.linkedin.com/in/rotem-lurx-horovitz-9601705/"
-  }
+    linkedin: "https://www.linkedin.com/in/rotem-lurx-horovitz-9601705/",
+  },
 } as const;
 
 export default contributors;
