@@ -14,21 +14,19 @@ const ClearButton = styled.img.attrs({ role: "button", tabIndex: 0 })`
 `;
 
 export default function ClearBoard({ board }) {
-  const { dispatch } = useStore();
+  const {
+    dispatch,
+    state: { answers },
+  } = useStore();
   const [showClear, setShowClear] = useState(false);
 
   useEffect(() => {
-    const storedData = getLocalStorage();
-    if (
-      storedData[board.id] &&
-      storedData[board.id].answers &&
-      storedData[board.id].answers.length
-    ) {
+    if (answers?.length) {
       setShowClear(true);
     } else {
       setShowClear(false);
     }
-  }, [board]);
+  }, [answers?.length]);
 
   const onClickClearBoard = () => {
     const cleanBoard = clearBoardFromLocalStorage(board.id);
