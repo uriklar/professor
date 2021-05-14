@@ -13,7 +13,10 @@ const Container = styled.header`
   font-size: 20px;
   color: white;
   font-weight: bold;
-
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 1px 10px 0 rgba(0,0,0,0.5);
   a {
     text-decoration: none;
 
