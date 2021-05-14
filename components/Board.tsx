@@ -8,9 +8,9 @@ import BoardList from "./BoardList";
 import BoardCreatedDialog from "./BoardCreatedDialog";
 import WhatsNew from "./WhatsNew";
 import { useRouter } from "next/router";
-import { useStore } from "./Store";
 //import { MOCK_BOARD } from "../../mocks";
 import LikesCounter from "./LikesCounter";
+import ClearBoard from "./ClearBoard";
 
 const Container = styled.main`
   padding: 10px;
@@ -24,9 +24,16 @@ const GridContainer = styled.div`
   flex-direction: column;
 `;
 
-const BoardTitle = styled.h3`
-  margin-bottom: 6px;
+const BoardTitle = styled.div`
+  display: flex;
+  align-items: center;
+
+  h3 {
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
 `;
+
 export interface Props {
   board: IBoard;
   ids: string[];
@@ -52,6 +59,7 @@ function useToast() {
     closeToast,
   };
 }
+
 export default function Board({
   board,
   ids,
@@ -64,7 +72,10 @@ export default function Board({
       <Container>
         <Store board={board} ids={ids} likes={likes}>
           <GridContainer>
-            <BoardTitle>{board.id}</BoardTitle>
+            <BoardTitle>
+              <ClearBoard board={board} />
+              <h3>{board.id}</h3>
+            </BoardTitle>
             <LikesCounter />
             <Grid />
             <BoardNavigator />

@@ -43,6 +43,11 @@ const VERSIONS: IVersion[] = [
     contributor: 5,
     text: "הוספנו קצת ריווח לאותיות כדי שיהיה קל יותר לקרוא",
   },
+  {
+    number: 6,
+    contributor: 6,
+    text: "מהיום ניתן לאפס לוח פתור. חפשו את ה 🔄 ליד שם הלוח.",
+  },
 ];
 
 const LOCAL_STORAGE_KEY = "openprofessor__version";
