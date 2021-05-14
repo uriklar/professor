@@ -20,7 +20,7 @@ const contributors = {
     linkedin: "https://www.linkedin.com/in/rotem-lurx-horovitz-9601705/",
   },
   6: {
-    name: "הדס שווקי תמם",
+    name: "הדס שוויקי-תימן",
     linkedin: "https://www.linkedin.com/in/hadasshvekyteman/",
   },
 } as const;
