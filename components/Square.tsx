@@ -22,6 +22,7 @@ const Container = styled(motion.div).attrs({ role: "button", tabIndex: 0 })`
   font-weight: bold;
   color: white;
   font-size: 14px;
+  letter-spacing: 0.5px;
 `;
 
 interface Props {

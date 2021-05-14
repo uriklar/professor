@@ -1,12 +1,11 @@
 import { Actions, useStore } from "./Store";
-import { getLocalStorage, clearBoardFromLocalStorage } from "../utils";
+import { clearBoardFromLocalStorage } from "../utils";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
-const ClearButton = styled.img.attrs({ role: "button", tabIndex: 0 })`
-  height: 35px;
-  width: 35px;
-  margin: 0;
+const ClearButton = styled.div.attrs({ role: "button", tabIndex: 0 })`
+  font-size: 24px;
+  margin-left: 8px;
 
   :hover {
     cursor: pointer;
@@ -14,21 +13,19 @@ const ClearButton = styled.img.attrs({ role: "button", tabIndex: 0 })`
 `;
 
 export default function ClearBoard({ board }) {
-  const { dispatch } = useStore();
+  const {
+    dispatch,
+    state: { answers },
+  } = useStore();
   const [showClear, setShowClear] = useState(false);
 
   useEffect(() => {
-    const storedData = getLocalStorage();
-    if (
-      storedData[board.id] &&
-      storedData[board.id].answers &&
-      storedData[board.id].answers.length
-    ) {
+    if (answers?.length) {
       setShowClear(true);
     } else {
       setShowClear(false);
     }
-  }, [board]);
+  }, [answers?.length]);
 
   const onClickClearBoard = () => {
     const cleanBoard = clearBoardFromLocalStorage(board.id);
@@ -43,11 +40,11 @@ export default function ClearBoard({ board }) {
     showClear && (
       <ClearButton
         title="נקה לוח"
-        alt="נקה לוח"
         onClick={onClickClearBoard}
         onKeyPress={onClickClearBoard}
-        src="/images/clear-board.svg"
-      />
+      >
+        🔄
+      </ClearButton>
     )
   );
 }

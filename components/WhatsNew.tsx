@@ -38,6 +38,16 @@ const VERSIONS: IVersion[] = [
     text:
       ".אהבתם לוח? מהיום אפשר לתת לו 😍 ובכך לסמן למשתמשים אחרים שהלוח הזה טוב (האפשרות תופיע בסיום הלוח) ",
   },
+  {
+    number: 4,
+    contributor: 5,
+    text: "הוספנו קצת ריווח לאותיות כדי שיהיה קל יותר לקרוא",
+  },
+  {
+    number: 6,
+    contributor: 6,
+    text: "מהיום ניתן לאפס לוח פתור. חפשו את ה 🔄 ליד שם הלוח.",
+  },
 ];
 
 const LOCAL_STORAGE_KEY = "openprofessor__version";
