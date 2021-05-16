@@ -11,7 +11,7 @@ interface Props {
   categoryId: string;
 }
 
-const TWO_MINUTES = 120000;
+const ONE_MINUTE = 60000;
 
 const Container = styled(motion.div)`
   grid-column: span 4;
@@ -37,7 +37,7 @@ function useShouldShowClues(board: IBoard, categoryId: string) {
 
   useEffect(() => {
     if (fullySolved && !!board.clues?.[categoryId]) {
-      setTimeout(() => setShowClues(true), TWO_MINUTES);
+      setTimeout(() => setShowClues(true), ONE_MINUTE);
     }
   }, [board.clues, categoryId, fullySolved]);
 
