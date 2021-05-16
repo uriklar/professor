@@ -1090,6 +1090,14 @@
   "resolved" "https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.0.tgz"
   "version" "1.1.0"
 
+"@reach/auto-id@0.15.0":
+  "integrity" "sha512-iACaCcZeqAhDf4OOwJpmHHS/LaRj9z3Ip8JmlhpCrFWV2YOIiiZk42amlBZX6CKH66Md+eriYZQk3TyAjk6Oxg=="
+  "resolved" "https://registry.npmjs.org/@reach/auto-id/-/auto-id-0.15.0.tgz"
+  "version" "0.15.0"
+  dependencies:
+    "@reach/utils" "0.15.0"
+    "tslib" "^2.1.0"
+
 "@reach/dialog@^0.15.0":
   "integrity" "sha512-ivZr4ukUcEr/tU1wYpHJt0XZF1kZunaZmNeQwIqaVrjpvwIVbWJtEmDvXDSuUYiNOxJ7L9iCt4nrN8sZhf78XA=="
   "resolved" "https://registry.npmjs.org/@reach/dialog/-/dialog-0.15.0.tgz"
@@ -1102,6 +1110,11 @@
     "react-remove-scroll" "^2.4.1"
     "tslib" "^2.1.0"
 
+"@reach/observe-rect@1.2.0":
+  "integrity" "sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ=="
+  "resolved" "https://registry.npmjs.org/@reach/observe-rect/-/observe-rect-1.2.0.tgz"
+  "version" "1.2.0"
+
 "@reach/portal@0.15.0":
   "integrity" "sha512-Aulqjk/PIRu+R7yhINYAAYfYh++ZdC30qwHDWDtGk2cmTEJT7m9AlvBX+W7T+Q3Ux6Wy5f37eV+TTGid1CcjFw=="
   "resolved" "https://registry.npmjs.org/@reach/portal/-/portal-0.15.0.tgz"
@@ -1110,12 +1123,45 @@
     "@reach/utils" "0.15.0"
     "tslib" "^2.1.0"
 
+"@reach/rect@0.15.0":
+  "integrity" "sha512-Nu0zG4Xq8Z0C3Yr3wbjtj7fvII1q2KopHDStNtmL26oWPzlaZJ9A1K6rZSPIqxKkx1hvl6AUTeom7eHTIKhHjA=="
+  "resolved" "https://registry.npmjs.org/@reach/rect/-/rect-0.15.0.tgz"
+  "version" "0.15.0"
+  dependencies:
+    "@reach/observe-rect" "1.2.0"
+    "@reach/utils" "0.15.0"
+    "prop-types" "^15.7.2"
+    "tiny-warning" "^1.0.3"
+    "tslib" "^2.1.0"
+
+"@reach/tooltip@^0.15.0":
+  "integrity" "sha512-eFKtelL/iAcYSlNx2buxpxXbgKTQhdcvVxjzfVzkcHkSRFhRbQ+PmDBCdSxPhP89Cq6ULcxlFraH+PvPVN3y/w=="
+  "resolved" "https://registry.npmjs.org/@reach/tooltip/-/tooltip-0.15.0.tgz"
+  "version" "0.15.0"
+  dependencies:
+    "@reach/auto-id" "0.15.0"
+    "@reach/portal" "0.15.0"
+    "@reach/rect" "0.15.0"
+    "@reach/utils" "0.15.0"
+    "@reach/visually-hidden" "0.15.0"
+    "prop-types" "^15.7.2"
+    "tiny-warning" "^1.0.3"
+    "tslib" "^2.1.0"
+
 "@reach/utils@0.15.0":
   "integrity" "sha512-JHHN7T5ucFiuQbqkgv8ECbRWKfRiJxrO/xHR3fHf+f2C7mVs/KkJHhYtovS1iEapR4silygX9PY0+QUmHPOTYw=="
   "resolved" "https://registry.npmjs.org/@reach/utils/-/utils-0.15.0.tgz"
   "version" "0.15.0"
   dependencies:
     "tiny-warning" "^1.0.3"
+    "tslib" "^2.1.0"
+
+"@reach/visually-hidden@0.15.0":
+  "integrity" "sha512-ZRRBOaRrvSM6iCk+R2/8txFfXLY2DsnZQuaHNqOuSvz8vN2+syUnni1T+hpC93rvBRXtqD36kqdTsu5qihGnFw=="
+  "resolved" "https://registry.npmjs.org/@reach/visually-hidden/-/visually-hidden-0.15.0.tgz"
+  "version" "0.15.0"
+  dependencies:
+    "prop-types" "^15.7.2"
     "tslib" "^2.1.0"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -6265,7 +6311,7 @@
   dependencies:
     "@babel/runtime" "^7.12.13"
 
-"react-dom@17.0.2":
+"react-dom@^16.8.0 || 17.x", "react-dom@17.0.2":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -6334,7 +6380,7 @@
     "invariant" "^2.2.4"
     "tslib" "^1.0.0"
 
-"react@17.0.2":
+"react@^16.8.0 || 17.x", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"

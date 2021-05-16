@@ -15,6 +15,7 @@
   "dependencies": {
     "@giphy/js-fetch-api": "^3.0.0",
     "@reach/dialog": "^0.15.0",
+    "@reach/tooltip": "^0.15.0",
     "firebase": "^8.3.3",
     "firebase-admin": "^9.6.0",
     "framer-motion": "^4.1.2",
