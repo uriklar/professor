@@ -1,41 +1,47 @@
 export type ActionMap<M extends { [index: string]: any }> = {
-  [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
+	[Key in keyof M]: M[Key] extends undefined
+		? {
+				type: Key;
+		  }
+		: {
+				type: Key;
+				payload: M[Key];
+		  };
 };
 
 export interface IItem {
-  text: string;
-  categoryId: string;
+	text: string;
+	categoryId: string;
 }
 export interface IClues {
-  [categoryId: string]: string;
+	[categoryId: string]: string;
 }
 
 export interface IAnswers {
-  [categoryId: string]: string[];
+	[categoryId: string]: string[];
 }
 export interface IBoard {
-  id: string;
-  items: IItem[];
-  answers: IAnswers;
-  clues?: IClues;
+	id: string;
+	items: IItem[];
+	answers: IAnswers;
+	clues?: IClues;
+	user: IUser;
 }
 
 export enum AnswerState {
-  Matched,
-  Answered,
+	Matched,
+	Answered,
 }
 export interface IAnswer {
-  categoryId: string;
-  state: AnswerState;
+	categoryId: string;
+	state: AnswerState;
 }
 
 export interface ILikes {
-  [boardId: string]: { likes: number };
+	[boardId: string]: { likes: number };
+}
+
+export interface IUser {
+	id: string;
+	name: string;
 }
