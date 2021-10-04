@@ -29,4 +29,6 @@ Once your database is created, in the sidebar, next to Project overview, there's
 
 ## Contributing
 
-See [This issue](https://github.com/uriklar/professor/issues/1) for issues open for grabs. And thanks for taking a part in this project!
+See [our open issues](https://github.com/uriklar/professor/issues), and thanks for taking a part in this project!
+
+Join our Slack workspace using [this link](https://join.slack.com/t/professorcrew/shared_invite/zt-p75wib6f-KjlwEii0HoCgXyQXFKiYIw)
